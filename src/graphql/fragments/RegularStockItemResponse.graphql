@@ -1,0 +1,34 @@
+fragment RegularStockItem on StockItem {
+  _id
+  isPicking
+  isSorting
+  isDeleted
+  timestamp
+  warehousingDate
+  expirationDate
+  qrcode
+  warehousingDate
+  expirationDate
+  palletCode
+  enterQuantity
+  quantity
+  replenishment
+  quantityOfEach
+  ecountProductCode
+  name
+  description
+  rackLocation
+  ecountProduct {
+    PROD_CD
+    PROD_DES
+    SIZE_DES
+    UNIT
+  }
+  name
+  description
+  recorder {
+    _id
+    username
+  }
+  rackId
+}

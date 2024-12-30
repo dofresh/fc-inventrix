@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-rgb: 214, 219, 220;
+  --foreground-rgb: 0, 0, 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-rgb: 0, 0, 0;
+    --foreground-rgb: 255, 255, 255;
+  }
+}
+
+body {
+  background: rgb(var(--background-rgb));
+  color: rgb(var(--foreground-rgb));
+}
+
+.active {
+  @apply bg-blue-100 text-blue-600;
+}
+
+input {
+  background-color: transparent;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #00bfff;
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+
+  -webkit-animation: spin 1000ms infinite linear;
+  -moz-animation: spin 1000ms infinite linear;
+  -ms-animation: spin 1000ms infinite linear;
+  animation: spin 1000ms infinite linear;
+}
+
+.spinner-md {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #00bfff;
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+
+  -webkit-animation: spin 1000ms infinite linear;
+  -moz-animation: spin 1000ms infinite linear;
+  -ms-animation: spin 1000ms infinite linear;
+  animation: spin 1000ms infinite linear;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

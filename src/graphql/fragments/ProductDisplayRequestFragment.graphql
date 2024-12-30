@@ -1,0 +1,3 @@
+fragment ProductDisplayRequestFragment on StoreProductCtrl {
+  productDisplayRequest
+}
