@@ -8,6 +8,7 @@ import { LoginDocument, LoginMutation } from "~/generated/graphql";
 import { createStore } from "solid-js/store";
 import { queryClient } from "~/lib/querh-client";
 import { Field } from "~/components/Field";
+import { setUserStore } from "~/stroes/userStrore";
 
 // Form 타입 정의
 type LoginForm = {
@@ -43,6 +44,7 @@ const Login: Component = () => {
         queryClient.setQueryData(["me"], {
           me: data.login.user,
         });
+        setUserStore("user", data.login.user);
         navigate("/");
       }
       if (data.login.errors) {

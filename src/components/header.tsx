@@ -68,6 +68,7 @@ export const Header: Component<Props> = (props) => {
 
   createEffect(() => {
     setUsername(getUsername());
+
     console.log("getUsername", getUsername());
   });
 

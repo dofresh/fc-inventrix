@@ -1,4 +1,4 @@
-import { Component, JSX } from "solid-js";
+import { Component, JSX, onMount } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { createQuery } from "@tanstack/solid-query";
 import { gqlClient } from "~/lib/graphql-client";
@@ -27,6 +27,9 @@ export const IsAuth: Component<IsAuthProps> = (props) => {
 
           // store 업데이트 확인
           console.log("User store after update:");
+        } else {
+          navigate("/auth/login", { replace: true });
+          return null;
         }
         return response;
       } catch (error) {
@@ -37,6 +40,13 @@ export const IsAuth: Component<IsAuthProps> = (props) => {
     },
     retry: false, // 재시도 비활성화
   }));
+
+  // 새로고침 시 강제로 refetch 실행
+  onMount(() => {
+    if (!meQuery.isLoading && !meQuery.isFetching) {
+      meQuery.refetch();
+    }
+  });
 
   if (meQuery.isError) {
     navigate("/auth/login", { replace: true });
