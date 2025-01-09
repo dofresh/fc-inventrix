@@ -1,0 +1,10 @@
+mutation UploadBaljugoDispatchXLSX($file: [Upload!]!) {
+  uploadBaljugoDispatchXLSX(file: $file) {
+    ok
+    results
+    errors {
+      field
+      message
+    }
+  }
+}

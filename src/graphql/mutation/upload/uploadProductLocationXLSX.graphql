@@ -1,0 +1,10 @@
+mutation UploadProductLocationXLSX($file: [Upload!]!) {
+  uploadProductLocationXLSX(file: $file) {
+    ok
+    results
+    errors {
+      field
+      message
+    }
+  }
+}

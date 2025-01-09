@@ -1,0 +1,17 @@
+query GetRack($input: GetRackInput!) {
+  getRack(input: $input) {
+    errors {
+      query
+      message
+    }
+    rack {
+      _id
+      location
+      name
+      description
+    }
+    stockItems {
+      ...RegularStockItem
+    }
+  }
+}

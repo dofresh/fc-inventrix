@@ -1,0 +1,17 @@
+mutation UpsertRack($input: UpsertRackInput!) {
+  upsertRack(input: $input) {
+    errors {
+      query
+      message
+    }
+    rack {
+      _id
+      location
+      name
+      description
+      stockItems {
+        _id
+      }
+    }
+  }
+}

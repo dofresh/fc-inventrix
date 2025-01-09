@@ -1,0 +1,64 @@
+query BaljugoOrderCustomers {
+  baljugoOrderCustomers {
+    baljugoCustomers {
+      customerCode
+      customerName
+      nickName
+      quantity
+      orderDate
+      dispatchDate
+      published
+      canceled
+      modified
+      added
+      totalAmount
+      customerAmount
+      destinationLocation
+    }
+    dailyOrders {
+      code
+      printedLabels
+      cancelLabels
+      productDES
+      size
+      location
+      inventory
+      unit
+    }
+    customerOrders {
+      customerCode
+      orders {
+        _id
+        location
+        printedLabels
+        cancelLabels
+        totalAmount
+        productOrderStatus
+        customerCode
+        customerName
+        nickName
+        productCode
+        orderCode
+        orderVersion
+        isModify
+        baljugoProductDES
+        ecountProductDES
+        warehouseProductDES
+        sizeDES
+        unit
+        storageMethod
+        orderDate
+        orderConfirmDate
+        deliveryRequestDate
+        dispatchDate
+        dispatchedDate
+        dispatchedSize
+        returnDate
+        returnSize
+        destinationLocation
+        quantity
+        productName
+      }
+    }
+  }
+}

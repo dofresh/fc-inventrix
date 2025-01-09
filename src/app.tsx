@@ -18,11 +18,11 @@ export default function App() {
       <SolidQueryDevtools />
       <Router
         root={(props) => (
-          <IsAuth>
-            <Suspense>
-              <Layout> {props.children}</Layout>
-            </Suspense>
-          </IsAuth>
+          // <IsAuth>
+          <Suspense>
+            <Layout> {props.children}</Layout>
+          </Suspense>
+          // </IsAuth>
         )}
       >
         <FileRoutes />

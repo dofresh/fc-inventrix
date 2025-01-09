@@ -1,0 +1,9 @@
+mutation OrderState($input: PickingListInput!) {
+  orderState(input: $input) {
+    result
+    error {
+      query
+      message
+    }
+  }
+}

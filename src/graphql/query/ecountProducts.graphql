@@ -1,0 +1,5 @@
+query EcountProducts {
+  ecountProducts {
+    ...RegularEcountProduct
+  }
+}

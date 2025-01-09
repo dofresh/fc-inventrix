@@ -1,0 +1,24 @@
+query GetRackST($input: GetRackInput!) {
+  getRackST(input: $input) {
+    errors {
+      query
+      message
+    }
+    totalQuantities {
+      productCode
+      quantity
+      quantityOfEach
+      ecountInventory
+      lastProdInventory
+    }
+    rack {
+      _id
+      location
+      name
+      description
+    }
+    stockItems {
+      ...RegularStockItem
+    }
+  }
+}

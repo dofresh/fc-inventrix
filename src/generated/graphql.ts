@@ -3989,6 +3989,47 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { me: { _id: string, username: string, email: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
 
+export type AddTotalOrdersMutationVariables = Exact<{
+  input: AddTotalOrdersInput;
+}>;
+
+
+export type AddTotalOrdersMutation = { addTotalOrders: { result: Array<string>, error: { query: string, message: string } } };
+
+export type OrderStateMutationVariables = Exact<{
+  input: PickingListInput;
+}>;
+
+
+export type OrderStateMutation = { orderState: { result: Array<string>, error: { query: string, message: string } } };
+
+export type ChangePasswordMutationVariables = Exact<{
+  token: Scalars['String']['input'];
+  newPassword: Scalars['String']['input'];
+}>;
+
+
+export type ChangePasswordMutation = { changePassword: { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, email: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } } };
+
+export type EcountProductAllUpsertMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EcountProductAllUpsertMutation = { ecountProductAllUpsert: boolean };
+
+export type EmailVerifictionMutationVariables = Exact<{
+  input: EmailVerifyInput;
+}>;
+
+
+export type EmailVerifictionMutation = { emailVerifiction: { errors: Array<{ field: string, message: string }> } };
+
+export type ForgotPasswordMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
+
+
+export type ForgotPasswordMutation = { forgotPassword: boolean };
+
 export type LoginMutationVariables = Exact<{
   usernameOrEmail: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -4002,15 +4043,175 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { logout: boolean };
 
-export type EcountProductAllUpsertMutationVariables = Exact<{ [key: string]: never; }>;
+export type UploadBaljugoDispatchXlsxMutationVariables = Exact<{
+  file: Array<Scalars['Upload']['input']> | Scalars['Upload']['input'];
+}>;
 
 
-export type EcountProductAllUpsertMutation = { ecountProductAllUpsert: boolean };
+export type UploadBaljugoDispatchXlsxMutation = { uploadBaljugoDispatchXLSX: { ok: boolean, results: Array<string>, errors: { field: string, message: string } } };
+
+export type UploadProductLocationXlsxMutationVariables = Exact<{
+  file: Array<Scalars['Upload']['input']> | Scalars['Upload']['input'];
+}>;
+
+
+export type UploadProductLocationXlsxMutation = { uploadProductLocationXLSX: { ok: boolean, results: Array<string>, errors: { field: string, message: string } } };
+
+export type CreateStockItemMutationVariables = Exact<{
+  input: StockItemInput;
+}>;
+
+
+export type CreateStockItemMutation = { createStockItem: { errors: Array<{ query: string, message: string }>, stockItem: { _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } } } };
+
+export type DeleteStockItemMutationVariables = Exact<{
+  input: InvisivleStockItemInput;
+}>;
+
+
+export type DeleteStockItemMutation = { deleteStockItem: boolean };
+
+export type InvisibleStockItemMutationVariables = Exact<{
+  input: InvisivleStockItemInput;
+}>;
+
+
+export type InvisibleStockItemMutation = { invisibleStockItem: boolean };
+
+export type ItemsToPickingMutationVariables = Exact<{
+  input: SortingStockItemInput;
+}>;
+
+
+export type ItemsToPickingMutation = { itemsToPicking: { errors: Array<{ query: string, message: string }>, stockItem: Array<{ palletCode: string, name: string, isSorting: boolean, isPicking: boolean, replenishment: any, quantity: number }> } };
+
+export type TransitStockItemMutationVariables = Exact<{
+  input: InvisivleStockItemInput;
+}>;
+
+
+export type TransitStockItemMutation = { transitStockItem: boolean };
+
+export type UpdateStockItemMutationVariables = Exact<{
+  input: StockItemUpdateInput;
+}>;
+
+
+export type UpdateStockItemMutation = { updateStockItem: { errors: Array<{ query: string, message: string }>, stockItem: { _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } } } };
+
+export type UpsertRackMutationVariables = Exact<{
+  input: UpsertRackInput;
+}>;
+
+
+export type UpsertRackMutation = { upsertRack: { errors: Array<{ query: string, message: string }>, rack: { _id: string, location: string, name: string, description: string, stockItems: Array<{ _id: string }> } } };
+
+export type UpsertStockItemMutationVariables = Exact<{
+  input: StockItemInput;
+}>;
+
+
+export type UpsertStockItemMutation = { upsertStockItem: { errors: Array<{ query: string, message: string }>, stockItem: { _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } } } };
+
+export type BaljugoOrderCustomerQueryVariables = Exact<{
+  input: BaljugoCustomerOrderInput;
+}>;
+
+
+export type BaljugoOrderCustomerQuery = { baljugoOrderCustomer: { error: { query: string, message: string }, customerOrders: Array<{ _id: string, location: string, printedLabels: Array<string>, cancelLabels: Array<string>, totalAmount: number, productOrderStatus: FcProductOrderStatus, customerCode: string, customerName: string, nickName: string, productCode: string, orderCode: string, orderVersion: number, isModify: boolean, baljugoProductDES: string, ecountProductDES: string, warehouseProductDES: string, sizeDES: string, unit: string, storageMethod: string, orderDate: string, orderConfirmDate: string, deliveryRequestDate: string, dispatchDate: string, dispatchedDate: string, dispatchedSize: number, returnDate: string, returnSize: number, destinationLocation: string, quantity: number, productName: string }> } };
+
+export type BaljugoOrderCustomersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BaljugoOrderCustomersQuery = { baljugoOrderCustomers: { baljugoCustomers: Array<{ customerCode: string, customerName: string, nickName: string, quantity: number, orderDate: string, dispatchDate: string, published: number, canceled: Array<string>, modified: Array<string>, added: Array<string>, totalAmount: number, customerAmount: number, destinationLocation: string }>, dailyOrders: Array<{ code: string, printedLabels: Array<string>, cancelLabels: Array<string>, productDES: string, size: number, location: string, inventory: number, unit: string }>, customerOrders: Array<{ customerCode: string, orders: Array<{ _id: string, location: string, printedLabels: Array<string>, cancelLabels: Array<string>, totalAmount: number, productOrderStatus: FcProductOrderStatus, customerCode: string, customerName: string, nickName: string, productCode: string, orderCode: string, orderVersion: number, isModify: boolean, baljugoProductDES: string, ecountProductDES: string, warehouseProductDES: string, sizeDES: string, unit: string, storageMethod: string, orderDate: string, orderConfirmDate: string, deliveryRequestDate: string, dispatchDate: string, dispatchedDate: string, dispatchedSize: number, returnDate: string, returnSize: number, destinationLocation: string, quantity: number, productName: string }> }> } };
+
+export type BaljugoOrderCustomersHistoryQueryVariables = Exact<{
+  input: BaljugoOrderCustomersHistoryInput;
+}>;
+
+
+export type BaljugoOrderCustomersHistoryQuery = { baljugoOrderCustomersHistory: { baljugoCustomers: Array<{ customerCode: string, customerName: string, nickName: string, quantity: number, orderDate: string, dispatchDate: string, published: number, totalAmount: number, destinationLocation: string }>, dailyOrders: Array<{ code: string, printedLabels: Array<string>, cancelLabels: Array<string>, productDES: string, size: number, location: string, inventory: number, unit: string }>, customerOrders: Array<{ customerCode: string, orders: Array<{ _id: string, location: string, printedLabels: Array<string>, cancelLabels: Array<string>, totalAmount: number, productOrderStatus: FcProductOrderStatus, customerCode: string, customerName: string, nickName: string, productCode: string, orderCode: string, orderVersion: number, isModify: boolean, baljugoProductDES: string, ecountProductDES: string, warehouseProductDES: string, sizeDES: string, unit: string, storageMethod: string, orderDate: string, orderConfirmDate: string, deliveryRequestDate: string, dispatchDate: string, dispatchedDate: string, dispatchedSize: number, returnDate: string, returnSize: number, destinationLocation: string, quantity: number, productName: string }> }> } };
+
+export type BaljugoPickingListQueryVariables = Exact<{
+  input: PickingListInput;
+}>;
+
+
+export type BaljugoPickingListQuery = { baljugoPickingList: { PickingLists: Array<{ customerCode: string, customerName: string, nickName: string, quantity: number, destinationLocation: string, customerOrders: Array<{ _id: string, location: string, printedLabels: Array<string>, cancelLabels: Array<string>, totalAmount: number, productOrderStatus: FcProductOrderStatus, customerCode: string, customerName: string, nickName: string, productCode: string, orderCode: string, orderVersion: number, isModify: boolean, baljugoProductDES: string, ecountProductDES: string, warehouseProductDES: string, sizeDES: string, unit: string, storageMethod: string, orderDate: string, orderConfirmDate: string, deliveryRequestDate: string, dispatchDate: string, dispatchedDate: string, dispatchedSize: number, returnDate: string, returnSize: number, destinationLocation: string, quantity: number, productName: string }> }> } };
+
+export type SetOrderArrivalLocationMutationVariables = Exact<{
+  input: SetOrderArrivalLocationInput;
+}>;
+
+
+export type SetOrderArrivalLocationMutation = { setOrderArrivalLocation: { ok: boolean, error: { query: string, message: string } } };
+
+export type EcountProductsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EcountProductsQuery = { ecountProducts: Array<{ _id: string, createdAt: string, updatedAt: string, PROD_CD: string, PROD_DES: string, SIZE_FLAG: string, SIZE_DES: string, UNIT: string, PROD_TYPE: string, SET_FLAG: string, BAL_FLAG: string, WH_CD: string, IN_PRICE: number, IN_PRICE_VAT: string, OUT_PRICE: number, OUT_PRICE_VAT: string, REMARKS_WIN: string, CLASS_CD: string, CLASS_CD2: string, CLASS_CD3: string, BAR_CODE: string, VAT_YN: string, TAX: number, VAT_RATE_BY_BASE_YN: string, VAT_RATE_BY: number, CS_FLAG: string, REMARKS: string, INSPECT_TYPE_CD: string, INSPECT_STATUS: string, SAMPLE_PERCENT: number, CSORD_C0001: string, CSORD_TEXT: number, CSORD_C0003: string, IN_TERM: string, MIN_QTY: string, CUST: string, EXCH_RATE: string, DENO_RATE: string, OUT_PRICE1: number, OUT_PRICE1_VAT_YN: string, OUT_PRICE2: number, OUT_PRICE2_VAT_YN: string, OUT_PRICE3: number, OUT_PRICE3_VAT_YN: string, OUT_PRICE4: number, OUT_PRICE4_VAT_YN: string, OUT_PRICE5: number, OUT_PRICE5_VAT_YN: string, OUT_PRICE6: number, OUT_PRICE6_VAT_YN: string, OUT_PRICE7: number, OUT_PRICE7_VAT_YN: string, OUT_PRICE8: number, OUT_PRICE8_VAT_YN: string, OUT_PRICE9: number, OUT_PRICE9_VAT_YN: string, OUT_PRICE10: number, OUT_PRICE10_VAT_YN: string, OUTSIDE_PRICE: number, OUTSIDE_PRICE_VAT: string, LABOR_WEIGHT: number, EXPENSES_WEIGHT: number, MATERIAL_COST: number, EXPENSE_COST: number, LABOR_COST: number, OUT_COST: number, CONT1: string, CONT2: string, CONT3: string, CONT4: string, CONT5: string, CONT6: string, NO_USER1: number, NO_USER2: number, NO_USER3: number, NO_USER4: number, NO_USER5: number, NO_USER6: number, NO_USER7: number, NO_USER8: number, NO_USER9: number, NO_USER10: number, ITEM_TYPE: string, SERIAL_TYPE: string, PROD_SELL_TYPE: string, PROD_WHMOVE_TYPE: string, QC_BUY_TYPE: string, QC_YN: string }> };
+
+export type GetSavedEcountInventoryQueryVariables = Exact<{
+  input: Scalars['String']['input'];
+}>;
+
+
+export type GetSavedEcountInventoryQuery = { getSavedEcountInventory: { inventory: { _id: string, createdAt: string, updatedAt: string, WH_CD: string, WH_DES: string, PROD_CD: string, PROD_DES: string, PROD_SIZE_DES: string, BAL_QTY: string, UNIT: string }, error: { query: string, message: string } } };
+
+export type PackageBoxesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PackageBoxesQuery = { packageBoxes: { errors: Array<{ query: string, message: string }>, packageBoxed: Array<{ _id: string, box: { _id: string, boxName: string, boxType: string, boxCost: number, description: string }, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_FLAG: string, SIZE_DES: string } }> } };
+
+export type GetProductLocationsQueryVariables = Exact<{
+  input: GetProductLocationsInput;
+}>;
+
+
+export type GetProductLocationsQuery = { getProductLocations: { inventory: number, lastProdInventory: number, totalQuantity: number, stockItems: Array<{ _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } }> } };
+
+export type GetRackQueryVariables = Exact<{
+  input: GetRackInput;
+}>;
+
+
+export type GetRackQuery = { getRack: { errors: Array<{ query: string, message: string }>, rack: { _id: string, location: string, name: string, description: string }, stockItems: Array<{ _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } }> } };
+
+export type GetRackStQueryVariables = Exact<{
+  input: GetRackInput;
+}>;
+
+
+export type GetRackStQuery = { getRackST: { errors: Array<{ query: string, message: string }>, totalQuantities: Array<{ productCode: string, quantity: number, quantityOfEach: number, ecountInventory: number, lastProdInventory: number }>, rack: { _id: string, location: string, name: string, description: string }, stockItems: Array<{ _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } }> } };
+
+export type GetRacksQueryVariables = Exact<{
+  input: GetRacksInput;
+}>;
+
+
+export type GetRacksQuery = { getRacks: { errors: Array<{ query: string, message: string }>, racks: Array<{ _id: string, location: string, name: string, description: string, stockItems: Array<{ _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } }> }> } };
+
+export type GetStockItemsQueryVariables = Exact<{
+  input: GetStockItemsInput;
+}>;
+
+
+export type GetStockItemsQuery = { getStockItems: { errors: Array<{ query: string, message: string }>, stockItems: Array<{ _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } }> } };
+
+export type ProductLocationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductLocationsQuery = { productLocations: Array<{ productCode: string, location: string }> };
 
 export type WarehouseBoardQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WarehouseBoardQuery = { warehouseBoard: { warehouseBoxSize: number, warehouseEASize: number, inventoryPackSize: number, inventoryBOXSize: number, inventoryKg: number, inventoryEAs: Array<{ productCode: string, productDescript: string, size: number }> } };
+
+export type WarehouseProductsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WarehouseProductsQuery = { warehouseProducts: Array<{ _id: string, createdAt: string, updatedAt: string, PROD_CD: string, PROD_DES: string, SIZE_FLAG: string, SIZE_DES: string, UNIT: string, PROD_TYPE: string, SET_FLAG: string, BAL_FLAG: string, WH_CD: string, IN_PRICE: number, IN_PRICE_VAT: string, OUT_PRICE: number, OUT_PRICE_VAT: string, REMARKS_WIN: string, CLASS_CD: string, CLASS_CD2: string, CLASS_CD3: string, BAR_CODE: string, VAT_YN: string, TAX: number, VAT_RATE_BY_BASE_YN: string, VAT_RATE_BY: number, CS_FLAG: string, REMARKS: string, INSPECT_TYPE_CD: string, INSPECT_STATUS: string, SAMPLE_PERCENT: number, CSORD_C0001: string, CSORD_TEXT: number, CSORD_C0003: string, IN_TERM: string, MIN_QTY: string, CUST: string, EXCH_RATE: string, DENO_RATE: string, OUT_PRICE1: number, OUT_PRICE1_VAT_YN: string, OUT_PRICE2: number, OUT_PRICE2_VAT_YN: string, OUT_PRICE3: number, OUT_PRICE3_VAT_YN: string, OUT_PRICE4: number, OUT_PRICE4_VAT_YN: string, OUT_PRICE5: number, OUT_PRICE5_VAT_YN: string, OUT_PRICE6: number, OUT_PRICE6_VAT_YN: string, OUT_PRICE7: number, OUT_PRICE7_VAT_YN: string, OUT_PRICE8: number, OUT_PRICE8_VAT_YN: string, OUT_PRICE9: number, OUT_PRICE9_VAT_YN: string, OUT_PRICE10: number, OUT_PRICE10_VAT_YN: string, OUTSIDE_PRICE: number, OUTSIDE_PRICE_VAT: string, LABOR_WEIGHT: number, EXPENSES_WEIGHT: number, MATERIAL_COST: number, EXPENSE_COST: number, LABOR_COST: number, OUT_COST: number, CONT1: string, CONT2: string, CONT3: string, CONT4: string, CONT5: string, CONT6: string, NO_USER1: number, NO_USER2: number, NO_USER3: number, NO_USER4: number, NO_USER5: number, NO_USER6: number, NO_USER7: number, NO_USER8: number, NO_USER9: number, NO_USER10: number, ITEM_TYPE: string, SERIAL_TYPE: string, PROD_SELL_TYPE: string, PROD_WHMOVE_TYPE: string, QC_BUY_TYPE: string, QC_YN: string }> };
 
 export const ProductDisplayRequestFragmentFragmentDoc = gql`
     fragment ProductDisplayRequestFragment on StoreProductCtrl {
@@ -4190,6 +4391,61 @@ export const MeDocument = gql`
   }
 }
     ${RegularUserFragmentDoc}`;
+export const AddTotalOrdersDocument = gql`
+    mutation AddTotalOrders($input: AddTotalOrdersInput!) {
+  addTotalOrders(input: $input) {
+    result
+    error {
+      query
+      message
+    }
+  }
+}
+    `;
+export const OrderStateDocument = gql`
+    mutation OrderState($input: PickingListInput!) {
+  orderState(input: $input) {
+    result
+    error {
+      query
+      message
+    }
+  }
+}
+    `;
+export const ChangePasswordDocument = gql`
+    mutation ChangePassword($token: String!, $newPassword: String!) {
+  changePassword(token: $token, newPassword: $newPassword) {
+    errors {
+      field
+      message
+    }
+    user {
+      ...RegularUser
+    }
+  }
+}
+    ${RegularUserFragmentDoc}`;
+export const EcountProductAllUpsertDocument = gql`
+    mutation EcountProductAllUpsert {
+  ecountProductAllUpsert
+}
+    `;
+export const EmailVerifictionDocument = gql`
+    mutation EmailVerifiction($input: EmailVerifyInput!) {
+  emailVerifiction(input: $input) {
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export const ForgotPasswordDocument = gql`
+    mutation ForgotPassword($email: String!) {
+  forgotPassword(email: $email)
+}
+    `;
 export const LoginDocument = gql`
     mutation Login($usernameOrEmail: String!, $password: String!) {
   login(usernameOrEmail: $usernameOrEmail, password: $password) {
@@ -4204,9 +4460,503 @@ export const LogoutDocument = gql`
   logout
 }
     `;
-export const EcountProductAllUpsertDocument = gql`
-    mutation EcountProductAllUpsert {
-  ecountProductAllUpsert
+export const UploadBaljugoDispatchXlsxDocument = gql`
+    mutation UploadBaljugoDispatchXLSX($file: [Upload!]!) {
+  uploadBaljugoDispatchXLSX(file: $file) {
+    ok
+    results
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export const UploadProductLocationXlsxDocument = gql`
+    mutation UploadProductLocationXLSX($file: [Upload!]!) {
+  uploadProductLocationXLSX(file: $file) {
+    ok
+    results
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export const CreateStockItemDocument = gql`
+    mutation CreateStockItem($input: StockItemInput!) {
+  createStockItem(input: $input) {
+    errors {
+      query
+      message
+    }
+    stockItem {
+      ...RegularStockItem
+    }
+  }
+}
+    ${RegularStockItemFragmentDoc}`;
+export const DeleteStockItemDocument = gql`
+    mutation DeleteStockItem($input: InvisivleStockItemInput!) {
+  deleteStockItem(input: $input)
+}
+    `;
+export const InvisibleStockItemDocument = gql`
+    mutation InvisibleStockItem($input: InvisivleStockItemInput!) {
+  invisibleStockItem(input: $input)
+}
+    `;
+export const ItemsToPickingDocument = gql`
+    mutation ItemsToPicking($input: SortingStockItemInput!) {
+  itemsToPicking(input: $input) {
+    errors {
+      query
+      message
+    }
+    stockItem {
+      palletCode
+      name
+      isSorting
+      isPicking
+      replenishment
+      quantity
+    }
+  }
+}
+    `;
+export const TransitStockItemDocument = gql`
+    mutation TransitStockItem($input: InvisivleStockItemInput!) {
+  transitStockItem(input: $input)
+}
+    `;
+export const UpdateStockItemDocument = gql`
+    mutation UpdateStockItem($input: StockItemUpdateInput!) {
+  updateStockItem(input: $input) {
+    errors {
+      query
+      message
+    }
+    stockItem {
+      ...RegularStockItem
+    }
+  }
+}
+    ${RegularStockItemFragmentDoc}`;
+export const UpsertRackDocument = gql`
+    mutation UpsertRack($input: UpsertRackInput!) {
+  upsertRack(input: $input) {
+    errors {
+      query
+      message
+    }
+    rack {
+      _id
+      location
+      name
+      description
+      stockItems {
+        _id
+      }
+    }
+  }
+}
+    `;
+export const UpsertStockItemDocument = gql`
+    mutation UpsertStockItem($input: StockItemInput!) {
+  upsertStockItem(input: $input) {
+    errors {
+      query
+      message
+    }
+    stockItem {
+      ...RegularStockItem
+    }
+  }
+}
+    ${RegularStockItemFragmentDoc}`;
+export const BaljugoOrderCustomerDocument = gql`
+    query BaljugoOrderCustomer($input: BaljugoCustomerOrderInput!) {
+  baljugoOrderCustomer(input: $input) {
+    error {
+      query
+      message
+    }
+    customerOrders {
+      _id
+      location
+      printedLabels
+      cancelLabels
+      totalAmount
+      productOrderStatus
+      customerCode
+      customerName
+      nickName
+      productCode
+      orderCode
+      orderVersion
+      isModify
+      baljugoProductDES
+      ecountProductDES
+      warehouseProductDES
+      sizeDES
+      unit
+      storageMethod
+      orderDate
+      orderConfirmDate
+      deliveryRequestDate
+      dispatchDate
+      dispatchedDate
+      dispatchedSize
+      returnDate
+      returnSize
+      destinationLocation
+      quantity
+      productName
+    }
+  }
+}
+    `;
+export const BaljugoOrderCustomersDocument = gql`
+    query BaljugoOrderCustomers {
+  baljugoOrderCustomers {
+    baljugoCustomers {
+      customerCode
+      customerName
+      nickName
+      quantity
+      orderDate
+      dispatchDate
+      published
+      canceled
+      modified
+      added
+      totalAmount
+      customerAmount
+      destinationLocation
+    }
+    dailyOrders {
+      code
+      printedLabels
+      cancelLabels
+      productDES
+      size
+      location
+      inventory
+      unit
+    }
+    customerOrders {
+      customerCode
+      orders {
+        _id
+        location
+        printedLabels
+        cancelLabels
+        totalAmount
+        productOrderStatus
+        customerCode
+        customerName
+        nickName
+        productCode
+        orderCode
+        orderVersion
+        isModify
+        baljugoProductDES
+        ecountProductDES
+        warehouseProductDES
+        sizeDES
+        unit
+        storageMethod
+        orderDate
+        orderConfirmDate
+        deliveryRequestDate
+        dispatchDate
+        dispatchedDate
+        dispatchedSize
+        returnDate
+        returnSize
+        destinationLocation
+        quantity
+        productName
+      }
+    }
+  }
+}
+    `;
+export const BaljugoOrderCustomersHistoryDocument = gql`
+    query BaljugoOrderCustomersHistory($input: BaljugoOrderCustomersHistoryInput!) {
+  baljugoOrderCustomersHistory(input: $input) {
+    baljugoCustomers {
+      customerCode
+      customerName
+      nickName
+      quantity
+      orderDate
+      dispatchDate
+      published
+      totalAmount
+      destinationLocation
+    }
+    dailyOrders {
+      code
+      printedLabels
+      cancelLabels
+      productDES
+      size
+      location
+      inventory
+      unit
+    }
+    customerOrders {
+      customerCode
+      orders {
+        _id
+        location
+        printedLabels
+        cancelLabels
+        totalAmount
+        productOrderStatus
+        customerCode
+        customerName
+        nickName
+        productCode
+        orderCode
+        orderVersion
+        isModify
+        baljugoProductDES
+        ecountProductDES
+        warehouseProductDES
+        sizeDES
+        unit
+        storageMethod
+        orderDate
+        orderConfirmDate
+        deliveryRequestDate
+        dispatchDate
+        dispatchedDate
+        dispatchedSize
+        returnDate
+        returnSize
+        destinationLocation
+        quantity
+        productName
+      }
+    }
+  }
+}
+    `;
+export const BaljugoPickingListDocument = gql`
+    query BaljugoPickingList($input: PickingListInput!) {
+  baljugoPickingList(input: $input) {
+    PickingLists {
+      customerCode
+      customerName
+      nickName
+      quantity
+      destinationLocation
+      customerOrders {
+        _id
+        location
+        printedLabels
+        cancelLabels
+        totalAmount
+        productOrderStatus
+        customerCode
+        customerName
+        nickName
+        productCode
+        orderCode
+        orderVersion
+        isModify
+        baljugoProductDES
+        ecountProductDES
+        warehouseProductDES
+        sizeDES
+        unit
+        storageMethod
+        orderDate
+        orderConfirmDate
+        deliveryRequestDate
+        dispatchDate
+        dispatchedDate
+        dispatchedSize
+        returnDate
+        returnSize
+        destinationLocation
+        quantity
+        productName
+      }
+    }
+  }
+}
+    `;
+export const SetOrderArrivalLocationDocument = gql`
+    mutation setOrderArrivalLocation($input: SetOrderArrivalLocationInput!) {
+  setOrderArrivalLocation(input: $input) {
+    ok
+    error {
+      query
+      message
+    }
+  }
+}
+    `;
+export const EcountProductsDocument = gql`
+    query EcountProducts {
+  ecountProducts {
+    ...RegularEcountProduct
+  }
+}
+    ${RegularEcountProductFragmentDoc}`;
+export const GetSavedEcountInventoryDocument = gql`
+    query GetSavedEcountInventory($input: String!) {
+  getSavedEcountInventory(productCode: $input) {
+    inventory {
+      _id
+      createdAt
+      updatedAt
+      WH_CD
+      WH_DES
+      PROD_CD
+      PROD_DES
+      PROD_SIZE_DES
+      BAL_QTY
+      UNIT
+    }
+    error {
+      query
+      message
+    }
+  }
+}
+    `;
+export const PackageBoxesDocument = gql`
+    query PackageBoxes {
+  packageBoxes {
+    errors {
+      query
+      message
+    }
+    packageBoxed {
+      _id
+      box {
+        _id
+        boxName
+        boxType
+        boxCost
+        description
+      }
+      ecountProduct {
+        PROD_CD
+        PROD_DES
+        SIZE_FLAG
+        SIZE_DES
+      }
+    }
+  }
+}
+    `;
+export const GetProductLocationsDocument = gql`
+    query GetProductLocations($input: GetProductLocationsInput!) {
+  getProductLocations(input: $input) {
+    inventory
+    lastProdInventory
+    totalQuantity
+    stockItems {
+      ...RegularStockItem
+      ecountProduct {
+        PROD_CD
+        PROD_DES
+        SIZE_DES
+        UNIT
+      }
+    }
+  }
+}
+    ${RegularStockItemFragmentDoc}`;
+export const GetRackDocument = gql`
+    query GetRack($input: GetRackInput!) {
+  getRack(input: $input) {
+    errors {
+      query
+      message
+    }
+    rack {
+      _id
+      location
+      name
+      description
+    }
+    stockItems {
+      ...RegularStockItem
+    }
+  }
+}
+    ${RegularStockItemFragmentDoc}`;
+export const GetRackStDocument = gql`
+    query GetRackST($input: GetRackInput!) {
+  getRackST(input: $input) {
+    errors {
+      query
+      message
+    }
+    totalQuantities {
+      productCode
+      quantity
+      quantityOfEach
+      ecountInventory
+      lastProdInventory
+    }
+    rack {
+      _id
+      location
+      name
+      description
+    }
+    stockItems {
+      ...RegularStockItem
+    }
+  }
+}
+    ${RegularStockItemFragmentDoc}`;
+export const GetRacksDocument = gql`
+    query GetRacks($input: GetRacksInput!) {
+  getRacks(input: $input) {
+    errors {
+      query
+      message
+    }
+    racks {
+      _id
+      location
+      name
+      description
+      stockItems {
+        ...RegularStockItem
+      }
+    }
+  }
+}
+    ${RegularStockItemFragmentDoc}`;
+export const GetStockItemsDocument = gql`
+    query GetStockItems($input: GetStockItemsInput!) {
+  getStockItems(input: $input) {
+    errors {
+      query
+      message
+    }
+    stockItems {
+      ...RegularStockItem
+    }
+  }
+}
+    ${RegularStockItemFragmentDoc}`;
+export const ProductLocationsDocument = gql`
+    query ProductLocations {
+  productLocations {
+    productCode
+    location
+  }
 }
     `;
 export const WarehouseBoardDocument = gql`
@@ -4225,6 +4975,13 @@ export const WarehouseBoardDocument = gql`
   }
 }
     `;
+export const WarehouseProductsDocument = gql`
+    query WarehouseProducts {
+  warehouseProducts {
+    ...RegularEcountProduct
+  }
+}
+    ${RegularEcountProductFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -4236,17 +4993,107 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     Me(variables?: MeQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<MeQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<MeQuery>(MeDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Me', 'query', variables);
     },
+    AddTotalOrders(variables: AddTotalOrdersMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddTotalOrdersMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddTotalOrdersMutation>(AddTotalOrdersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddTotalOrders', 'mutation', variables);
+    },
+    OrderState(variables: OrderStateMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<OrderStateMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<OrderStateMutation>(OrderStateDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'OrderState', 'mutation', variables);
+    },
+    ChangePassword(variables: ChangePasswordMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ChangePasswordMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ChangePasswordMutation>(ChangePasswordDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ChangePassword', 'mutation', variables);
+    },
+    EcountProductAllUpsert(variables?: EcountProductAllUpsertMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<EcountProductAllUpsertMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<EcountProductAllUpsertMutation>(EcountProductAllUpsertDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'EcountProductAllUpsert', 'mutation', variables);
+    },
+    EmailVerifiction(variables: EmailVerifictionMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<EmailVerifictionMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<EmailVerifictionMutation>(EmailVerifictionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'EmailVerifiction', 'mutation', variables);
+    },
+    ForgotPassword(variables: ForgotPasswordMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ForgotPasswordMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ForgotPasswordMutation>(ForgotPasswordDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ForgotPassword', 'mutation', variables);
+    },
     Login(variables: LoginMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LoginMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<LoginMutation>(LoginDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Login', 'mutation', variables);
     },
     Logout(variables?: LogoutMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LogoutMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<LogoutMutation>(LogoutDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Logout', 'mutation', variables);
     },
-    EcountProductAllUpsert(variables?: EcountProductAllUpsertMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<EcountProductAllUpsertMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<EcountProductAllUpsertMutation>(EcountProductAllUpsertDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'EcountProductAllUpsert', 'mutation', variables);
+    UploadBaljugoDispatchXLSX(variables: UploadBaljugoDispatchXlsxMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UploadBaljugoDispatchXlsxMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UploadBaljugoDispatchXlsxMutation>(UploadBaljugoDispatchXlsxDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UploadBaljugoDispatchXLSX', 'mutation', variables);
+    },
+    UploadProductLocationXLSX(variables: UploadProductLocationXlsxMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UploadProductLocationXlsxMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UploadProductLocationXlsxMutation>(UploadProductLocationXlsxDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UploadProductLocationXLSX', 'mutation', variables);
+    },
+    CreateStockItem(variables: CreateStockItemMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateStockItemMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateStockItemMutation>(CreateStockItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateStockItem', 'mutation', variables);
+    },
+    DeleteStockItem(variables: DeleteStockItemMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteStockItemMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteStockItemMutation>(DeleteStockItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DeleteStockItem', 'mutation', variables);
+    },
+    InvisibleStockItem(variables: InvisibleStockItemMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<InvisibleStockItemMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<InvisibleStockItemMutation>(InvisibleStockItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'InvisibleStockItem', 'mutation', variables);
+    },
+    ItemsToPicking(variables: ItemsToPickingMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ItemsToPickingMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ItemsToPickingMutation>(ItemsToPickingDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ItemsToPicking', 'mutation', variables);
+    },
+    TransitStockItem(variables: TransitStockItemMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<TransitStockItemMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<TransitStockItemMutation>(TransitStockItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'TransitStockItem', 'mutation', variables);
+    },
+    UpdateStockItem(variables: UpdateStockItemMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateStockItemMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateStockItemMutation>(UpdateStockItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpdateStockItem', 'mutation', variables);
+    },
+    UpsertRack(variables: UpsertRackMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpsertRackMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpsertRackMutation>(UpsertRackDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpsertRack', 'mutation', variables);
+    },
+    UpsertStockItem(variables: UpsertStockItemMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpsertStockItemMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpsertStockItemMutation>(UpsertStockItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpsertStockItem', 'mutation', variables);
+    },
+    BaljugoOrderCustomer(variables: BaljugoOrderCustomerQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<BaljugoOrderCustomerQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BaljugoOrderCustomerQuery>(BaljugoOrderCustomerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'BaljugoOrderCustomer', 'query', variables);
+    },
+    BaljugoOrderCustomers(variables?: BaljugoOrderCustomersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<BaljugoOrderCustomersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BaljugoOrderCustomersQuery>(BaljugoOrderCustomersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'BaljugoOrderCustomers', 'query', variables);
+    },
+    BaljugoOrderCustomersHistory(variables: BaljugoOrderCustomersHistoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<BaljugoOrderCustomersHistoryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BaljugoOrderCustomersHistoryQuery>(BaljugoOrderCustomersHistoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'BaljugoOrderCustomersHistory', 'query', variables);
+    },
+    BaljugoPickingList(variables: BaljugoPickingListQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<BaljugoPickingListQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<BaljugoPickingListQuery>(BaljugoPickingListDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'BaljugoPickingList', 'query', variables);
+    },
+    setOrderArrivalLocation(variables: SetOrderArrivalLocationMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SetOrderArrivalLocationMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SetOrderArrivalLocationMutation>(SetOrderArrivalLocationDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'setOrderArrivalLocation', 'mutation', variables);
+    },
+    EcountProducts(variables?: EcountProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<EcountProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<EcountProductsQuery>(EcountProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'EcountProducts', 'query', variables);
+    },
+    GetSavedEcountInventory(variables: GetSavedEcountInventoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSavedEcountInventoryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetSavedEcountInventoryQuery>(GetSavedEcountInventoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSavedEcountInventory', 'query', variables);
+    },
+    PackageBoxes(variables?: PackageBoxesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<PackageBoxesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<PackageBoxesQuery>(PackageBoxesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'PackageBoxes', 'query', variables);
+    },
+    GetProductLocations(variables: GetProductLocationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductLocationsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductLocationsQuery>(GetProductLocationsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductLocations', 'query', variables);
+    },
+    GetRack(variables: GetRackQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetRackQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRackQuery>(GetRackDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetRack', 'query', variables);
+    },
+    GetRackST(variables: GetRackStQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetRackStQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRackStQuery>(GetRackStDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetRackST', 'query', variables);
+    },
+    GetRacks(variables: GetRacksQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetRacksQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRacksQuery>(GetRacksDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetRacks', 'query', variables);
+    },
+    GetStockItems(variables: GetStockItemsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetStockItemsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetStockItemsQuery>(GetStockItemsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetStockItems', 'query', variables);
+    },
+    ProductLocations(variables?: ProductLocationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ProductLocationsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ProductLocationsQuery>(ProductLocationsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ProductLocations', 'query', variables);
     },
     WarehouseBoard(variables?: WarehouseBoardQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<WarehouseBoardQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<WarehouseBoardQuery>(WarehouseBoardDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'WarehouseBoard', 'query', variables);
+    },
+    WarehouseProducts(variables?: WarehouseProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<WarehouseProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<WarehouseProductsQuery>(WarehouseProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'WarehouseProducts', 'query', variables);
     }
   };
 }

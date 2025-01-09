@@ -1,0 +1,16 @@
+query GetProductLocations($input: GetProductLocationsInput!) {
+  getProductLocations(input: $input) {
+    inventory
+    lastProdInventory
+    totalQuantity
+    stockItems {
+      ...RegularStockItem
+      ecountProduct {
+        PROD_CD
+        PROD_DES
+        SIZE_DES
+        UNIT
+      }
+    }
+  }
+}

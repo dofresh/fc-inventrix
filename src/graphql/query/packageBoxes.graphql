@@ -1,0 +1,24 @@
+query PackageBoxes {
+  packageBoxes {
+    errors {
+      query
+      message
+    }
+    packageBoxed {
+      _id
+      box {
+        _id
+        boxName
+        boxType
+        boxCost
+        description
+      }
+      ecountProduct {
+        PROD_CD
+        PROD_DES
+        SIZE_FLAG
+        SIZE_DES
+      }
+    }
+  }
+}
