@@ -43,7 +43,6 @@ const WarehousePage = () => {
     queryKey: ["rack", decodedLocation()],
     queryFn: async () => {
       try {
-        console.log("Fetching data for location:", decodedLocation()); // 디버깅용
         const response = await gqlClient.request<GetRackStQuery>(
           GetRackStDocument,
           {
@@ -51,48 +50,69 @@ const WarehousePage = () => {
           }
         );
 
-        console.log("Query response:", response); // 디버깅용
-
-        if (response.getRackST.rack) {
-          setRack(response.getRackST.rack as RackType);
+        // 응답이 없거나 getRackST가 없는 경우 기본값 반환
+        if (!response || !response.getRackST) {
+          return {
+            rack: null,
+            stockItems: [],
+            totalQuantities: [],
+          };
         }
 
-        if (response.getRackST.stockItems) {
-          const palletCodes = response.getRackST.stockItems
-            .filter((item: any) => item.palletCode)
-            .map((item: any) => item.palletCode);
+        const { getRackST } = response;
 
-          if (palletCodes) {
-            setPallets(palletCodes as string[]);
-          }
+        // 상태 업데이트
+        if (getRackST.rack) {
+          setRack(getRackST.rack as RackType);
         }
 
-        return response.getRackST;
+        if (getRackST.stockItems) {
+          const palletCodes = getRackST.stockItems
+            .filter((item) => item?.palletCode)
+            .map((item) => item.palletCode as string);
+          setPallets(palletCodes);
+        }
+
+        // 반드시 전체 getRackST 객체를 반환
+        return getRackST;
       } catch (error) {
         console.error("Rack query error:", error);
-        throw error;
+        // 에러 시 기본값 반환
+        return {
+          rack: null,
+          stockItems: [],
+          totalQuantities: [],
+        };
       }
     },
     initialData: () => {
-      // 캐시된 데이터가 있으면 사용
       const cachedData = queryClient.getQueryData<GetRackStQuery["getRackST"]>([
         "rack",
         decodedLocation(),
       ]);
-      console.log("cachedData", cachedData);
 
-      if (cachedData?.rack) {
-        setRack(cachedData.rack as RackType);
+      // 캐시된 데이터가 있으면 사용
+      if (cachedData) {
+        if (cachedData.rack) {
+          setRack(cachedData.rack as RackType);
+        }
         if (cachedData.stockItems) {
           const palletCodes = cachedData.stockItems
-            .filter((item: any) => item.palletCode)
-            .map((item: any) => item.palletCode);
-          setPallets(palletCodes as string[]);
+            .filter((item) => item?.palletCode)
+            .map((item) => item.palletCode as string);
+          setPallets(palletCodes);
         }
         return cachedData;
       }
+
+      // 캐시된 데이터가 없으면 기본값 반환
+      return {
+        rack: null,
+        stockItems: [],
+        totalQuantities: [],
+      };
     },
-    enabled: true, // 항상 쿼리 활성화
+    enabled: true,
   }));
   // Rack mutation
   const rackMutation = createMutation(() => ({
@@ -141,7 +161,7 @@ const WarehousePage = () => {
                 fallback={<Spin isOpen={true} />}
               >
                 <Show
-                  when={rack()}
+                  when={rack() && rack}
                   fallback={
                     <div class="mt-48">
                       {/* <div class="text-center mb-12">{decodedLocation()}</div> */}

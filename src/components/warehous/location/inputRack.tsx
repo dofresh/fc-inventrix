@@ -1,5 +1,11 @@
 import { useNavigate } from "@solidjs/router";
-import { createSignal, createEffect, Component, Setter } from "solid-js";
+import {
+  createSignal,
+  createEffect,
+  Component,
+  Setter,
+  onMount,
+} from "solid-js";
 
 interface Props {
   location: string;
@@ -103,6 +109,14 @@ const LocationCode: Component<Props> = (props) => {
     );
   });
 
+  onMount(() => {
+    console.log(" props.location", props.location);
+    setRoomSelected(props.location.split("-")[0] || "1");
+    setColumnSelected(props.location.split("-")[1] || "L");
+    setNumSelected(props.location.split("-")[2] || "1");
+    setShelfSelected(props.location.split("-")[3] || "1");
+  });
+
   return (
     <div class="w-full flex flex-col justify-center items-center">
       <div class="flex mt-12">
@@ -187,14 +201,14 @@ const LocationCode: Component<Props> = (props) => {
           </div>
         )}
       </div>
-      {/* <button
+      <button
         class={`${
           !props.loading && props.showSubmit && "hidden"
         } w-[20rem] h-14 mt-12 bg-sky-500 rounded-lg text-white font-bold`}
         onClick={submitHandle}
       >
         랙으로 이동
-      </button> */}
+      </button>
     </div>
   );
 };
