@@ -14,7 +14,7 @@ import {
 } from "~/generated/graphql";
 import { gqlClient } from "~/lib/graphql-client";
 import LocationCode from "~/components/warehous/location/inputRack";
-import Stock, { StockType } from "~/components/warehous/location/stockItem";
+import Stock, { StockType } from "~/components/warehous/location/stockItems";
 import { queryClient } from "~/lib/querh-client";
 export type RackType = {
   location: string;
@@ -34,6 +34,7 @@ const WarehousePage = () => {
   const params = useParams<{ location: string }>();
   const navigate = useNavigate();
   const [decodedLocation, setDecodedLocation] = createSignal(params.location);
+  const [showLocationInput, setShowLocationInput] = createSignal(false);
   const [showSubmit, setShowSubmit] = createSignal(true);
   const [pallets, setPallets] = createSignal<string[]>([]);
   const [rack, setRack] = createSignal<RackType>();
@@ -146,12 +147,24 @@ const WarehousePage = () => {
       <main class="max-w-5xl flex-1 mx-auto py-4 text-gray-600">
         <div>
           <div class="flex flex-col items-center w-full">
-            <LocationCode
-              location={decodedLocation()}
-              showSubmit={showSubmit()}
-              setShowSubmit={setShowSubmit}
-              loading={rackQuery.isLoading}
-            />
+            <Show when={showLocationInput}>
+              <LocationCode
+                location={decodedLocation()}
+                showSubmit={showSubmit()}
+                setShowSubmit={setShowSubmit}
+                loading={rackQuery.isLoading}
+                showLocationInput={showLocationInput}
+                setShowLocationInput={setShowLocationInput}
+              />
+            </Show>
+            <Show when={showSubmit()}>
+              <div
+                onclick={() => setShowLocationInput(!showLocationInput())}
+                class="flex justify-center text-5xl font-weight-900 border px-8 py-2"
+              >
+                {decodedLocation()}
+              </div>
+            </Show>
             <Show
               when={!rackQuery.isLoading || !rackMutation.isPending}
               fallback={<Spin isOpen={true} />}
@@ -188,11 +201,8 @@ const WarehousePage = () => {
                     </div>
                   }
                 >
-                  {showSubmit() && (
+                  <Show when={showSubmit()}>
                     <div>
-                      <div class="flex justify-center text-4xl font-weight-900">
-                        {decodedLocation()}
-                      </div>
                       <Stock
                         pallets={pallets()}
                         locationStockItems={
@@ -206,7 +216,7 @@ const WarehousePage = () => {
                         prodTotalQuantities={rackQuery.data?.totalQuantities}
                       />
                     </div>
-                  )}
+                  </Show>
                 </Show>
               </Show>
             </Show>

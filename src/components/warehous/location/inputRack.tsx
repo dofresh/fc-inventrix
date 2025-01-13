@@ -1,10 +1,12 @@
-import { useNavigate } from "@solidjs/router";
+import { useNavigate, useParams } from "@solidjs/router";
 import {
   createSignal,
   createEffect,
   Component,
   Setter,
-  onMount,
+  batch,
+  Show,
+  Accessor,
 } from "solid-js";
 
 interface Props {
@@ -12,6 +14,8 @@ interface Props {
   showSubmit: boolean;
   setShowSubmit: Setter<boolean>;
   loading: boolean;
+  setShowLocationInput: Setter<boolean>;
+  showLocationInput: Accessor<boolean>;
 }
 
 const LocationCode: Component<Props> = (props) => {
@@ -43,19 +47,15 @@ const LocationCode: Component<Props> = (props) => {
     props.location.split("-")[3] || "1"
   );
 
+  //현제 location 입력값 dom에서 가져오기
+  const getSelectValue = (id: string) => {
+    const selectValue = document.getElementById(id) as HTMLSelectElement;
+    return selectValue?.value;
+  };
+
   const handleRoomSelect = (e: any) => {
     const room = e.target.value;
     setRoomSelected(room);
-    if (freezers.includes(room)) {
-      setColumnSelected("L");
-      setNumSelected("1");
-    } else if (refrigerators.includes(room)) {
-      setColumnSelected("a");
-      setNumSelected("1");
-    } else if (etc.includes(room)) {
-      setColumnSelected("");
-      setNumSelected("");
-    }
   };
 
   const handleColumnSelect = (e: any) => {
@@ -64,10 +64,12 @@ const LocationCode: Component<Props> = (props) => {
 
   const handleNumSelect = (e: any) => {
     setNumSelected(e.target.value);
+    fetchUrl();
   };
 
   const handleShelfSelect = (e: any) => {
     setShelfSelected(e.target.value);
+    fetchUrl();
   };
 
   const fetchUrl = () => {
@@ -93,8 +95,24 @@ const LocationCode: Component<Props> = (props) => {
     fetchUrl();
   };
 
+  let numSelectedRef: HTMLSelectElement | undefined = undefined;
   createEffect(() => {
-    fetchUrl();
+    console.log(
+      props.location,
+      `${getSelectValue("room")}-${getSelectValue("column")}-${getSelectValue(
+        "num"
+      )}${getSelectValue("shelf") !== "1" ? `-${shelfSelected()}` : ""}`
+    );
+
+    if (
+      props.location !==
+      `${getSelectValue("room")}-${getSelectValue("column")}-${getSelectValue(
+        "num"
+      )}${getSelectValue("shelf") !== "1" ? `-${shelfSelected()}` : ""}`
+    ) {
+      props.setShowLocationInput(false);
+      props.setShowSubmit(true);
+    }
   });
 
   createEffect(() => {
@@ -109,102 +127,98 @@ const LocationCode: Component<Props> = (props) => {
     );
   });
 
-  onMount(() => {
-    console.log(" props.location", props.location);
-    setRoomSelected(props.location.split("-")[0] || "1");
-    setColumnSelected(props.location.split("-")[1] || "L");
-    setNumSelected(props.location.split("-")[2] || "1");
-    setShelfSelected(props.location.split("-")[3] || "1");
-  });
-
   return (
     <div class="w-full flex flex-col justify-center items-center">
       <div class="flex mt-12">
-        <div class="flex flex-col items-center">
-          <select
-            id="room"
-            class="block mx-2 p-3 text-2xl rounded-lg border-2"
-            onChange={handleRoomSelect}
-            value={roomSelected()}
-          >
-            {roomList.map((item) => (
-              <option value={item}>{item}</option>
-            ))}
-          </select>
-          <div>저장고</div>
-        </div>
-        {!etc.includes(roomSelected()) && (
-          <div class="flex">
-            <div class="flex flex-col items-center">
-              <select
-                id="column"
-                class="block mx-2 p-3 text-2xl rounded-lg border-2"
-                onChange={handleColumnSelect}
-                value={columnSelected()}
-              >
-                {refrigerators.includes(roomSelected())
-                  ? columnListNormal.map((item) => (
-                      <option value={item}>{item}</option>
-                    ))
-                  : columnList.map((item) => (
-                      <option value={item}>{item}</option>
-                    ))}
-              </select>
-              <div>열</div>
-            </div>
-            {columnSelected() === "f" ? (
-              <div class="flex">
-                <div class="flex flex-col items-center">
-                  <select
-                    id="num"
-                    class="mx-2 p-3 text-2xl rounded-lg border-2"
-                    onChange={handleNumSelect}
-                    value={numSelected()}
-                  >
-                    {numList.map((item) => (
-                      <option value={item}>{item}</option>
-                    ))}
-                  </select>
-                  <div>번호</div>
-                </div>
-              </div>
-            ) : (
-              <div class="flex">
-                <div class="flex flex-col items-center">
-                  <select
-                    id="num"
-                    class="mx-2 p-3 text-2xl rounded-lg border-2"
-                    onChange={handleNumSelect}
-                    value={numSelected()}
-                  >
-                    {numList.map((item) => (
-                      <option value={item}>{item}</option>
-                    ))}
-                  </select>
-                  <div>번호</div>
-                </div>
-                <div class="flex flex-col items-center">
-                  <select
-                    id="shelf"
-                    class="mx-2 p-3 text-2xl rounded-lg border-2"
-                    onChange={handleShelfSelect}
-                    value={shelfSelected()}
-                  >
-                    {shelfList.map((item) => (
-                      <option value={item}>{item === 1 ? "" : item}</option>
-                    ))}
-                  </select>
-                  <div>단</div>
-                </div>
-              </div>
-            )}
+        <Show when={props.showLocationInput()}>
+          <div class="flex flex-col items-center">
+            <select
+              id="room"
+              class="block mx-2 p-3 text-2xl rounded-lg border-2"
+              onChange={handleRoomSelect}
+              value={roomSelected()}
+            >
+              {roomList.map((item) => (
+                <option value={item}>{item}</option>
+              ))}
+            </select>
+            <div>저장고</div>
           </div>
-        )}
+          {!etc.includes(roomSelected()) && (
+            <div class="flex">
+              <div class="flex flex-col items-center">
+                <select
+                  id="column"
+                  class="block mx-2 p-3 text-2xl rounded-lg border-2"
+                  onChange={handleColumnSelect}
+                  value={columnSelected()}
+                >
+                  {refrigerators.includes(roomSelected())
+                    ? columnListNormal.map((item) => (
+                        <option value={item}>{item}</option>
+                      ))
+                    : columnList.map((item) => (
+                        <option value={item}>{item}</option>
+                      ))}
+                </select>
+                <div>열</div>
+              </div>
+              {columnSelected() === "f" ? (
+                <div class="flex">
+                  <div class="flex flex-col items-center">
+                    <select
+                      id="num"
+                      class="mx-2 p-3 text-2xl rounded-lg border-2"
+                      onChange={handleNumSelect}
+                      value={numSelected()}
+                    >
+                      {numList.map((item) => (
+                        <option value={item}>{item}</option>
+                      ))}
+                    </select>
+                    <div>번호</div>
+                  </div>
+                </div>
+              ) : (
+                <div class="flex">
+                  <div class="flex flex-col items-center">
+                    <select
+                      id="num"
+                      class="mx-2 p-3 text-2xl rounded-lg border-2"
+                      onChange={handleNumSelect}
+                      value={numSelected()}
+                    >
+                      {numList.map((item) => (
+                        <option value={item}>{item}</option>
+                      ))}
+                    </select>
+                    <div>번호</div>
+                  </div>
+                  <div class="flex flex-col items-center">
+                    <select
+                      id="shelf"
+                      class="mx-2 p-3 text-2xl rounded-lg border-2"
+                      onChange={handleShelfSelect}
+                      value={shelfSelected()}
+                      ref={numSelectedRef}
+                    >
+                      {shelfList.map((item) => (
+                        <option value={item}>{item === 1 ? "" : item}</option>
+                      ))}
+                    </select>
+                    <div>단</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </Show>
       </div>
+
       <button
         class={`${
           !props.loading && props.showSubmit && "hidden"
-        } w-[20rem] h-14 mt-12 bg-sky-500 rounded-lg text-white font-bold`}
+        } w-[20rem] h-14 mt-12 bg-sky-500 rounded-lg text-white font-bold mb-12`}
         onClick={submitHandle}
       >
         랙으로 이동

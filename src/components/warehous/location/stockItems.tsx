@@ -3,17 +3,21 @@ import {
   EcountProduct,
   TotalQuantity,
   User,
+  EcountProductsDocument,
+  EcountProductsQuery,
 } from "~/generated/graphql";
 import { createSignal, createEffect, Component, For, Show } from "solid-js";
 import { A } from "@solidjs/router";
 import { BsPlusSquareDotted } from "solid-icons/bs";
 import { TbQrcodeOff } from "solid-icons/tb";
 
-import AddStockItemsModal from "~/components/Modal/addStockItemsModal";
-import QrGetPallet from "~/components/qrGetPallet";
 import { getGradientColor } from "~/utilities/getGradientColor";
 import dayjs from "dayjs";
 import { localDate } from "~/lib/dayjs-config";
+import AddStockItemsModal from "~/components/Modal/addStockItmesModal";
+import { createQuery } from "@tanstack/solid-query";
+import { gqlClient } from "~/lib/graphql-client";
+import QrGetPallet from "~/components/qrGetPallet";
 
 interface IReplenishment {
   userName: string;
@@ -63,6 +67,15 @@ const Stock: Component<Props> = (props) => {
   >();
 
   // Replace with Solid Query or your GraphQL client
+  const productsQuery = createQuery(() => ({
+    queryKey: ["ecountProducts"],
+    queryFn: async () => {
+      const response = await gqlClient.request<EcountProductsQuery>(
+        EcountProductsDocument
+      );
+      return response;
+    },
+  }));
   const [productData] = createSignal(/* your query implementation */);
 
   const handleOpenModal = () => setModalOpen(true);
@@ -113,9 +126,9 @@ const Stock: Component<Props> = (props) => {
 
   return (
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center w-full">
-      {/* <Show when={isModalOpen()}> */}
-      {/* <AddStockItemsModal
-          productData={productData()}
+      <Show when={isModalOpen()}>
+        <AddStockItemsModal
+          productData={productsQuery.data}
           currentStock={currentStock()}
           isOpen={isModalOpen()}
           onClose={handleCloseModal}
@@ -123,8 +136,8 @@ const Stock: Component<Props> = (props) => {
           setStocks={setStocks}
           stocks={stocks()}
           location={props.location || ""}
-        /> */}
-      {/* </Show> */}
+        />
+      </Show>
 
       <For each={stockItems()}>
         {(stock) => (
@@ -292,14 +305,14 @@ const Stock: Component<Props> = (props) => {
       </For>
 
       <div class="flex justify-center items-center mt-8">
-        {/* <QrGetPallet
-          productData={productData()}
+        <QrGetPallet
+          productData={productsQuery.data}
           pallets={props.pallets}
           isScan={isScan()}
           setIsScan={setIsScan}
           rackId={props.rackId}
           location={props.location}
-        /> */}
+        />
         <Show when={!isScan()}>
           <div
             class="text-[6rem] inline-block cursor-pointer hover:text-green-700"
