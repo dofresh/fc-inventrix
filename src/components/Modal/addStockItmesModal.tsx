@@ -4,16 +4,12 @@ import clsx from "clsx";
 import {
   EcountProductsQuery,
   EcountProduct,
-  GetRackStDocument,
-  StockItem,
-  GetProductLocationsDocument,
   StockItemUpdateInput,
   StockItemInput,
 } from "~/generated/graphql";
 import Spin from "../Spin";
 import { StockType } from "../warehous/location/stockItems";
 import { useDeleteStockItem } from "~/api/mutation/stockItme/useDeleteStockItem";
-import { useTransitStockItem } from "~/api/mutation/stockItme/useTransitStockItem";
 import { useUpsertStockItem } from "~/api/mutation/stockItme/useUpsertStockItem";
 import { useUpdateStockItem } from "~/api/mutation/stockItme/useUpdateStockItem";
 import { useItemsToPicking } from "~/api/mutation/stockItme/useItemsToPicking";
@@ -42,9 +38,9 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
   const [isEditQty, setIsEditQty] = createSignal(false);
   const [palletCode, setPalletCode] = createSignal<string>();
   const [enterQuantity, setEnterQuantity] = createSignal<string>();
-  const [quantity, setQuantity] = createSignal<string>("");
+  const [quantity, setQuantity] = createSignal<string>();
   const [sortingQuantity, setSortingQuantity] = createSignal<string>("0");
-  const [quantityOfEach, setQuantityOfEach] = createSignal<string>("");
+  const [quantityOfEach, setQuantityOfEach] = createSignal<string>();
   const [isPicking, setIsPicking] = createSignal<boolean>(false);
   const [isSorting, setIsSorting] = createSignal<boolean>(false);
   const [isLoading, setIsLoading] = createSignal(false);
@@ -55,7 +51,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
   };
 
   const getRemainingQuantity = (): string => {
-    const baseQty = Number(quantity()) || 0;
+    const baseQty = Number(quantity() || enterQuantity()) || 0;
     const sortQty = Number(sortingQuantity()) || 0;
     return String(Math.max(0, baseQty - sortQty));
   };
@@ -70,16 +66,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
       props.onClose();
     },
   });
-  const transitMutation = useTransitStockItem({
-    stocks: props.stocks,
-    setStocks: props.setStocks,
-    location: props.location,
-    setIsScan: props.setIsScan,
-    onSuccess: () => {
-      setIsLoading(false);
-      props.onClose();
-    },
-  });
+
   const upsertMutation = useUpsertStockItem({
     location: props.location,
     onSuccess: () => {
@@ -170,7 +157,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
 
   createEffect(() => {
     if (isSorting()) {
-      setSortingQuantity("0");
+      setSortingQuantity("");
     }
   });
 
@@ -312,7 +299,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                       <input
                         class="my-4 text-xl ml-2 border-2 rounded-lg p-2"
                         type="number"
-                        value={quantity() || enterQuantity()}
+                        value={quantity() || enterQuantity() || ""}
                         onInput={(e) => setQuantity(e.currentTarget.value)}
                       />
                     </div>
@@ -321,10 +308,10 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                       <input
                         class="my-4 text-xl ml-2 border-2 rounded-lg p-2"
                         type="number"
-                        value={props.currentStock?.quantityOfEach}
-                        onInput={(e) =>
-                          setQuantityOfEach(e.currentTarget.value)
-                        }
+                        value={props.currentStock?.quantityOfEach || ""}
+                        onInput={(e) => {
+                          setQuantityOfEach(e.currentTarget.value);
+                        }}
                       />
                     </div>
                   </div>
@@ -350,8 +337,8 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                       <input
                         type="number"
                         class="w-full my-4 text-xl ml-2 border-2 rounded-lg p-2"
-                        value={sortingQuantity()}
-                        onInput={(e) => {
+                        value={sortingQuantity() || ""}
+                        onChange={(e) => {
                           const newValue = e.currentTarget.value;
                           if (
                             Number(newValue) >= 0 &&
@@ -389,12 +376,12 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                         },
                       });
                       // 삭제 후 수행할 작업
-                      const filteredStocks = props.stocks.filter(
-                        (stock) =>
-                          String(stock._id) !==
-                            String(props.currentStock?._id) || stock.isDeleted
-                      );
-                      props.setStocks(filteredStocks);
+                      // const filteredStocks = props.stocks.filter(
+                      //   (stock) =>
+                      //     String(stock._id) !==
+                      //       String(props.currentStock?._id) || stock.isDeleted
+                      // );
+                      // props.setStocks(filteredStocks);
                       setIsLoading(false);
                       props.onClose();
                     }
@@ -451,24 +438,21 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                       } text-white border-4 py-1 px-2 md:py-3 md:px-5 rounded-lg`}
                       onClick={async () => {
                         setIsLoading(true);
-                        const handleUpdate = async () => {
-                          setIsLoading(true);
-                          await updateMutation.mutateAsync({
-                            input: {
-                              isPicking: isPicking(),
-                              isSorting: isSorting(),
-                              sortedQuantity: getNumberValue(sortingQuantity()),
-                              stockId: props.currentStock!._id!,
-                              quantity:
-                                getNumberValue(quantity()) -
-                                getNumberValue(sortingQuantity()),
-                              quantityOfEach: getNumberValue(quantityOfEach()),
-                              productCode: String(product()?.PROD_CD),
-                              rackId: String(props.rackId),
-                              rackLocation: props.location,
-                            } as StockItemUpdateInput,
-                          });
-                        };
+                        await updateMutation.mutateAsync({
+                          input: {
+                            isPicking: isPicking(),
+                            isSorting: isSorting(),
+                            sortedQuantity: getNumberValue(sortingQuantity()),
+                            stockId: props.currentStock!._id!,
+                            quantity:
+                              getNumberValue(quantity()) -
+                              getNumberValue(sortingQuantity()),
+                            quantityOfEach: getNumberValue(quantityOfEach()),
+                            productCode: String(product()?.PROD_CD),
+                            rackId: String(props.rackId),
+                            rackLocation: props.location,
+                          } as StockItemUpdateInput,
+                        });
                       }}
                     >
                       저장
@@ -476,9 +460,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                   }
                 >
                   <button
-                    disabled={
-                      sortingQuantity() === "0" || sortingQuantity() === ""
-                    }
+                    disabled={Number(getRemainingQuantity()) < 0}
                     class={`hover:border-slate-600 bg-slate-600 ${
                       (sortingQuantity() === "0" || sortingQuantity() === "") &&
                       "!bg-slate-200"
@@ -509,7 +491,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                       }
                     }}
                   >
-                    {getRemainingQuantity() === "0"
+                    {Number(getRemainingQuantity()) === 0
                       ? "이동 후 소멸"
                       : "피킹존으로 이동"}
                   </button>
@@ -534,6 +516,3 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
 };
 
 export default AddStockItemsModal;
-function useDeleteStockItemMutation(): [any] {
-  throw new Error("Function not implemented.");
-}

@@ -21,33 +21,27 @@ export const useUpsertStockItem = ({
     mutationFn: async (
       variables: UpsertStockItemMutationVariables
     ): Promise<UpsertStockItemMutation["upsertStockItem"]> => {
+      console.log("1. Mutation 시작:", variables);
       const response = await gqlClient.request<UpsertStockItemMutation>(
         UpsertStockItemDocument,
         variables
       );
+      console.log("2. Mutation 응답:", response);
       return response.upsertStockItem;
     },
-    onSuccess: (data, variables) => {
+    onSuccess: async (data) => {
       // 캐시 무효화
-      queryClient.invalidateQueries({
-        queryKey: ["GetRackSt", { location }],
+      await queryClient.invalidateQueries({
+        queryKey: ["rack", location],
       });
 
-      // 캐시 업데이트
-      if (data?.stockItem) {
-        queryClient.setQueryData(
-          ["stockItems", variables.input.productCode],
-          (old: any) => {
-            if (!old) return { stockItems: [data.stockItem] };
-            return {
-              ...old,
-              stockItems: [...old.stockItems, data.stockItem],
-            };
-          }
-        );
-      }
+      await queryClient.invalidateQueries({
+        queryKey: [
+          "GetProductLocations",
+          { productCode: data.stockItem.ecountProductCode },
+        ],
+      });
 
-      // 추가 성공 콜백 실행
       onSuccess?.();
     },
   }));

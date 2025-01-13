@@ -34,7 +34,7 @@ export const useItemsToPicking = ({
       );
       return response.itemsToPicking;
     },
-    onSuccess: (data, variables) => {
+    onSuccess: async (data, variables) => {
       // 에러 처리
       if (data?.errors && data.errors.length > 0) {
         onError?.(data.errors[0].message);
@@ -42,11 +42,12 @@ export const useItemsToPicking = ({
       }
 
       // 캐시 무효화
-      queryClient.invalidateQueries({
-        queryKey: ["GetRackSt", { location }],
+
+      await queryClient.invalidateQueries({
+        queryKey: ["rack", location],
       });
 
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: [
           "GetProductLocations",
           { productCode: variables.input.productCode },

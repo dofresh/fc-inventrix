@@ -29,13 +29,13 @@ export const useUpdateStockItem = ({
       );
       return response.updateStockItem;
     },
-    onSuccess: (data, variables) => {
+    onSuccess: async (data, variables) => {
       // 캐시 무효화
-      queryClient.invalidateQueries({
-        queryKey: ["GetRackSt", { location }],
+      await queryClient.invalidateQueries({
+        queryKey: ["rack", location],
       });
 
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: [
           "GetProductLocations",
           { productCode: variables.input.productCode },
