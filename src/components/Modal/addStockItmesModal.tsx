@@ -375,13 +375,6 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                           stockId: props.currentStock._id!,
                         },
                       });
-                      // 삭제 후 수행할 작업
-                      // const filteredStocks = props.stocks.filter(
-                      //   (stock) =>
-                      //     String(stock._id) !==
-                      //       String(props.currentStock?._id) || stock.isDeleted
-                      // );
-                      // props.setStocks(filteredStocks);
                       setIsLoading(false);
                       props.onClose();
                     }

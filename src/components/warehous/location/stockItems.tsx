@@ -187,7 +187,7 @@ const Stock: Component<Props> = (props) => {
 
               <A
                 class="block my-4 hover:ring-1"
-                href={`/warehouse/productlocation?productCode=${stock.ecountProductCode!!}`}
+                href={`/productlocation?productCode=${stock.ecountProductCode!!}`}
                 onClick={(event) => event.stopPropagation()}
               >
                 <div class="grid grid-cols-7 md:grid-cols-6 items-center ">
