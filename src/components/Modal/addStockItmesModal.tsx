@@ -161,6 +161,10 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
     }
   });
 
+  createEffect(() => {
+    console.log("props.currentStock", props.currentStock);
+  });
+
   return (
     <Show when={props.isOpen} fallback={null}>
       <Spin isOpen={isLoading()} />

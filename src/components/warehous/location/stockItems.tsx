@@ -55,6 +55,7 @@ interface Props {
   location: string | undefined;
   prodTotalQuantities: TotalQuantity[] | null | undefined;
   pallets: string[] | undefined;
+  highlightStockId?: string;
 }
 
 const Stock: Component<Props> = (props) => {
@@ -76,7 +77,7 @@ const Stock: Component<Props> = (props) => {
       return response;
     },
   }));
-  const [productData] = createSignal(/* your query implementation */);
+  // const [productData] = createSignal(/* your query implementation */);
 
   const handleOpenModal = () => setModalOpen(true);
   const newHandleOpenModal = () => {
@@ -142,66 +143,66 @@ const Stock: Component<Props> = (props) => {
       <For each={stockItems()}>
         {(stock) => (
           <Show when={stock}>
-            <div
-              class={`${
-                stock.isPicking ? "border-amber-200" : "border-blue-200"
-              } ${
-                !stock.quantity!! &&
-                !stock.quantityOfEach &&
-                !stock.enterQuantity &&
-                "opacity-30 border-gray-200"
-              } w-full border-4 rounded-2xl p-8 m-4 hover:bg-gray-100 cursor-pointer`}
-              onClick={() => {
-                setCurrentStock({
-                  ...stock,
-                  rackLocation: props.location,
-                });
-                setTimeout(handleOpenModal, 150);
-              }}
-            >
-              <div class="flex justify-between items-center">
-                <div
-                  class={`px-4 ${
-                    stock.isPicking
-                      ? "bg-amber-300"
-                      : stock.isSorting
-                      ? "bg-emerald-300"
-                      : "bg-blue-300"
-                  }`}
-                >
-                  <Show
-                    when={stock.isPicking}
-                    fallback={
-                      <Show when={stock.isSorting} fallback={<div>보관</div>}>
-                        <div>소분</div>
-                      </Show>
-                    }
+            <div id={`stock-${stock._id}`}>
+              <div
+                class={`stock-item ${
+                  stock._id === props.highlightStockId ? "ring-8" : ""
+                } ${stock.isPicking ? "border-amber-200" : "border-blue-200"} ${
+                  !stock.quantity!! &&
+                  !stock.quantityOfEach &&
+                  !stock.enterQuantity &&
+                  "opacity-30 border-gray-200"
+                } w-full border-4 rounded-2xl p-8 m-4 hover:bg-gray-100 cursor-pointer`}
+                onClick={() => {
+                  setCurrentStock({
+                    ...stock,
+                    rackLocation: props.location,
+                  });
+                  setTimeout(handleOpenModal, 150);
+                }}
+              >
+                <div class="flex justify-between items-center">
+                  <div
+                    class={`px-4 ${
+                      stock.isPicking
+                        ? "bg-amber-300"
+                        : stock.isSorting
+                        ? "bg-emerald-300"
+                        : "bg-blue-300"
+                    }`}
                   >
-                    <div>피킹</div>
+                    <Show
+                      when={stock.isPicking}
+                      fallback={
+                        <Show when={stock.isSorting} fallback={<div>보관</div>}>
+                          <div>소분</div>
+                        </Show>
+                      }
+                    >
+                      <div>피킹</div>
+                    </Show>
+                  </div>
+                  <Show when={!stock.palletCode}>
+                    <TbQrcodeOff size={32} color="#d00" />
                   </Show>
                 </div>
-                <Show when={!stock.palletCode}>
-                  <TbQrcodeOff size={32} color="#d00" />
-                </Show>
-              </div>
 
-              <A
-                class="block my-4 hover:ring-1"
-                href={`/productlocation?productCode=${stock.ecountProductCode!!}`}
-                onClick={(event) => event.stopPropagation()}
-              >
-                <div class="grid grid-cols-7 md:grid-cols-6 items-center ">
-                  <div class="flex justify-center items-center col-span-2 md:col-span-2 bg-black h-full text-white font-black text-md md:text-lg line-height">
-                    {stock.ecountProduct?.PROD_CD}
+                <A
+                  class="block my-4 hover:ring-1"
+                  href={`/productlocation?productCode=${stock.ecountProductCode!!}`}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <div class="grid grid-cols-7 md:grid-cols-6 items-center ">
+                    <div class="flex justify-center items-center col-span-2 md:col-span-2 bg-black h-full text-white font-black text-md md:text-lg line-height">
+                      {stock.ecountProduct?.PROD_CD}
+                    </div>
+                    <div class="col-span-5 md:col-span-4 bg-gray-100 p-2 border">
+                      <div>{stock.ecountProduct?.PROD_DES}</div>
+                      <div>{stock.ecountProduct?.SIZE_DES}</div>
+                    </div>
                   </div>
-                  <div class="col-span-5 md:col-span-4 bg-gray-100 p-2 border">
-                    <div>{stock.ecountProduct?.PROD_DES}</div>
-                    <div>{stock.ecountProduct?.SIZE_DES}</div>
-                  </div>
-                </div>
-              </A>
+                </A>
 
-              {stock.warehousingDate && (
                 <div class="border p-3 rounded-xl">
                   <div>
                     소비기한 :{" "}
@@ -221,84 +222,84 @@ const Stock: Component<Props> = (props) => {
                     {stock.enterQuantity ? stock.enterQuantity : "----"}
                   </div>
                 </div>
-              )}
 
-              <div>작성일: {time(stock.timestamp)}</div>
+                <div>작성일: {time(stock.timestamp)}</div>
 
-              <div>
-                작성일 Box: {stock.quantity}{" "}
-                <span
-                  class="bg-gray-500 px-2 rounded-md text-sm font-bold"
-                  style={{
-                    color: stock.isPicking
-                      ? getGradientColor(daysPassedSince(stock.timestamp))
-                      : "#FFF",
-                  }}
-                >
-                  D+ {daysPassedSince(stock.timestamp)}
-                </span>
-              </div>
-              {stock.isPicking && (
                 <div>
-                  <div class="text-lg">
-                    Box:{" "}
-                    {(
-                      stock.quantity -
-                      (Number(stock.lastProdInventory) -
-                        Number(stock.ecountInventory))
-                    ).toFixed(2)}
-                    <span class="text-xs">
-                      (기록수량 - 누적판매수량:
-                      {Number(stock.lastProdInventory) -
-                        Number(stock.ecountInventory)}
-                      )
-                    </span>
+                  작성일 Box: {stock.quantity}{" "}
+                  <span
+                    class="bg-gray-500 px-2 rounded-md text-sm font-bold"
+                    style={{
+                      color: stock.isPicking
+                        ? getGradientColor(daysPassedSince(stock.timestamp))
+                        : "#FFF",
+                    }}
+                  >
+                    D+ {daysPassedSince(stock.timestamp)}
+                  </span>
+                </div>
+                {stock.isPicking && (
+                  <div>
+                    <div class="text-lg">
+                      Box:{" "}
+                      {(
+                        stock.quantity -
+                        (Number(stock.lastProdInventory) -
+                          Number(stock.ecountInventory))
+                      ).toFixed(2)}
+                      <span class="text-xs">
+                        (기록수량 - 누적판매수량:
+                        {Number(stock.lastProdInventory) -
+                          Number(stock.ecountInventory)}
+                        )
+                      </span>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              <div>낱개수량: {stock.quantityOfEach}</div>
-              <div>기록: {stock.recorder?.username}</div>
-              {stock.replenishment && (
-                <div class="border p-3 rounded-lg overflow-auto h-24">
-                  <div>보충 이력</div>
-                  {Array.isArray(stock.replenishment) &&
-                    (stock.replenishment as IReplenishment[]).map(
-                      (item, index) => {
-                        const previousItem =
-                          index > 0
-                            ? (
-                                stock.replenishment as unknown as IReplenishment[]
-                              )[index - 1]
-                            : undefined;
-                        const isRackChanged =
-                          !previousItem || previousItem.rack !== item.rack;
-                        let date;
-                        date = localDate(item.timestamp);
-                        // console.log(item.timestamp, date);
+                <div>낱개수량: {stock.quantityOfEach}</div>
+                <div>기록: {stock.recorder?.username}</div>
+                {stock.replenishment && (
+                  <div class="border p-3 rounded-lg overflow-auto h-24">
+                    <div>보충 이력</div>
+                    {Array.isArray(stock.replenishment) &&
+                      (stock.replenishment as IReplenishment[]).map(
+                        (item, index) => {
+                          const previousItem =
+                            index > 0
+                              ? (
+                                  stock.replenishment as unknown as IReplenishment[]
+                                )[index - 1]
+                              : undefined;
+                          const isRackChanged =
+                            !previousItem || previousItem.rack !== item.rack;
+                          let date;
+                          date = localDate(item.timestamp);
+                          // console.log(item.timestamp, date);
 
-                        return (
-                          <div class="">
-                            {/* rack이 변경되었을 때 구분선과 함께 표시 */}
-                            {isRackChanged && (
-                              <div class="font-bold mr-1 mt-1">
-                                Rack: {item.rack}
+                          return (
+                            <div class="">
+                              {/* rack이 변경되었을 때 구분선과 함께 표시 */}
+                              {isRackChanged && (
+                                <div class="font-bold mr-1 mt-1">
+                                  Rack: {item.rack}
+                                </div>
+                              )}
+
+                              <div class="flex mt-1">
+                                <div class="border rounded-lg px-1">
+                                  {item.replenishmentQuantity}
+                                </div>
+                                <div class="px-1">{item.userName}</div>
+                                <div class="px-1">{date}</div>
                               </div>
-                            )}
-
-                            <div class="flex mt-1">
-                              <div class="border rounded-lg px-1">
-                                {item.replenishmentQuantity}
-                              </div>
-                              <div class="px-1">{item.userName}</div>
-                              <div class="px-1">{date}</div>
                             </div>
-                          </div>
-                        );
-                      }
-                    )}
-                </div>
-              )}
+                          );
+                        }
+                      )}
+                  </div>
+                )}
+              </div>
             </div>
           </Show>
         )}

@@ -1,5 +1,5 @@
 // ~/routes/warehouse/[location].tsx
-import { useParams, useNavigate } from "@solidjs/router";
+import { useParams, useNavigate, useSearchParams } from "@solidjs/router";
 import { createEffect, createSignal, Show } from "solid-js";
 import { createQuery, createMutation } from "@tanstack/solid-query";
 import Spin from "~/components/Spin";
@@ -32,9 +32,11 @@ export type RackType = {
 
 const WarehousePage = () => {
   const params = useParams<{ location: string }>();
+  const [searchParams] = useSearchParams();
+  const stockId = searchParams.stockId;
   const navigate = useNavigate();
   const [decodedLocation, setDecodedLocation] = createSignal(params.location);
-  const [showLocationInput, setShowLocationInput] = createSignal(false);
+  const [showLocationInput, setShowLocationInput] = createSignal(true);
   const [showSubmit, setShowSubmit] = createSignal(true);
   const [pallets, setPallets] = createSignal<string[]>([]);
   const [rack, setRack] = createSignal<RackType>();
@@ -142,8 +144,18 @@ const WarehousePage = () => {
     rackMutation.mutate({ location: decodedLocation() });
   };
 
+  // 지정 스톡으로 이동
+  createEffect(() => {
+    if (stockId && rackQuery.data?.stockItems) {
+      const element = document.getElementById(`stock-${stockId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  });
+
   return (
-    <div class="flex flex-col justify-center">
+    <div class="flex flex-col justify-center mb-36">
       <main class="max-w-5xl flex-1 mx-auto py-4 text-gray-600">
         <div>
           <div class="flex flex-col items-center w-full">
@@ -214,6 +226,7 @@ const WarehousePage = () => {
                         rackId={rack()?._id}
                         location={decodedLocation()}
                         prodTotalQuantities={rackQuery.data?.totalQuantities}
+                        highlightStockId={stockId as string}
                       />
                     </div>
                   </Show>

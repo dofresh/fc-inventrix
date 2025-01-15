@@ -2632,6 +2632,7 @@ export type Query = {
   getInventorySnapshot: Scalars['Float']['output'];
   getNaverOriginProducts: Scalars['String']['output'];
   getPackageBoxCost: Scalars['Float']['output'];
+  getPalletStockItem: StockItemRespones;
   getProductLocations: ProdLocationRespones;
   getRack: RackRespones;
   getRackST: RackRespones;
@@ -2802,6 +2803,11 @@ export type QueryGetNaverOriginProductsArgs = {
 
 export type QueryGetPackageBoxCostArgs = {
   input: GetPackageBoxCostInput;
+};
+
+
+export type QueryGetPalletStockItemArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -4163,6 +4169,13 @@ export type PackageBoxesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type PackageBoxesQuery = { packageBoxes: { errors: Array<{ query: string, message: string }>, packageBoxed: Array<{ _id: string, box: { _id: string, boxName: string, boxType: string, boxCost: number, description: string }, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_FLAG: string, SIZE_DES: string } }> } };
 
+export type GetPalletStockItemQueryVariables = Exact<{
+  input: Scalars['String']['input'];
+}>;
+
+
+export type GetPalletStockItemQuery = { getPalletStockItem: { errors: Array<{ query: string, message: string }>, stockItem: { _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } } } };
+
 export type GetProductLocationsQueryVariables = Exact<{
   input: GetProductLocationsInput;
 }>;
@@ -4856,6 +4869,19 @@ export const PackageBoxesDocument = gql`
   }
 }
     `;
+export const GetPalletStockItemDocument = gql`
+    query GetPalletStockItem($input: String!) {
+  getPalletStockItem(id: $input) {
+    errors {
+      query
+      message
+    }
+    stockItem {
+      ...RegularStockItem
+    }
+  }
+}
+    ${RegularStockItemFragmentDoc}`;
 export const GetProductLocationsDocument = gql`
     query GetProductLocations($input: GetProductLocationsInput!) {
   getProductLocations(input: $input) {
@@ -5070,6 +5096,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     PackageBoxes(variables?: PackageBoxesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<PackageBoxesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PackageBoxesQuery>(PackageBoxesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'PackageBoxes', 'query', variables);
+    },
+    GetPalletStockItem(variables: GetPalletStockItemQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetPalletStockItemQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetPalletStockItemQuery>(GetPalletStockItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetPalletStockItem', 'query', variables);
     },
     GetProductLocations(variables: GetProductLocationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductLocationsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetProductLocationsQuery>(GetProductLocationsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetProductLocations', 'query', variables);

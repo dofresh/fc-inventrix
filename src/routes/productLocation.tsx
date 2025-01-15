@@ -11,8 +11,8 @@ import hangul from "hangul-js";
 import dayjs from "dayjs";
 import { EcountProduct } from "~/generated/graphql";
 import Spin from "~/components/Spin";
-import { useWarehouseProducts } from "~/api/mutation/\bproductLocation/useWarehouseProductList";
-import { useProductLocations } from "~/api/mutation/\bproductLocation/useProductLocations";
+import { useWarehouseProducts } from "~/api/query/\bproductLocation/useWarehouseProductList";
+import { useProductLocations } from "~/api/query/\bproductLocation/useProductLocations";
 
 const ProductLocation: Component = () => {
   const navigate = useNavigate();
@@ -216,7 +216,9 @@ const ProductLocation: Component = () => {
                           <div class="flex max-w-[490px] w-full p-4 text-2xl md:text-4xl">
                             <button
                               onClick={() => {
-                                navigate(`/warehouse/${stock.rackLocation}`);
+                                navigate(
+                                  `/warehouse/${stock.rackLocation}?stockId=${stock._id}`
+                                );
                               }}
                               class="relative whitespace-nowrap active:bg-gray-600 active:text-white cursor-pointer border px-3 py-2 md:px-5 md:py-3 shadow text-center mr-2"
                             >
@@ -268,8 +270,8 @@ const ProductLocation: Component = () => {
                                 <span class="bg-white text-gray-500 rounded-full px-2 mr-2">
                                   {stock.recorder?.username}{" "}
                                 </span>
-                                기록일 :{" "}
-                                {dayjs(stock.timestamp).format(
+                                소비기한 :{" "}
+                                {dayjs(stock.expirationDate).format(
                                   "YYYY년 MM월 DD일"
                                 )}
                               </div>

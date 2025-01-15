@@ -20,7 +20,6 @@ interface QuickScannerProps {
 
 export const QuickScanner: Component<QuickScannerProps> = (props) => {
   let fileRef: HTMLInputElement | undefined;
-  const navigate = useNavigate();
 
   const [scannerType, setScannerType] = createSignal("QR");
   const [cameraList, setCameraList] = createSignal<CameraDevice[]>([]);
