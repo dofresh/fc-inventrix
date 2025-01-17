@@ -15,6 +15,7 @@ import { useUpdateStockItem } from "~/api/mutation/stockItme/useUpdateStockItem"
 import { useItemsToPicking } from "~/api/mutation/stockItme/useItemsToPicking";
 import ProductsListElement from "../productsListElement";
 import { palletType } from "~/types/pallet";
+import dayjs from "dayjs";
 
 interface ModalProps {
   currentStock?: StockType;
@@ -34,6 +35,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
   const [showProdList, setShowProdList] = createSignal(false);
   const [isVisible, setIsVisible] = createSignal(false);
   const [prodSearch, setProdSearch] = createSignal("");
+  const [expirationDate, setExpirationDate] = createSignal<string>();
 
   const [isEditQty, setIsEditQty] = createSignal(false);
   const [palletCode, setPalletCode] = createSignal<string>();
@@ -113,6 +115,10 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
     },
   });
 
+  const updateInput = {
+    ...(expirationDate() && { expirationDate: expirationDate() }),
+  } as StockItemUpdateInput;
+
   createEffect(() => {
     if (props.productData && props.param) {
       if (props.param.palletCode) {
@@ -132,7 +138,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
 
   createEffect(() => {
     if (props.currentStock) {
-      console.log("currentStock", props.currentStock.quantity);
+      // console.log("currentStock", props.currentStock.quantity);
       setProduct(props.currentStock.ecountProduct);
       setQuantity(String(props.currentStock.quantity) || "");
       setQuantityOfEach(String(props.currentStock.quantityOfEach) || "");
@@ -162,7 +168,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
   });
 
   createEffect(() => {
-    console.log("props.currentStock", props.currentStock);
+    // console.log("props.currentStock", props.currentStock);
   });
 
   return (
@@ -318,6 +324,20 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                         }}
                       />
                     </div>
+                    <Show when={!isPicking()}>
+                      <div class="text-2x flex items-center">
+                        <span class="mr-2 text-xs">
+                          <div>임시작성</div>
+                          <div>소비기한</div>
+                        </span>
+
+                        <input
+                          class="my-4 text-xl border-2 rounded-lg p-2 w-[234px]"
+                          type="date"
+                          onChange={(e) => setExpirationDate(e.target.value)}
+                        />
+                      </div>
+                    </Show>
                   </div>
                 }
               >
@@ -437,10 +457,10 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                         setIsLoading(true);
                         await updateMutation.mutateAsync({
                           input: {
+                            stockId: props.currentStock!._id!,
                             isPicking: isPicking(),
                             isSorting: isSorting(),
                             sortedQuantity: getNumberValue(sortingQuantity()),
-                            stockId: props.currentStock!._id!,
                             quantity:
                               getNumberValue(quantity()) -
                               getNumberValue(sortingQuantity()),
@@ -448,6 +468,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                             productCode: String(product()?.PROD_CD),
                             rackId: String(props.rackId),
                             rackLocation: props.location,
+                            expirationDate: expirationDate(),
                           } as StockItemUpdateInput,
                         });
                       }}

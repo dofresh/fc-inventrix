@@ -2,7 +2,7 @@ import { Component } from "solid-js";
 import { IconProps } from "./iconType";
 
 export const QrcodeScanIcon: Component<IconProps> = ({
-  width,
+  size: width,
   fill = "#fff",
 }) => (
   <svg

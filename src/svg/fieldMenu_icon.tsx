@@ -2,7 +2,7 @@ import { Component } from "solid-js";
 import { IconProps } from "./iconType";
 
 export const FieldMenuIcon: Component<IconProps> = (props) => (
-  <svg width={props.width} class={props.class} viewBox="0 0 255 315">
+  <svg width={props.size} class={props.class} viewBox="0 0 255 315">
     <path
       id="다각형_2"
       data-name="다각형 2"

@@ -80,10 +80,10 @@ export const Header: Component<Props> = (props) => {
             <div class="flex items-end mb-3 max-h-[80px] h-[30px] max-w-[100%] img-container">
               <A href="/">
                 <div class="hidden md:flex bg-black">
-                  <FCFreshhadaLogoKr width={110} fill="#fff" />
+                  <FCFreshhadaLogoKr size={110} fill="#fff" />
                 </div>
                 <div class="md:hidden bg-black">
-                  <FCLogo width={28.5} fill="#fff" />
+                  <FCLogo size={28.5} fill="#fff" />
                 </div>
               </A>
 
@@ -138,7 +138,7 @@ export const Header: Component<Props> = (props) => {
               <Show when={username()}>
                 <div>{username()}</div>
               </Show>
-              <UserIcon width={22} />
+              <UserIcon size={22} />
             </div>
           }
         >

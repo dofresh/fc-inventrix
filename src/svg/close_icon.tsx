@@ -1,7 +1,10 @@
 import { IconProps } from "./iconType";
 import { Component } from "solid-js";
 
-export const CloseIcon: Component<IconProps> = ({ width, fill = "#fff" }) => (
+export const CloseIcon: Component<IconProps> = ({
+  size: width,
+  fill = "#fff",
+}) => (
   <svg
     width={width}
     height="19"

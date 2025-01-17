@@ -30,7 +30,7 @@ export const warehouseMenu: MenuType[] = [
   { isSeperate: true },
   {
     name: "파렛트라벨 출력",
-    url: "/printPalletLabel",
+    url: "/receiving/printPallet",
     Icon: ImNewspaper,
   },
   {

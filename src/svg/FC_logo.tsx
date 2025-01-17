@@ -4,7 +4,7 @@ import { IconProps } from "./iconType";
 export const FCLogo: Component<IconProps> = (props) => {
   return (
     <svg
-      width={props.width || "247"}
+      width={props.size || "247"}
       viewBox="0 0 247 284"
       xmlns="http://www.w3.org/2000/svg"
     >

@@ -209,9 +209,9 @@ export const QuickScanner: Component<QuickScannerProps> = (props) => {
           onClick={handleClickAdvanced}
         >
           {scannerType() === "QR" ? (
-            <QrcodeScanIcon width={90} fill="#555" />
+            <QrcodeScanIcon size={90} fill="#555" />
           ) : (
-            <BarcodeScanIcon width={90} fill="#555" />
+            <BarcodeScanIcon size={90} fill="#555" />
           )}
         </button>
       </Show>

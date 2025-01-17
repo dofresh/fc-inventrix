@@ -171,9 +171,9 @@ export const Scanner: Component<ScannerProps> = (props) => {
             onClick={handleClickAdvanced}
           >
             {props.type === "QR" ? (
-              <QrcodeScanIcon width={120} fill="111" />
+              <QrcodeScanIcon size={120} fill="111" />
             ) : (
-              <BarcodeScanIcon width={120} fill="111" />
+              <BarcodeScanIcon size={120} fill="111" />
             )}
           </button>
         </div>

@@ -14,6 +14,7 @@
     "@solidjs/router": "^0.15.2",
     "@solidjs/start": "^1.0.10",
     "@tanstack/solid-query": "^5.62.9",
+    "add": "^2.0.6",
     "autoprefixer": "^10.4.19",
     "dayjs": "^1.11.13",
     "graphql": "^16.10.0",
@@ -24,6 +25,8 @@
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.2",
     "solid-motionone": "^1.0.2",
+    "swapy": "^1.0.3",
+    "swapy-solid": "^0.1.0",
     "tailwindcss": "^3.4.3",
     "vinxi": "^0.4.3",
     "yup": "^1.6.1"
