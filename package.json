@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
+    "@graphql-codegen/typescript-graphql-request": "^6.2.0",
     "@modular-forms/solid": "^0.25.0",
     "@solidjs/router": "^0.15.2",
     "@solidjs/start": "^1.0.10",
@@ -18,7 +19,7 @@
     "autoprefixer": "^10.4.19",
     "dayjs": "^1.11.13",
     "graphql": "^16.10.0",
-    "graphql-request": "^7.1.2",
+    "graphql-request": "^6.0.0",
     "hangul-js": "^0.2.6",
     "html5-qrcode": "^2.3.8",
     "postcss": "^8.4.38",
@@ -40,7 +41,6 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.3",
     "@graphql-codegen/typescript": "^4.1.2",
-    "@graphql-codegen/typescript-graphql-request": "^6.2.0",
     "@graphql-codegen/typescript-operations": "^4.4.0",
     "@solid-devtools/overlay": "^0.31.6",
     "@solid-devtools/transform": "^0.10.4",
