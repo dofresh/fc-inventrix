@@ -1,0 +1,20 @@
+query GetSavedEcountInventory($input: String!) {
+  getSavedEcountInventory(productCode: $input) {
+    inventory {
+      _id
+      createdAt
+      updatedAt
+      WH_CD
+      WH_DES
+      PROD_CD
+      PROD_DES
+      PROD_SIZE_DES
+      BAL_QTY
+      UNIT
+    }
+    error {
+      query
+      message
+    }
+  }
+}

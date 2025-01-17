@@ -1,0 +1,11 @@
+mutation CreateStockItem($input: StockItemInput!) {
+  createStockItem(input: $input) {
+    errors {
+      query
+      message
+    }
+    stockItem {
+      ...RegularStockItem
+    }
+  }
+}

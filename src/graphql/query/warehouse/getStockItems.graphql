@@ -1,0 +1,11 @@
+query GetStockItems($input: GetStockItemsInput!) {
+  getStockItems(input: $input) {
+    errors {
+      query
+      message
+    }
+    stockItems {
+      ...RegularStockItem
+    }
+  }
+}

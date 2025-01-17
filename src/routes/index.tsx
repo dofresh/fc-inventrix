@@ -10,6 +10,7 @@ import {
 } from "~/generated/graphql";
 import { A } from "@solidjs/router";
 import { BsDatabaseDown } from "solid-icons/bs";
+import Spin from "~/components/Spin";
 
 export default function Home() {
   const [showUnboxingProduct, setShowUnboxingProduct] = createSignal(false);

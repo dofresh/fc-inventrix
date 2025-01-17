@@ -1,0 +1,3 @@
+mutation TransitStockItem($input: InvisivleStockItemInput!) {
+  transitStockItem(input: $input)
+}

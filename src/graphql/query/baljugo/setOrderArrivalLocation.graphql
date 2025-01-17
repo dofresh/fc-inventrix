@@ -1,0 +1,9 @@
+mutation setOrderArrivalLocation($input: SetOrderArrivalLocationInput!) {
+  setOrderArrivalLocation(input: $input) {
+    ok
+    error {
+      query
+      message
+    }
+  }
+}

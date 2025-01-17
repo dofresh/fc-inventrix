@@ -1,0 +1,3 @@
+mutation InvisibleStockItem($input: InvisivleStockItemInput!) {
+  invisibleStockItem(input: $input)
+}

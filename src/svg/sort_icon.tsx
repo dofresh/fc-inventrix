@@ -2,7 +2,7 @@ import { Component } from "solid-js";
 import { IconProps } from "./iconType";
 
 export const SortIcon: Component<IconProps> = (props) => (
-  <svg width={props.width} viewBox="0 0 255 315">
+  <svg width={props.size} viewBox="0 0 255 315">
     <path
       id="다각형_1"
       data-name="다각형 1"

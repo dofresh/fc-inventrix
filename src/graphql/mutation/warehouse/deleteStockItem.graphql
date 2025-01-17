@@ -1,0 +1,3 @@
+mutation DeleteStockItem($input: InvisivleStockItemInput!) {
+  deleteStockItem(input: $input)
+}

@@ -1,0 +1,6 @@
+query ProductLocations {
+  productLocations {
+    productCode
+    location
+  }
+}

@@ -1,0 +1,11 @@
+query GetPalletStockItem($input: String!) {
+  getPalletStockItem(id: $input) {
+    errors {
+      query
+      message
+    }
+    stockItem {
+      ...RegularStockItem
+    }
+  }
+}

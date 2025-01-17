@@ -2,7 +2,7 @@ import { Component } from "solid-js";
 import { IconProps } from "./iconType";
 
 export const BarcodeScanIcon: Component<IconProps> = ({
-  width,
+  size: width,
   fill = "#fff",
 }) => (
   <svg width={width} fill={fill} viewBox="0 0 1024 1024" version="1.1">

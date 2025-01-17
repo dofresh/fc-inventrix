@@ -1,0 +1,16 @@
+mutation ItemsToPicking($input: SortingStockItemInput!) {
+  itemsToPicking(input: $input) {
+    errors {
+      query
+      message
+    }
+    stockItem {
+      palletCode
+      name
+      isSorting
+      isPicking
+      replenishment
+      quantity
+    }
+  }
+}

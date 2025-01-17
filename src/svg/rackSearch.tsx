@@ -2,7 +2,7 @@ import { Component } from "solid-js";
 import { IconProps } from "./iconType";
 
 export const RackSearchIcon: Component<IconProps> = ({
-  width,
+  size: width,
   fill = "#fff",
 }) => (
   <svg

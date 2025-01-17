@@ -1,0 +1,11 @@
+mutation UpdateStockItem($input: StockItemUpdateInput!) {
+  updateStockItem(input: $input) {
+    errors {
+      query
+      message
+    }
+    stockItem {
+      ...RegularStockItem
+    }
+  }
+}

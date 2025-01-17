@@ -1,0 +1,9 @@
+mutation AddTotalOrders($input: AddTotalOrdersInput!) {
+  addTotalOrders(input: $input) {
+    result
+    error {
+      query
+      message
+    }
+  }
+}

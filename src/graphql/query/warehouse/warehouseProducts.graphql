@@ -1,0 +1,5 @@
+query WarehouseProducts {
+  warehouseProducts {
+    ...RegularEcountProduct
+  }
+}

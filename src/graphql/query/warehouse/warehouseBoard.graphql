@@ -1,0 +1,14 @@
+query WarehouseBoard {
+  warehouseBoard {
+    warehouseBoxSize
+    warehouseEASize
+    inventoryPackSize
+    inventoryBOXSize
+    inventoryKg
+    inventoryEAs {
+      productCode
+      productDescript
+      size
+    }
+  }
+}

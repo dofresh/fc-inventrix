@@ -4,7 +4,7 @@ import { IconProps } from "./iconType";
 export const FCFreshhadaLogoKr: Component<IconProps> = (props) => {
   return (
     <svg
-      width={props.width || "965"}
+      width={props.size || "965"}
       viewBox="0 0 959 284"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

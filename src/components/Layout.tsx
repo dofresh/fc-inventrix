@@ -1,17 +1,16 @@
-import { Component, createSignal, JSX } from "solid-js";
-import { Header } from "~/components/header";
-import { warehouseMenu } from "./routes/warehouseMenu";
-import Sidebar from "~/components/sidebar";
+import { warehouseMenu } from "~/routes/warehouseMenu";
+import { Header } from "./header";
+import { Sidebar } from "./sidebar";
+import { createSignal, JSXElement } from "solid-js";
 
-interface RootLayoutProps {
-  children: JSX.Element;
+interface Props {
+  children: JSXElement;
 }
 
-const Root: Component<RootLayoutProps> = (props) => {
+function Layout(props: Props) {
   const [isOpen, setIsOpen] = createSignal(false);
-
   return (
-    <div class="flex-grow">
+    <div>
       <Header
         isOpen={isOpen()}
         setIsOpen={setIsOpen}
@@ -28,6 +27,6 @@ const Root: Component<RootLayoutProps> = (props) => {
       </div>
     </div>
   );
-};
+}
 
-export default Root;
+export default Layout;

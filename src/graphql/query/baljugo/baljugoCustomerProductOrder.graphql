@@ -1,0 +1,40 @@
+query BaljugoOrderCustomer($input: BaljugoCustomerOrderInput!) {
+  baljugoOrderCustomer(input: $input) {
+    error {
+      query
+      message
+    }
+    customerOrders {
+      _id
+      location
+      printedLabels
+      cancelLabels
+      totalAmount
+      productOrderStatus
+      customerCode
+      customerName
+      nickName
+      productCode
+      orderCode
+      orderVersion
+      isModify
+      baljugoProductDES
+      ecountProductDES
+      warehouseProductDES
+      sizeDES
+      unit
+      storageMethod
+      orderDate
+      orderConfirmDate
+      deliveryRequestDate
+      dispatchDate
+      dispatchedDate
+      dispatchedSize
+      returnDate
+      returnSize
+      destinationLocation
+      quantity
+      productName
+    }
+  }
+}
