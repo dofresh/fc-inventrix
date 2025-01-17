@@ -15,7 +15,6 @@ import { useUpdateStockItem } from "~/api/mutation/stockItme/useUpdateStockItem"
 import { useItemsToPicking } from "~/api/mutation/stockItme/useItemsToPicking";
 import ProductsListElement from "../productsListElement";
 import { palletType } from "~/types/pallet";
-import dayjs from "dayjs";
 
 interface ModalProps {
   currentStock?: StockType;
