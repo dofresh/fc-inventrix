@@ -23,12 +23,12 @@ export const useGetPalletStockItem = (
       },
       enabled: !!palletId,
       ...options,
-      onSuccess: (data: GetPalletStockItemQuery | null) => {
-        console.log("Query success:", data);
-      },
-      onError: (error: Error) => {
-        console.error("Query error:", error);
-      },
+      // onSuccess: (data: GetPalletStockItemQuery | null) => {
+      //   console.log("Query success:", data);
+      // },
+      // onError: (error: Error) => {
+      //   console.error("Query error:", error);
+      // },
     };
   });
 };

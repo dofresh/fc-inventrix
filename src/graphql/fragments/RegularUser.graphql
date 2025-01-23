@@ -1,7 +1,6 @@
 fragment RegularUser on User {
   _id
   username
-  email
   _email
   nickname
   position

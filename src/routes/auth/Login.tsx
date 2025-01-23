@@ -39,12 +39,14 @@ const Login: Component = () => {
       );
       return response;
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data.login.user) {
         queryClient.setQueryData(["me"], {
           me: data.login.user,
         });
-        setUserStore("user", data.login.user);
+
+        // 쿼리 캐시 무효화하여 새로운 데이터 fetch
+        await queryClient.invalidateQueries({ queryKey: ["me"] });
         navigate("/");
       }
       if (data.login.errors) {

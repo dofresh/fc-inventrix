@@ -480,6 +480,18 @@ export type CreateImportItemResponse = {
   importOrder: Maybe<ImportOrder>;
 };
 
+export type CreateStockItemLableInput = {
+  atDate: InputMaybe<Scalars['String']['input']>;
+  expirationDate: InputMaybe<Scalars['String']['input']>;
+  productCode: InputMaybe<Scalars['String']['input']>;
+  size: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreateStockItemLableRespones = {
+  error: Maybe<FatchError>;
+  ok: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type CreateTodoInput = {
   assignedTo: InputMaybe<Array<Scalars['String']['input']>>;
   description: InputMaybe<Scalars['String']['input']>;
@@ -1491,6 +1503,7 @@ export type Mutation = {
   createOutbound: FcOutBound;
   createProduct: Product;
   createStockItem: StockItemRespones;
+  createStockItemLable: CreateStockItemLableRespones;
   createTodo: CreateTodoResponse;
   deleteBaljugoOrder: Maybe<Scalars['Boolean']['output']>;
   deleteCompanyContact: Scalars['Boolean']['output'];
@@ -1531,8 +1544,6 @@ export type Mutation = {
   removeImportItem: Scalars['Boolean']['output'];
   removeImportOrder: Scalars['Boolean']['output'];
   removePackageBox: Scalars['Boolean']['output'];
-  /** 네이버 정산데이터를 기준으로 이카운트 판매입력 */
-  saleBulk: Scalars['Boolean']['output'];
   saleSaveDaily: Scalars['Boolean']['output'];
   setImportOrder: CreateImportItemResponse;
   setOrderArrivalLocation: SetOrderArrivalLocationRespones;
@@ -1631,6 +1642,11 @@ export type MutationCreateProductArgs = {
 
 export type MutationCreateStockItemArgs = {
   input: StockItemInput;
+};
+
+
+export type MutationCreateStockItemLableArgs = {
+  input: CreateStockItemLableInput;
 };
 
 
@@ -1772,11 +1788,6 @@ export type MutationRemoveImportOrderArgs = {
 
 export type MutationRemovePackageBoxArgs = {
   packageBoxId: Scalars['String']['input'];
-};
-
-
-export type MutationSaleBulkArgs = {
-  input: SettleInput;
 };
 
 
@@ -2669,6 +2680,7 @@ export type Query = {
   spcOrders: SpcOrdersResponse;
   spcProduct: SpcProductResponse;
   spcProducts: SpcProductsResponse;
+  stockitemLable: StockItemLableRespones;
   userLog: UserLogResponse;
   userLogs: Array<UserLog>;
   warehouseBoard: WarehouseBoardRespones;
@@ -2928,6 +2940,11 @@ export type QuerySpcOrdersArgs = {
 
 export type QuerySpcProductArgs = {
   input: GetSpcProudctInput;
+};
+
+
+export type QueryStockitemLableArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -3429,6 +3446,21 @@ export type StockItemInput = {
   rackLocation: InputMaybe<Scalars['String']['input']>;
   sortedQuantity: InputMaybe<Scalars['Float']['input']>;
   warehousingDate: InputMaybe<Scalars['String']['input']>;
+};
+
+export type StockItemLable = {
+  _id: Scalars['ID']['output'];
+  atDate: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  expirationDate: Maybe<Scalars['String']['output']>;
+  productCode: Maybe<Scalars['String']['output']>;
+  size: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type StockItemLableRespones = {
+  error: Maybe<FatchError>;
+  stockItemLable: Maybe<StockItemLable>;
 };
 
 export type StockItemRespones = {
@@ -3982,18 +4014,18 @@ export type RegularEcountProductFragment = { _id: string, createdAt: string, upd
 
 export type RegularErrorFragment = { field: string, message: string };
 
-export type RegularLoginResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, email: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
+export type RegularLoginResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
 
 export type RegularStockItemFragment = { _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } };
 
-export type RegularUserFragment = { _id: string, username: string, email: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string };
+export type RegularUserFragment = { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string };
 
-export type RegularUserResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, email: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
+export type RegularUserResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { me: { _id: string, username: string, email: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
+export type MeQuery = { me: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
 
 export type AddTotalOrdersMutationVariables = Exact<{
   input: AddTotalOrdersInput;
@@ -4015,7 +4047,7 @@ export type ChangePasswordMutationVariables = Exact<{
 }>;
 
 
-export type ChangePasswordMutation = { changePassword: { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, email: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } } };
+export type ChangePasswordMutation = { changePassword: { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } } };
 
 export type EcountProductAllUpsertMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -4042,7 +4074,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { login: { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, email: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } } };
+export type LoginMutation = { login: { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -4333,7 +4365,6 @@ export const RegularUserFragmentDoc = gql`
     fragment RegularUser on User {
   _id
   username
-  email
   _email
   nickname
   position

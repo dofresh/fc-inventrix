@@ -13,6 +13,7 @@ import { EcountProduct } from "~/generated/graphql";
 import Spin from "~/components/Spin";
 import { useWarehouseProducts } from "~/api/query/\bproductLocation/useWarehouseProductList";
 import { useProductLocations } from "~/api/query/\bproductLocation/useProductLocations";
+import Layout from "~/components/Layout";
 
 const ProductLocation: Component = () => {
   const navigate = useNavigate();
@@ -98,196 +99,206 @@ const ProductLocation: Component = () => {
     }
   });
   return (
-    <div class="flex flex-col justify-center">
-      <main class="max-w-5xl flex-1 mx-auto py-4 text-gray-600">
-        <div>
-          <Spin isOpen={isLoading()} />
-          <div class="w-full flex flex-col items-center">
-            <div class="w-full text-center text-2xl my-8">품목위치현황</div>
+    <Layout>
+      <div class="flex flex-col justify-center">
+        <main class="max-w-5xl flex-1 mx-auto py-4 text-gray-600">
+          <div>
+            <Spin isOpen={isLoading()} />
+            <div class="w-full flex flex-col items-center">
+              <div class="w-full text-center text-2xl my-8">품목위치현황</div>
 
-            {/* Search Input */}
-            <div class="relative flex justify-center">
-              <div class="w-full max-w-[490px] py-3 px-6 mx-4 h-12 shadow-inner border rounded-full bg-white">
-                <input
-                  type="text"
-                  placeholder="검색..."
-                  onInput={(e) => setProdSearch(e.currentTarget.value)}
-                  onFocus={() => {
-                    setShowProdList(true);
-                    setProdSearch("");
-                  }}
-                  onBlur={() => {
-                    setTimeout(() => {
-                      setShowProdList(false);
-                    }, 200);
-                  }}
-                  class="focus:outline-none flex justify-center w-full"
-                />
-                <Show
-                  when={showProdList() && productsQuery.data?.warehouseProducts}
-                >
-                  <div class="absolute top-14 overflow-auto max-h-60 bg-white p-6 rounded-lg shadow-lg border">
-                    <ProductsList />
-                  </div>
-                </Show>
-              </div>
-            </div>
-
-            {/* Product Details */}
-            <Show when={product() && locationsQuery.data?.getProductLocations}>
-              <div>
-                {/* Product Info */}
-                <div class="flex justify-center">
-                  <div class="flex items-center m-4">
-                    <div class="bg-gray-200 px-4 m-2 rounded-lg">
-                      <div>{product()?.PROD_CD}</div>
+              {/* Search Input */}
+              <div class="relative flex justify-center">
+                <div class="w-full max-w-[490px] py-3 px-6 mx-4 h-12 shadow-inner border rounded-full bg-white">
+                  <input
+                    type="text"
+                    placeholder="검색..."
+                    onInput={(e) => setProdSearch(e.currentTarget.value)}
+                    onFocus={() => {
+                      setShowProdList(true);
+                      setProdSearch("");
+                    }}
+                    onBlur={() => {
+                      setTimeout(() => {
+                        setShowProdList(false);
+                      }, 200);
+                    }}
+                    class="focus:outline-none flex justify-center w-full"
+                  />
+                  <Show
+                    when={
+                      showProdList() && productsQuery.data?.warehouseProducts
+                    }
+                  >
+                    <div class="absolute top-14 overflow-auto max-h-60 bg-white p-6 rounded-lg shadow-lg border">
+                      <ProductsList />
                     </div>
-                    <div class="flex flex-col items-center">
-                      <div class="border-b-2 px-2">{product()?.PROD_DES}</div>
-                      <div>{product()?.SIZE_DES}</div>
-                    </div>
-                  </div>
+                  </Show>
                 </div>
+              </div>
 
-                {/* Inventory Info */}
-                <Show when={locationsQuery.data?.getProductLocations}>
-                  <div>
-                    <div class="flex justify-center items-center text-center my-3 gap-12">
-                      <div>
-                        전산재고 :{" "}
-                        {locationsQuery.data?.getProductLocations.inventory ??
-                          0}
+              {/* Product Details */}
+              <Show
+                when={product() && locationsQuery.data?.getProductLocations}
+              >
+                <div>
+                  {/* Product Info */}
+                  <div class="flex justify-center">
+                    <div class="flex items-center m-4">
+                      <div class="bg-gray-200 px-4 m-2 rounded-lg">
+                        <div>{product()?.PROD_CD}</div>
                       </div>
-                      <div>예측재고 : {liveInv()}</div>
-                      <div>
-                        실사재고 :{" "}
-                        {Number(
-                          locationsQuery.data?.getProductLocations.totalQuantity
-                        )}
+                      <div class="flex flex-col items-center">
+                        <div class="border-b-2 px-2">{product()?.PROD_DES}</div>
+                        <div>{product()?.SIZE_DES}</div>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Cumulative Info */}
-                    <div class="flex justify-center items-center text-center my-3 gap-12">
-                      <div class="flex items-center">
-                        <div>누적출고수 : </div>
-                        <div class="ml-1 bg-gray-800 text-white px-2 rounded-lg text-2xl">
+                  {/* Inventory Info */}
+                  <Show when={locationsQuery.data?.getProductLocations}>
+                    <div>
+                      <div class="flex justify-center items-center text-center my-3 gap-12">
+                        <div>
+                          전산재고 :{" "}
+                          {locationsQuery.data?.getProductLocations.inventory ??
+                            0}
+                        </div>
+                        <div>예측재고 : {liveInv()}</div>
+                        <div>
+                          실사재고 :{" "}
                           {Number(
                             locationsQuery.data?.getProductLocations
-                              .lastProdInventory
-                          ) -
-                            (locationsQuery.data?.getProductLocations
-                              .inventory || 0)}
+                              .totalQuantity
+                          )}
                         </div>
                       </div>
-                      <div class="flex items-center">
-                        오차 :{" "}
-                        <div
-                          class={`p-3 mx-2 rounded-full text-lg font-bold text-white ${
-                            (liveInv() || 0) -
+
+                      {/* Cumulative Info */}
+                      <div class="flex justify-center items-center text-center my-3 gap-12">
+                        <div class="flex items-center">
+                          <div>누적출고수 : </div>
+                          <div class="ml-1 bg-gray-800 text-white px-2 rounded-lg text-2xl">
+                            {Number(
+                              locationsQuery.data?.getProductLocations
+                                .lastProdInventory
+                            ) -
                               (locationsQuery.data?.getProductLocations
-                                .inventory || 0) <
-                            0
-                              ? "bg-red-500"
-                              : "bg-blue-500"
-                          }`}
-                        >
-                          {(liveInv() || 0) -
-                            (locationsQuery.data?.getProductLocations
-                              .inventory || 0) >
-                            0 && <span>+</span>}
-                          {(liveInv() || 0) -
-                            (locationsQuery.data?.getProductLocations
-                              .inventory || 0)}
+                                .inventory || 0)}
+                          </div>
+                        </div>
+                        <div class="flex items-center">
+                          오차 :{" "}
+                          <div
+                            class={`p-3 mx-2 rounded-full text-lg font-bold text-white ${
+                              (liveInv() || 0) -
+                                (locationsQuery.data?.getProductLocations
+                                  .inventory || 0) <
+                              0
+                                ? "bg-red-500"
+                                : "bg-blue-500"
+                            }`}
+                          >
+                            {(liveInv() || 0) -
+                              (locationsQuery.data?.getProductLocations
+                                .inventory || 0) >
+                              0 && <span>+</span>}
+                            {(liveInv() || 0) -
+                              (locationsQuery.data?.getProductLocations
+                                .inventory || 0)}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Show>
+                  </Show>
 
-                {/* Stock Items List */}
-                <div class={`${showProdList() && "hidden"} w-full`}>
-                  <For
-                    each={locationsQuery.data?.getProductLocations.stockItems}
-                  >
-                    {(stock) => (
-                      <Show when={stock}>
-                        <div class="flex justify-center items-center w-full">
-                          <div class="flex max-w-[490px] w-full p-4 text-2xl md:text-4xl">
-                            <button
-                              onClick={() => {
-                                navigate(
-                                  `/warehouse/${stock.rackLocation}?stockId=${stock._id}`
-                                );
-                              }}
-                              class="relative whitespace-nowrap active:bg-gray-600 active:text-white cursor-pointer border px-3 py-2 md:px-5 md:py-3 shadow text-center mr-2"
-                            >
-                              {stock.rackLocation}
-                              {(stock.isPicking || stock.isSorting) && (
-                                <div
-                                  style={{
-                                    position: "absolute",
-                                    right: "0",
-                                    width: "0",
-                                    height: "0",
-                                    "border-left": "30px solid transparent",
-                                    ...(stock.isPicking
-                                      ? {
-                                          top: "0",
-                                          "border-top": "30px solid #ee9900",
-                                        }
-                                      : {
-                                          bottom: "0",
-                                          "border-bottom": "30px solid #10b981",
-                                        }),
-                                  }}
-                                />
-                              )}
-                            </button>
-
-                            <div class="grow w-full flex flex-col justify-center">
-                              <div>
-                                <span class="ml-2">
-                                  {stock.isPicking
-                                    ? Number(stock.quantity) -
-                                      (Number(
-                                        locationsQuery.data?.getProductLocations
-                                          .lastProdInventory
-                                      ) -
-                                        (locationsQuery.data
-                                          ?.getProductLocations.inventory || 0))
-                                    : stock.quantity}{" "}
-                                  <span class="text-lg">BOX</span>
-                                </span>
-                                <Show when={stock.quantityOfEach}>
-                                  <span>
-                                    {stock.quantityOfEach}
-                                    <span class="text-lg">EA</span>
-                                  </span>
-                                </Show>
-                              </div>
-                              <div class="w-full text-xs md:text-sm bg-gray-600 text-white px-2">
-                                <span class="bg-white text-gray-500 rounded-full px-2 mr-2">
-                                  {stock.recorder?.username}{" "}
-                                </span>
-                                소비기한 :{" "}
-                                {dayjs(stock.expirationDate).format(
-                                  "YYYY년 MM월 DD일"
+                  {/* Stock Items List */}
+                  <div class={`${showProdList() && "hidden"} w-full`}>
+                    <For
+                      each={locationsQuery.data?.getProductLocations.stockItems}
+                    >
+                      {(stock) => (
+                        <Show when={stock}>
+                          <div class="flex justify-center items-center w-full">
+                            <div class="flex max-w-[490px] w-full p-4 text-2xl md:text-4xl">
+                              <button
+                                onClick={() => {
+                                  navigate(
+                                    `/warehouse/${stock.rackLocation}?stockId=${stock._id}`
+                                  );
+                                }}
+                                class="relative whitespace-nowrap active:bg-gray-600 active:text-white cursor-pointer border px-3 py-2 md:px-5 md:py-3 shadow text-center mr-2"
+                              >
+                                {stock.rackLocation}
+                                {(stock.isPicking || stock.isSorting) && (
+                                  <div
+                                    style={{
+                                      position: "absolute",
+                                      right: "0",
+                                      width: "0",
+                                      height: "0",
+                                      "border-left": "30px solid transparent",
+                                      ...(stock.isPicking
+                                        ? {
+                                            top: "0",
+                                            "border-top": "30px solid #ee9900",
+                                          }
+                                        : {
+                                            bottom: "0",
+                                            "border-bottom":
+                                              "30px solid #10b981",
+                                          }),
+                                    }}
+                                  />
                                 )}
+                              </button>
+
+                              <div class="grow w-full flex flex-col justify-center">
+                                <div>
+                                  <span class="ml-2">
+                                    {stock.isPicking
+                                      ? Number(stock.quantity) -
+                                        (Number(
+                                          locationsQuery.data
+                                            ?.getProductLocations
+                                            .lastProdInventory
+                                        ) -
+                                          (locationsQuery.data
+                                            ?.getProductLocations.inventory ||
+                                            0))
+                                      : stock.quantity}{" "}
+                                    <span class="text-lg">BOX</span>
+                                  </span>
+                                  <Show when={stock.quantityOfEach}>
+                                    <span>
+                                      {stock.quantityOfEach}
+                                      <span class="text-lg">EA</span>
+                                    </span>
+                                  </Show>
+                                </div>
+                                <div class="w-full text-xs md:text-sm bg-gray-600 text-white px-2">
+                                  <span class="bg-white text-gray-500 rounded-full px-2 mr-2">
+                                    {stock.recorder?.username}{" "}
+                                  </span>
+                                  소비기한 :{" "}
+                                  {dayjs(stock.expirationDate).format(
+                                    "YYYY년 MM월 DD일"
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </Show>
-                    )}
-                  </For>
+                        </Show>
+                      )}
+                    </For>
+                  </div>
                 </div>
-              </div>
-            </Show>
+              </Show>
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </Layout>
   );
 };
 
