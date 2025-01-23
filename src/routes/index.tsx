@@ -10,7 +10,7 @@ import {
 } from "~/generated/graphql";
 import { A } from "@solidjs/router";
 import { BsDatabaseDown } from "solid-icons/bs";
-import Spin from "~/components/Spin";
+import Layout from "~/components/Layout";
 
 export default function Home() {
   const [showUnboxingProduct, setShowUnboxingProduct] = createSignal(false);
@@ -45,7 +45,7 @@ export default function Home() {
   }));
 
   return (
-    <div>
+    <Layout>
       <div class="relative mb-4 flex flex-col items-end">
         <Show when={warehouseQuery.isPending}>
           <div class="absolute spinner right-8 top-8" />
@@ -112,6 +112,6 @@ export default function Home() {
           </div>
         </div>
       </Show>
-    </div>
+    </Layout>
   );
 }

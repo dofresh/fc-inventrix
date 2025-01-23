@@ -1,32 +1,31 @@
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
-import { createSignal, Suspense } from "solid-js";
+import { Suspense } from "solid-js";
 import "./app.css";
 import { QueryClientProvider } from "@tanstack/solid-query";
 import { queryClient } from "./lib/querh-client";
-import { Header } from "./components/header";
-import { warehouseMenu } from "./routes/warehouseMenu";
-import { Sidebar } from "./components/sidebar";
-import { IsAuth } from "./components/IsAuth";
 import Layout from "./components/Layout";
 import { SolidQueryDevtools } from "@tanstack/solid-query-devtools";
+import { MetaProvider, Title, Meta } from "@solidjs/meta";
+import { IsAuth } from "./components/IsAuth";
 
 export default function App() {
-  const [isOpen, setIsOpen] = createSignal(false);
   return (
-    <QueryClientProvider client={queryClient}>
-      <SolidQueryDevtools />
-      <Router
-        root={(props) => (
-          // <IsAuth>
-          <Suspense>
-            <Layout> {props.children}</Layout>
-          </Suspense>
-          // </IsAuth>
-        )}
-      >
-        <FileRoutes />
-      </Router>
-    </QueryClientProvider>
+    <MetaProvider>
+      <Title>입고</Title>
+      <Meta name="google" content="notranslate" />
+      <QueryClientProvider client={queryClient}>
+        <SolidQueryDevtools />
+        <Router
+          root={(props) => (
+            <IsAuth>
+              <Suspense>{props.children}</Suspense>
+            </IsAuth>
+          )}
+        >
+          <FileRoutes />
+        </Router>
+      </QueryClientProvider>
+    </MetaProvider>
   );
 }

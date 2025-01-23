@@ -10,7 +10,7 @@ import { queryClient } from "~/lib/querh-client";
 import { FCFreshhadaLogoKr } from "~/svg/FCfreshhada_logo_kr";
 import { FCLogo } from "~/svg/FC_logo";
 import { UserIcon } from "~/svg/userIcon";
-import { LogoutDocument, LogoutMutation } from "~/generated/graphql";
+import { LogoutDocument, LogoutMutation, MeQuery } from "~/generated/graphql";
 import { DropdownMenu } from "./DropdownMenu";
 import {
   clearUserStore,
@@ -44,7 +44,6 @@ export const Header: Component<Props> = (props) => {
       }
     },
     onSuccess: () => {
-      clearUserStore(); // userStore 초기화 추가
       queryClient.setQueryData(["me"], { me: null });
       queryClient.invalidateQueries({ queryKey: ["me"] });
       navigate("/auth/login");
@@ -67,9 +66,12 @@ export const Header: Component<Props> = (props) => {
   };
 
   createEffect(() => {
-    setUsername(getUsername());
-
-    console.log("getUsername", getUsername());
+    // queryClient에서 "me" 쿼리의 캐시된 데이터 가져오기
+    const meData = queryClient.getQueryData<MeQuery>(["me"]);
+    // meData가 있고 me 프로퍼티가 있다면 사용자 이름 설정
+    if (meData?.me) {
+      setUsername(meData.me._email);
+    }
   });
 
   return (
@@ -143,7 +145,7 @@ export const Header: Component<Props> = (props) => {
           }
         >
           <Show
-            when={isAuthenticated()} // 조건 변경
+            when={username()} // 조건 변경
             fallback={
               <div
                 onClick={handleLogin}

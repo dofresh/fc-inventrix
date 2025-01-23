@@ -16,6 +16,7 @@ import { gqlClient } from "~/lib/graphql-client";
 import LocationCode from "~/components/warehous/location/inputRack";
 import Stock, { StockType } from "~/components/warehous/location/stockItems";
 import { queryClient } from "~/lib/querh-client";
+import Layout from "~/components/Layout";
 export type RackType = {
   location: string;
   stockItems: StockItem[];
@@ -155,88 +156,90 @@ const WarehousePage = () => {
   });
 
   return (
-    <div class="flex flex-col justify-center mb-36">
-      <main class="max-w-5xl flex-1 mx-auto py-4 text-gray-600">
-        <div>
-          <div class="flex flex-col items-center w-full">
-            <Show when={showLocationInput}>
-              <LocationCode
-                location={decodedLocation()}
-                showSubmit={showSubmit()}
-                setShowSubmit={setShowSubmit}
-                loading={rackQuery.isLoading}
-                showLocationInput={showLocationInput}
-                setShowLocationInput={setShowLocationInput}
-              />
-            </Show>
-            <Show when={showSubmit()}>
-              <div
-                onclick={() => setShowLocationInput(!showLocationInput())}
-                class="flex justify-center text-5xl font-weight-900 border px-8 py-2"
-              >
-                {decodedLocation()}
-              </div>
-            </Show>
-            <Show
-              when={!rackQuery.isLoading || !rackMutation.isPending}
-              fallback={<Spin isOpen={true} />}
-            >
+    <Layout>
+      <div class="flex flex-col justify-center mb-36">
+        <main class="max-w-5xl flex-1 mx-auto py-4 text-gray-600">
+          <div>
+            <div class="flex flex-col items-center w-full">
+              <Show when={showLocationInput}>
+                <LocationCode
+                  location={decodedLocation()}
+                  showSubmit={showSubmit()}
+                  setShowSubmit={setShowSubmit}
+                  loading={rackQuery.isLoading}
+                  showLocationInput={showLocationInput}
+                  setShowLocationInput={setShowLocationInput}
+                />
+              </Show>
+              <Show when={showSubmit()}>
+                <div
+                  onclick={() => setShowLocationInput(!showLocationInput())}
+                  class="flex justify-center text-5xl font-weight-900 border px-8 py-2"
+                >
+                  {decodedLocation()}
+                </div>
+              </Show>
               <Show
-                when={!rackQuery.isLoading}
+                when={!rackQuery.isLoading || !rackMutation.isPending}
                 fallback={<Spin isOpen={true} />}
               >
                 <Show
-                  when={rack() && rack}
-                  fallback={
-                    <div class="mt-48">
-                      {/* <div class="text-center mb-12">{decodedLocation()}</div> */}
-                      <div class="flex gap-4">
-                        <button class="" onClick={() => navigate(-1)}>
-                          <div
-                            class={`w-[6rem] cursor-pointer inline-block border-4 p-2 rounded-lg ${
-                              rackQuery.isLoading && "border-slate-400"
-                            }`}
-                          >
-                            취소
-                          </div>
-                        </button>
-                        <button class="" onClick={createRackHandle}>
-                          <div
-                            class={`w-[6rem] cursor-pointer inline-block border-4 p-2 rounded-lg ${
-                              rackQuery.isLoading && "border-slate-400"
-                            }`}
-                          >
-                            생성
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-                  }
+                  when={!rackQuery.isLoading}
+                  fallback={<Spin isOpen={true} />}
                 >
-                  <Show when={showSubmit()}>
-                    <div>
-                      <Stock
-                        pallets={pallets()}
-                        locationStockItems={
-                          rackQuery.data?.stockItems as
-                            | StockType[]
-                            | null
-                            | undefined
-                        }
-                        rackId={rack()?._id}
-                        location={decodedLocation()}
-                        prodTotalQuantities={rackQuery.data?.totalQuantities}
-                        highlightStockId={stockId as string}
-                      />
-                    </div>
+                  <Show
+                    when={rack() && rack}
+                    fallback={
+                      <div class="mt-48">
+                        {/* <div class="text-center mb-12">{decodedLocation()}</div> */}
+                        <div class="flex gap-4">
+                          <button class="" onClick={() => navigate(-1)}>
+                            <div
+                              class={`w-[6rem] cursor-pointer inline-block border-4 p-2 rounded-lg ${
+                                rackQuery.isLoading && "border-slate-400"
+                              }`}
+                            >
+                              취소
+                            </div>
+                          </button>
+                          <button class="" onClick={createRackHandle}>
+                            <div
+                              class={`w-[6rem] cursor-pointer inline-block border-4 p-2 rounded-lg ${
+                                rackQuery.isLoading && "border-slate-400"
+                              }`}
+                            >
+                              생성
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                    }
+                  >
+                    <Show when={showSubmit()}>
+                      <div>
+                        <Stock
+                          pallets={pallets()}
+                          locationStockItems={
+                            rackQuery.data?.stockItems as
+                              | StockType[]
+                              | null
+                              | undefined
+                          }
+                          rackId={rack()?._id}
+                          location={decodedLocation()}
+                          prodTotalQuantities={rackQuery.data?.totalQuantities}
+                          highlightStockId={stockId as string}
+                        />
+                      </div>
+                    </Show>
                   </Show>
                 </Show>
               </Show>
-            </Show>
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </Layout>
   );
 };
 
