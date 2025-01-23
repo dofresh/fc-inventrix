@@ -126,7 +126,7 @@ const Stock: Component<Props> = (props) => {
   });
 
   return (
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center w-full mt-12">
       <Show when={isModalOpen()}>
         <AddStockItemsModal
           productData={productsQuery.data}
@@ -152,7 +152,7 @@ const Stock: Component<Props> = (props) => {
                   !stock.quantityOfEach &&
                   !stock.enterQuantity &&
                   "opacity-30 border-gray-200"
-                } w-full border-4 rounded-2xl p-8 m-4 hover:bg-gray-100 cursor-pointer`}
+                } w-full border-4 rounded-2xl p-8 hover:bg-gray-100 cursor-pointer`}
                 onClick={() => {
                   setCurrentStock({
                     ...stock,
