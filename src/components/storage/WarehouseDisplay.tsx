@@ -99,7 +99,7 @@ const WarehouseContent: Component<{
   // area가 빈 경우는 헤더 없이 바로 렌더링
   // 미리 정의된 area 그룹 (빈 문자열은 제외)
 
-  const slotCount = 20;
+  const slotCount = 25;
   // 층(단)은 내림차순 (예: 3,2,1)
   const tiers = [3, 2, 1];
 
@@ -132,7 +132,7 @@ const WarehouseContent: Component<{
                 return (
                   <div class="mb-4">
                     <h4 class="font-medium">{tier} 단</h4>
-                    <div class="grid grid-cols-[repeat(20,1fr)] gap-1">
+                    <div class="grid grid-cols-[repeat(25,1fr)] gap-1">
                       <For each={slots}>
                         {(slot) => {
                           const item = tierItems.find(
@@ -195,7 +195,7 @@ const WarehouseContent: Component<{
                       return (
                         <div class="mb-4">
                           <h4 class="font-medium">{tier} 단</h4>
-                          <div class="grid grid-cols-[repeat(20,1fr)] gap-1">
+                          <div class="grid grid-cols-[repeat(25,1fr)] gap-1">
                             <For each={slots}>
                               {(slot) => {
                                 const item = tierItems.find(

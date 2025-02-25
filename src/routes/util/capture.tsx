@@ -1,9 +1,11 @@
 import domtoimage from "dom-to-image";
+import { createSignal } from "solid-js";
 import { useActualStorageItemsQuantity } from "~/api/query/actualInventory";
 import WarehouseDisplay from "~/components/storage/WarehouseDisplay";
 
 function MyComponent() {
   let captureRef: HTMLDivElement | undefined;
+  const [date, setDate] = createSignal<string>();
 
   const handleCapture = () => {
     if (!captureRef) return;
@@ -34,15 +36,19 @@ function MyComponent() {
       .catch((err) => console.error("캡처 오류:", err));
   };
 
-  const ActualStorageInventory = useActualStorageItemsQuantity("20240701");
+  const ActualStorageInventory = useActualStorageItemsQuantity("20250226");
   const items =
     ActualStorageInventory.data?.getStorageItemsQuantity.itemsQuantities || [];
 
   return (
     <div style="background-color:#ffffff; color:#000000;">
       {/* 상단 버튼 */}
-      <div style="padding:1rem; border-bottom:1px solid #ccc;">
-        <button onClick={handleCapture}>고해상도 캡처</button>
+      <div class="flex gap-4">
+        <div>
+          <button class="border" onClick={handleCapture}>
+            고해상도 캡처 20250226
+          </button>
+        </div>
       </div>
 
       {/* 캡처 대상 영역 */}

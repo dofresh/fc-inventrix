@@ -77,10 +77,7 @@ function StorageExcelExport(props: Props) {
         }));
 
         // 이 area에서 사용된 최대 슬롯 번호
-        const maxSlot = Math.max(
-          0,
-          ...parsedItems.map((p) => p.parsed.position)
-        );
+        const maxSlot = 25;
 
         // 3단, 2단, 1단 순서로 행을 생성 -----------------------------
         const tiers = [3, 2, 1];

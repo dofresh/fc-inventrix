@@ -23,7 +23,7 @@ function Storage(props: Props) {
   );
   // const getEcountProduct = useEcountProducts();
   // const getInventory = useGetEcountInventoryLocation();
-  const ActualStorageInventory = useActualStorageItemsQuantity("20240701");
+  const ActualStorageInventory = useActualStorageItemsQuantity("20250226");
 
   return (
     <Layout wide>
