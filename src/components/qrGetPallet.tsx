@@ -2,7 +2,7 @@
 import { Component, createSignal, createEffect } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { EcountProductsQuery } from "~/generated/graphql";
-import AddStockItmesModal from "./Modal/addStockItmesModal";
+import AddStockItmesModal from "./Modals/addStockItmesModal";
 import { StockType } from "./warehous/location/stockItems";
 import { QuickScanner } from "./QrCode/quickScan";
 
