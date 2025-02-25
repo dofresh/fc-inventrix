@@ -1,0 +1,20 @@
+query GetStorageItemsQuantity($recodedDate: String!) {
+  getStorageItemsQuantity(recodedDate: $recodedDate) {
+    errors {
+      field
+      message
+    }
+    itemsQuantities {
+      _id
+      quantity
+      storage
+      location
+      recodedDate
+      productCode
+      nickname
+      description
+      unit
+      sizeDES
+    }
+  }
+}

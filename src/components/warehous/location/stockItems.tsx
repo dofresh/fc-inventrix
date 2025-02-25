@@ -58,7 +58,7 @@ interface Props {
   highlightStockId?: string;
 }
 
-const Stock: Component<Props> = (props) => {
+const Stocks: Component<Props> = (props) => {
   const [isScan, setIsScan] = createSignal(false);
   const [isModalOpen, setModalOpen] = createSignal(false);
   const [currentStock, setCurrentStock] = createSignal<StockType | undefined>();
@@ -126,7 +126,7 @@ const Stock: Component<Props> = (props) => {
   });
 
   return (
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center w-full mt-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 items-center w-full mt-12">
       <Show when={isModalOpen()}>
         <AddStockItemsModal
           productData={productsQuery.data}
@@ -152,7 +152,7 @@ const Stock: Component<Props> = (props) => {
                   !stock.quantityOfEach &&
                   !stock.enterQuantity &&
                   "opacity-30 border-gray-200"
-                } w-full border-4 rounded-2xl p-8 hover:bg-gray-100 cursor-pointer`}
+                } w-full border-4 rounded-2xl p-4 hover:bg-gray-100 cursor-pointer`}
                 onClick={() => {
                   setCurrentStock({
                     ...stock,
@@ -286,12 +286,12 @@ const Stock: Component<Props> = (props) => {
                                 </div>
                               )}
 
-                              <div class="flex mt-1">
+                              <div class="flex mt-1 items-center">
                                 <div class="border rounded-lg px-1">
                                   {item.replenishmentQuantity}
                                 </div>
                                 <div class="px-1">{item.userName}</div>
-                                <div class="px-1">{date}</div>
+                                <div class="px-1 text-sm">{date}</div>
                               </div>
                             </div>
                           );
@@ -327,4 +327,4 @@ const Stock: Component<Props> = (props) => {
   );
 };
 
-export default Stock;
+export default Stocks;

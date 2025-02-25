@@ -12,7 +12,7 @@ export const useProductLocations = (productCode: Accessor<string | null>) => {
   // productCode 변경 감지 및 캐시 무효화
   createEffect(() => {
     const code = productCode();
-    console.log("Code changed to:", code);
+    console.error("Code changed to:", code);
 
     if (code) {
       queryClient.invalidateQueries({

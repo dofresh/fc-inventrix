@@ -79,9 +79,9 @@ const PrintPalletLabel = () => {
     }`;
     const querySize = `&size=${size()}`;
     const queryPageSize = `&pageSize=${pageSize()}`;
-    console.log(
-      `${serverUrl}${frontendUrl}${queryCode}${queryDes}${queryAtDate}${queryExpirationDate}${querySize}${queryPageSize}`
-    );
+    // console.log(
+    //   `${serverUrl}${frontendUrl}${queryCode}${queryDes}${queryAtDate}${queryExpirationDate}${querySize}${queryPageSize}`
+    // );
 
     return `${serverUrl}${frontendUrl}${queryCode}${queryDes}${queryAtDate}${queryExpirationDate}${querySize}${queryPageSize}`;
   };

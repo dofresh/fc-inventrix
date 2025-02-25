@@ -24,7 +24,7 @@ export const warehouseMenu: MenuType[] = [
   },
   {
     name: "저장소",
-    url: "/storage",
+    url: "/storages",
     Icon: TbBuildingWarehouse,
   },
   { isSeperate: true },

@@ -11,6 +11,7 @@ import {
 import { A } from "@solidjs/router";
 import { BsDatabaseDown } from "solid-icons/bs";
 import Layout from "~/components/Layout";
+import MobileMenu from "~/components/mobileMenu";
 
 export default function Home() {
   const [showUnboxingProduct, setShowUnboxingProduct] = createSignal(false);
@@ -67,12 +68,7 @@ export default function Home() {
           {warehouseMenu
             .filter((menu) => menu.name !== "대시보드")
             .map((item) => (
-              <li>
-                <A class="link" href={item.url || ""}>
-                  {item.Icon && <item.Icon class="min-w-max" size={23} />}
-                  {item.name}
-                </A>
-              </li>
+              <MobileMenu item={item} />
             ))}
         </ul>
       </div>
