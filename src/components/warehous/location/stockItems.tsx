@@ -14,10 +14,11 @@ import { TbQrcodeOff } from "solid-icons/tb";
 import { getGradientColor } from "~/utilities/getGradientColor";
 import dayjs from "dayjs";
 import { localDate } from "~/lib/dayjs-config";
-import AddStockItemsModal from "~/components/Modal/addStockItmesModal";
+
 import { createQuery } from "@tanstack/solid-query";
 import { gqlClient } from "~/lib/graphql-client";
 import QrGetPallet from "~/components/qrGetPallet";
+import AddStockItemsModal from "~/components/Modals/addStockItmesModal";
 
 interface IReplenishment {
   userName: string;
