@@ -1,0 +1,18 @@
+query GetEcountListInventoryStatusLocationTrends(
+  $input: EcountInventoryStatusLocationInput!
+) {
+  getEcountListInventoryStatusLocationTrends(input: $input) {
+    datas {
+      WH_CD
+      WH_DES
+      PROD_CD
+      PROD_DES
+      PROD_SIZE_DES
+      BAL_QTY
+    }
+    error {
+      query
+      message
+    }
+  }
+}

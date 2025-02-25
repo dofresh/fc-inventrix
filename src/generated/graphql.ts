@@ -36,7 +36,7 @@ export type AddTotalOrdersInput = {
 };
 
 export type AddTotalOrdersRespones = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   result: Maybe<Array<Scalars['String']['output']>>;
 };
 
@@ -86,6 +86,11 @@ export type AddressKr = {
   zipcode: Maybe<Scalars['String']['output']>;
 };
 
+export type ApiError = {
+  message: Scalars['String']['output'];
+  query: Scalars['String']['output'];
+};
+
 export type BaljugoCustomer = {
   /** [오더코드:품목코드] */
   added: Maybe<Array<Scalars['String']['output']>>;
@@ -114,7 +119,7 @@ export type BaljugoCustomerOrderInput = {
 
 export type BaljugoOrderCustomerRespones = {
   customerOrders: Maybe<Array<BaljugoProductOrder>>;
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
 };
 
 export type BaljugoOrderCustomersHistoryInput = {
@@ -126,7 +131,7 @@ export type BaljugoOrderCustomersRespones = {
   baljugoCustomers: Maybe<Array<BaljugoCustomer>>;
   customerOrders: Maybe<Array<CustomerOrders>>;
   dailyOrders: Maybe<Array<DailyOrder>>;
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
 };
 
 export type BaljugoProductOrder = {
@@ -251,7 +256,7 @@ export type CenterProuductStatus = {
 
 export type CenterProuductStatusResponse = {
   centerProuducts: Maybe<Array<CenterProuductStatus>>;
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   missingEcountProducts: Maybe<Array<ChannelProduct>>;
 };
 
@@ -406,7 +411,7 @@ export type Company = {
 
 export type CompanyResponse = {
   company: Maybe<Company>;
-  errors: Maybe<FatchError>;
+  errors: Maybe<ApiError>;
 };
 
 export type ComponySearchType = {
@@ -447,7 +452,7 @@ export type Content = {
 };
 
 export type CreateCalendarDateResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   event: Maybe<CalendarDate>;
 };
 
@@ -472,11 +477,11 @@ export type CreateContactInput = {
 
 export type CreateContactResponse = {
   contact: Maybe<Contact>;
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
 };
 
 export type CreateImportItemResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   importOrder: Maybe<ImportOrder>;
 };
 
@@ -488,7 +493,7 @@ export type CreateStockItemLableInput = {
 };
 
 export type CreateStockItemLableRespones = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   ok: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -505,7 +510,7 @@ export type CreateTodoInput = {
 };
 
 export type CreateTodoResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   todo: Maybe<Todo>;
 };
 
@@ -611,12 +616,12 @@ export type DeliveryPriceTag = {
 
 export type DeliveryPriceTagResponse = {
   deliveryPriceTag: Maybe<DeliveryPriceTag>;
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
 };
 
 export type DeliveryPriceTagsResponse = {
   deliveryPriceTags: Maybe<Array<DeliveryPriceTag>>;
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
 };
 
 export type DispatchProductOrderInput = {
@@ -664,7 +669,7 @@ export type EcountInventoryStatusLocationInput = {
 
 export type EcountInventoryStatusLocationResponse = {
   datas: Maybe<Array<EcountInventoryStatusLocation>>;
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
 };
 
 export type EcountProduct = {
@@ -884,7 +889,7 @@ export type EcountProfitMargin = {
 };
 
 export type EcountProfitMarginResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   margins: Maybe<Array<EcountProfitMargin>>;
 };
 
@@ -927,7 +932,7 @@ export type EcountSaleFatchInput = {
 };
 
 export type EcountSaleFatchResponce = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   ok: Scalars['Boolean']['output'];
 };
 
@@ -936,7 +941,7 @@ export type EcountSaleFatchesInput = {
 };
 
 export type EcountSaleFatchesResponce = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   ok: Scalars['Boolean']['output'];
 };
 
@@ -1076,7 +1081,7 @@ export type FcInBound = {
   orderDate: Maybe<Scalars['String']['output']>;
   /** 상대 업체 정보 */
   partnerCompany: Maybe<FcPartnerCompany>;
-  product: FcProduct;
+  product: WhProduct;
   /** 입고 요청 수량 */
   requestQuantity: Scalars['Float']['output'];
   /** 입고 상태 */
@@ -1095,14 +1100,17 @@ export type FcInBound = {
 };
 
 export type FcOutBound = {
+  _id: Scalars['ID']['output'];
+  createdAt: Maybe<Scalars['DateTime']['output']>;
   customer: FcCustomer;
   orderNumber: Scalars['String']['output'];
   outboundDate: Scalars['DateTime']['output'];
-  product: FcProduct;
+  product: WhProduct;
   quantity: Scalars['Float']['output'];
   supplyPrice: Scalars['Float']['output'];
   transactionType: Scalars['String']['output'];
   unitPrice: Scalars['Float']['output'];
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
   uploadSerialNumber: Scalars['String']['output'];
   vat: Scalars['Float']['output'];
   warehouse: FcWarehouse;
@@ -1116,38 +1124,12 @@ export type FcPartnerCompany = {
   contactNumber: Maybe<Scalars['String']['output']>;
   /** 담당자 */
   contactPerson: Maybe<Scalars['String']['output']>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
   /** 업체 이메일 */
   email: Maybe<Scalars['String']['output']>;
   /** 업체명 */
   name: Maybe<Scalars['String']['output']>;
-};
-
-export type FcProduct = {
-  ERPProductDES: Maybe<Scalars['String']['output']>;
-  /** 상품명 */
-  ProductName: Maybe<Scalars['String']['output']>;
-  _id: Scalars['ID']['output'];
-  code: Scalars['String']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  packageCapacity: Maybe<Scalars['Float']['output']>;
-  packageCapacityUnitType: Maybe<PackageCapacityUnitType>;
-  packageDepth: Maybe<Scalars['Float']['output']>;
-  packageType: Maybe<PackageType>;
-  peaceType: Maybe<PackageType>;
-  quantityInPackage: Maybe<Scalars['String']['output']>;
-  sallerProductDES: Maybe<Scalars['String']['output']>;
-  sellerCode: Scalars['String']['output'];
-  /** 규격 */
-  sizeDES: Maybe<Scalars['String']['output']>;
-  /** 보관방식 */
-  storageMethod: Maybe<Scalars['String']['output']>;
-  /** 보관방식 */
-  storageType: Maybe<StorageType>;
-  /** 단위 */
-  unit: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
-  /** 창고에서 사용하는 이름 */
-  warehouseProductDES: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 /** 상품 주문 상태 */
@@ -1166,19 +1148,21 @@ export enum FcProductOrderStatus {
 }
 
 export type FcWarehouse = {
-  code: Scalars['ID']['output'];
+  _id: Scalars['ID']['output'];
+  /** 작업 권한이 있는 사용자 목록 */
+  authorizedWorkers: Maybe<Array<Scalars['ID']['output']>>;
+  code: Scalars['String']['output'];
+  content: Maybe<Array<Content>>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
   name: Scalars['String']['output'];
+  storageTypes: StorageType;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type FailProductOrderInfos = {
   code: Scalars['String']['output'];
   message: Scalars['String']['output'];
   productOrderId: Scalars['String']['output'];
-};
-
-export type FatchError = {
-  message: Scalars['String']['output'];
-  query: Scalars['String']['output'];
 };
 
 export type FetchUpdatedOrdersResponse = {
@@ -1202,7 +1186,7 @@ export type GetBoxCostInput = {
 
 export type GetCalendarDateResponse = {
   dates: Maybe<Array<CalendarDate>>;
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
 };
 
 export type GetCalendarDatesInput = {
@@ -1214,11 +1198,11 @@ export type GetCalendarDatesInput = {
 
 export type GetCompaniesResponse = {
   companies: Maybe<Array<Company>>;
-  errors: Maybe<FatchError>;
+  errors: Maybe<ApiError>;
 };
 
 export type GetComponySearchListResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   list: Array<ComponySearchType>;
 };
 
@@ -1243,7 +1227,7 @@ export type GetImageUrls = {
 };
 
 export type GetImportOrderResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   importOrder: Maybe<ImportOrder>;
 };
 
@@ -1253,10 +1237,16 @@ export type GetImportsInput = {
 };
 
 export type GetImportsResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   hasMore: Scalars['Boolean']['output'];
   imports: Maybe<Array<ImportOrder>>;
   total: Scalars['Float']['output'];
+};
+
+export type GetInventoryAtDateInput = {
+  date: Scalars['String']['input'];
+  productId: Scalars['String']['input'];
+  warehouseId: Scalars['String']['input'];
 };
 
 export type GetPackageBoxCostInput = {
@@ -1280,12 +1270,12 @@ export type GetSpcProudctInput = {
 };
 
 export type GetSavedEcountInventoriesResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   inventories: Maybe<Array<EcountInventory>>;
 };
 
 export type GetSavedEcountInventoryResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   inventory: Maybe<EcountInventory>;
 };
 
@@ -1359,6 +1349,8 @@ export type ImportItem = {
 };
 
 export type ImportOrder = {
+  /** 해상운송 계약번호 */
+  BLCode: Maybe<Scalars['String']['output']>;
   _id: Scalars['ID']['output'];
   calendarDate: Maybe<CalendarDate>;
   createdAt: Maybe<Scalars['DateTime']['output']>;
@@ -1385,7 +1377,7 @@ export type ImportOrdersInput = {
 };
 
 export type ImportOrdersResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   importOrders: Maybe<Array<ImportOrder>>;
 };
 
@@ -1434,7 +1426,7 @@ export type InvisivleStockItemInput = {
 };
 
 export type ItemToPickingRespones = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   stockItem: Maybe<Array<StockItem>>;
 };
 
@@ -1480,12 +1472,12 @@ export type MonthlyProductSale = {
 };
 
 export type MonthlyProductSaleResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   monthlyProductSale: Maybe<MonthlyProductSale>;
 };
 
 export type MonthlyProductSalesResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   monthlyProductSales: Maybe<Array<MonthlyProductSale>>;
 };
 
@@ -1493,6 +1485,7 @@ export type Mutation = {
   addMember: EmailVerifyResponse;
   addProfilePicture: Scalars['Boolean']['output'];
   addTotalOrders: Maybe<AddTotalOrdersRespones>;
+  adjustInventoryForWrongProductCode: Scalars['Boolean']['output'];
   changePackageBox: PackageBoxResponse;
   changePassword: UserResponse;
   cleanEcountSale: Scalars['String']['output'];
@@ -1609,6 +1602,14 @@ export type MutationAddTotalOrdersArgs = {
 };
 
 
+export type MutationAdjustInventoryForWrongProductCodeArgs = {
+  adjustmentDate: Scalars['DateTime']['input'];
+  correctProductCode: Scalars['String']['input'];
+  warehouseId: Scalars['String']['input'];
+  wrongProductCode: Scalars['String']['input'];
+};
+
+
 export type MutationChangePackageBoxArgs = {
   input: ChangePackageBoxInput;
 };
@@ -1632,6 +1633,11 @@ export type MutationCreateCalendarDateArgs = {
 
 export type MutationCreateContactArgs = {
   input: CreateContactInput;
+};
+
+
+export type MutationCreateOutboundArgs = {
+  input: OutboundInput;
 };
 
 
@@ -1753,6 +1759,11 @@ export type MutationNaverDirectUploadImagesArgs = {
 
 export type MutationNaverDispatchProductOrderArgs = {
   input: DispatchsInput;
+};
+
+
+export type MutationOldEcountProductAllUpsertArgs = {
+  date: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -2219,6 +2230,13 @@ export type OrederUpdateStatusTracker = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type OutboundInput = {
+  outboundDate: Scalars['DateTime']['input'];
+  productId: Scalars['String']['input'];
+  quantity: Scalars['Float']['input'];
+  warehouseId: Scalars['String']['input'];
+};
+
 export type PackageBox = {
   _id: Scalars['ID']['output'];
   box: Maybe<Box>;
@@ -2233,17 +2251,17 @@ export type PackageBoxMapping = {
 };
 
 export type PackageBoxMappingResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   packageBoxMapping: Maybe<PackageBoxMapping>;
 };
 
 export type PackageBoxMappingsResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   packageBoxMappings: Maybe<Array<PackageBoxMapping>>;
 };
 
 export type PackageBoxResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   packageBox: Maybe<PackageBox>;
 };
 
@@ -2254,7 +2272,7 @@ export type PackageBoxed = {
 };
 
 export type PackageBoxesResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   packageBoxed: Maybe<Array<PackageBoxed>>;
 };
 
@@ -2275,12 +2293,42 @@ export enum PackageCapacityUnitType {
   Tonne = 'TONNE'
 }
 
-export enum PackageType {
+export enum PackageMaterial {
   Bulk = 'BULK',
+  Drum = 'DRUM',
   PaperPackage = 'PAPER_PACKAGE',
+  PlasticContainer = 'PLASTIC_CONTAINER',
   SealedPack = 'SEALED_PACK',
   VacuumPack = 'VACUUM_PACK'
 }
+
+export type PackageSize = {
+  format: PackagingFormat;
+  innerPackage: Maybe<PackageSize>;
+  quantity: Scalars['Float']['output'];
+  type: PackageType;
+};
+
+/** 포장 유형 (박스/내박스/패키지/낱개) */
+export enum PackageType {
+  Box = 'BOX',
+  Bucket = 'BUCKET',
+  InnerBox = 'INNER_BOX',
+  Pack = 'PACK',
+  Unit = 'UNIT'
+}
+
+export type PackagingFormat = {
+  description: Maybe<Scalars['String']['output']>;
+  /** 높이길이 */
+  height: Scalars['Float']['output'];
+  /** 세로길이 */
+  length: Scalars['Float']['output'];
+  material: Maybe<PackageMaterial>;
+  weight: Scalars['Float']['output'];
+  /** 가로길이 */
+  width: Scalars['Float']['output'];
+};
 
 export type PackingCost = {
   boxCost: Maybe<Scalars['Float']['output']>;
@@ -2349,7 +2397,7 @@ export type PickingListRespones = {
 
 export type PickingListsRespones = {
   PickingLists: Maybe<Array<PickingListRespones>>;
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
 };
 
 export type PickingStickerListInput = {
@@ -2365,7 +2413,7 @@ export enum Priority {
 }
 
 export type ProdLocationRespones = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   inventory: Maybe<Scalars['Float']['output']>;
   lastProdInventory: Maybe<Scalars['Float']['output']>;
   stockItems: Maybe<Array<StockItem>>;
@@ -2382,8 +2430,8 @@ export type Product = {
   packageCapacity: Maybe<Scalars['Float']['output']>;
   packageCapacityUnitType: Maybe<PackageCapacityUnitType>;
   packageDepth: Maybe<Scalars['Float']['output']>;
-  packageType: Maybe<PackageType>;
-  peaceType: Maybe<PackageType>;
+  packageType: Maybe<PackageMaterial>;
+  peaceType: Maybe<PackageMaterial>;
   quantityInPackage: Maybe<Scalars['String']['output']>;
   sallerProductDES: Maybe<Scalars['String']['output']>;
   sellerCode: Scalars['String']['output'];
@@ -2587,6 +2635,12 @@ export enum ProductOrderStatus {
   Returned = 'RETURNED'
 }
 
+export type ProductPackaging = {
+  fcProductId: Scalars['String']['output'];
+  note: Maybe<Scalars['String']['output']>;
+  packageHierarchy: PackageSize;
+};
+
 export enum ProductStatusType {
   Close = 'CLOSE',
   Delete = 'DELETE',
@@ -2681,6 +2735,7 @@ export type Query = {
   spcProduct: SpcProductResponse;
   spcProducts: SpcProductsResponse;
   stockitemLable: StockItemLableRespones;
+  storageRooms: Scalars['Boolean']['output'];
   userLog: UserLogResponse;
   userLogs: Array<UserLog>;
   warehouseBoard: WarehouseBoardRespones;
@@ -2805,6 +2860,11 @@ export type QueryGetImportOrdersArgs = {
 
 export type QueryGetImportsArgs = {
   input: GetImportsInput;
+};
+
+
+export type QueryGetInventoryAtDateArgs = {
+  input: GetInventoryAtDateInput;
 };
 
 
@@ -2967,17 +3027,18 @@ export type Rack = {
   stockItems: Maybe<Array<StockItem>>;
   type: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
+  warehouseId: Maybe<Scalars['String']['output']>;
 };
 
 export type RackRespones = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   rack: Maybe<Rack>;
   stockItems: Maybe<Array<StockItem>>;
   totalQuantities: Maybe<Array<TotalQuantity>>;
 };
 
 export type RacksRespones = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   racks: Maybe<Array<Rack>>;
 };
 
@@ -3059,6 +3120,7 @@ export enum Role {
   Logistics = 'LOGISTICS',
   Management = 'MANAGEMENT',
   Planning = 'PLANNING',
+  Public = 'PUBLIC',
   Sales = 'SALES',
   Transit = 'TRANSIT'
 }
@@ -3148,7 +3210,7 @@ export type SpcOrder = {
 };
 
 export type SpcOrdersResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   orders: Maybe<Array<SpcOrder>>;
 };
 
@@ -3168,12 +3230,12 @@ export type SpcProduct = {
 };
 
 export type SpcProductResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   spcProduct: Maybe<SpcProduct>;
 };
 
 export type SpcProductsResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   spcProducts: Maybe<Array<SpcProduct>>;
 };
 
@@ -3196,7 +3258,7 @@ export type SetOrderArrivalLocationInput = {
 };
 
 export type SetOrderArrivalLocationRespones = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   ok: Scalars['Boolean']['output'];
 };
 
@@ -3213,7 +3275,7 @@ export type SetSpcProdCodeMappingInput = {
 };
 
 export type SetSpcProdCodeMappingResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   ok: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -3426,6 +3488,7 @@ export type StockItem = {
   totalQuantity: Maybe<Scalars['Float']['output']>;
   totalQuantityOfEach: Maybe<Scalars['Float']['output']>;
   warehousingDate: Maybe<Scalars['String']['output']>;
+  weahouseId: Maybe<Scalars['String']['output']>;
 };
 
 export type StockItemInput = {
@@ -3456,15 +3519,16 @@ export type StockItemLable = {
   productCode: Maybe<Scalars['String']['output']>;
   size: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
+  weahouseId: Maybe<Scalars['String']['output']>;
 };
 
 export type StockItemLableRespones = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   stockItemLable: Maybe<StockItemLable>;
 };
 
 export type StockItemRespones = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   stockItem: Maybe<StockItem>;
 };
 
@@ -3490,7 +3554,7 @@ export type StockItemUpdateInput = {
 };
 
 export type StockItemsRespones = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   stockItems: Maybe<Array<StockItem>>;
 };
 
@@ -3635,7 +3699,7 @@ export enum TodoQueryNameType {
 }
 
 export type TodosResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   hasMore: Scalars['Boolean']['output'];
   todos: Array<Todo>;
   totalCount: Scalars['Int']['output'];
@@ -3664,7 +3728,7 @@ export type UpdateCalendarDateInput = {
 };
 
 export type UpdateCalendarDateResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   ok: Scalars['Boolean']['output'];
 };
 
@@ -3689,7 +3753,7 @@ export type UpdateSpcOrderInput = {
 };
 
 export type UpdateSpcOrderResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   ok: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -3712,12 +3776,12 @@ export type UpdateTodoInput = {
 };
 
 export type UpdateTodoResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   ok: Scalars['Boolean']['output'];
 };
 
 export type UpdateUserResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   ok: Scalars['Boolean']['output'];
 };
 
@@ -3744,7 +3808,7 @@ export type UpsertCompanyContactInput = {
 
 export type UpsertCompanyContactResponse = {
   contact: Maybe<Contact>;
-  errors: Maybe<FatchError>;
+  errors: Maybe<ApiError>;
 };
 
 export type UpsertContactEmailInput = {
@@ -3754,7 +3818,7 @@ export type UpsertContactEmailInput = {
 
 export type UpsertContactEmailResponse = {
   emails: Maybe<Array<Email>>;
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
 };
 
 export type UpsertContactPhoneInput = {
@@ -3763,7 +3827,7 @@ export type UpsertContactPhoneInput = {
 };
 
 export type UpsertContactPhoneResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   phones: Maybe<Array<Phone>>;
 };
 
@@ -3808,11 +3872,12 @@ export type UpsertImportItemInput = {
 };
 
 export type UpsertImportItemResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   importItem: Maybe<ImportItem>;
 };
 
 export type UpsertImportOrderInput = {
+  BLCode: InputMaybe<Scalars['String']['input']>;
   currency: InputMaybe<CurrencyType>;
   id: InputMaybe<Scalars['String']['input']>;
   isComplete: InputMaybe<Scalars['Boolean']['input']>;
@@ -3821,7 +3886,7 @@ export type UpsertImportOrderInput = {
 };
 
 export type UpsertImportOrderResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   importOrder: Maybe<ImportOrder>;
 };
 
@@ -3839,7 +3904,7 @@ export type UpsertImportTodoInput = {
 };
 
 export type UpsertImportTodoResponse = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   todo: Maybe<Todo>;
 };
 
@@ -3861,7 +3926,7 @@ export type User = {
   nickname: Maybe<Scalars['String']['output']>;
   phoneNumber: Maybe<Scalars['String']['output']>;
   position: Maybe<Scalars['String']['output']>;
-  roles: Maybe<Array<Role>>;
+  roles: Maybe<Array<Scalars['String']['output']>>;
   thumbnail: Maybe<Scalars['String']['output']>;
   updatedAt: Maybe<Scalars['DateTime']['output']>;
   userSet: Maybe<Scalars['JSON']['output']>;
@@ -3877,7 +3942,7 @@ export type UserLog = {
 };
 
 export type UserQueryResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   user: Maybe<User>;
 };
 
@@ -3898,8 +3963,24 @@ export type UsernamePasswordInput = {
   username: Scalars['String']['input'];
 };
 
+export type WhProduct = {
+  ERP_productCode: Maybe<Scalars['String']['output']>;
+  /** 표기된 상품명 */
+  ProductName: Maybe<Scalars['String']['output']>;
+  /** 박스, 패키지, 낱개 정보 */
+  ProductPackaging: Maybe<ProductPackaging>;
+  _id: Scalars['ID']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  productCode: Scalars['String']['output'];
+  /** 사이즈 표기 */
+  sizeChart: Maybe<Scalars['String']['output']>;
+  /** 보관방식 */
+  storageType: Maybe<StorageType>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
 export type WarehouseBoardRespones = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   inventoryBOXSize: Maybe<Scalars['Float']['output']>;
   inventoryEAs: Maybe<Array<InventoryEaType>>;
   inventoryKg: Maybe<Scalars['Float']['output']>;
@@ -3933,12 +4014,12 @@ export enum WeightUnit {
 }
 
 export type BaljugoPickingStickerListRespones = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   orders: Maybe<Array<BaljugoProductOrder>>;
 };
 
 export type CreateInventoryEcountResponese = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   total: Maybe<Scalars['Float']['output']>;
 };
 
@@ -3946,8 +4027,8 @@ export type CreateProductInput = {
   packageCapacity: InputMaybe<Scalars['Float']['input']>;
   packageCapacityUnitType: InputMaybe<PackageCapacityUnitType>;
   packageDepth: InputMaybe<Scalars['Float']['input']>;
-  packageType: InputMaybe<PackageType>;
-  peaceType: InputMaybe<PackageType>;
+  packageType: InputMaybe<PackageMaterial>;
+  peaceType: InputMaybe<PackageMaterial>;
   quantityInPackage: InputMaybe<Scalars['String']['input']>;
   sellerCode: Scalars['String']['input'];
   storageMethod: InputMaybe<Scalars['String']['input']>;
@@ -3960,7 +4041,7 @@ export type DeleteBaljugoOrderInput = {
 };
 
 export type OrderStateRespones = {
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
   result: Maybe<Array<Scalars['String']['output']>>;
 };
 
@@ -3993,11 +4074,11 @@ export type UpsertBoxInput = {
 
 export type UpsertBoxResponse = {
   box: Maybe<Box>;
-  error: Maybe<FatchError>;
+  error: Maybe<ApiError>;
 };
 
 export type UserLogResponse = {
-  errors: Maybe<Array<FatchError>>;
+  errors: Maybe<Array<ApiError>>;
   log: Maybe<UserLog>;
 };
 
@@ -4014,18 +4095,18 @@ export type RegularEcountProductFragment = { _id: string, createdAt: string, upd
 
 export type RegularErrorFragment = { field: string, message: string };
 
-export type RegularLoginResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
+export type RegularLoginResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<string>, thumbnail: string } };
 
 export type RegularStockItemFragment = { _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } };
 
-export type RegularUserFragment = { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string };
+export type RegularUserFragment = { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<string>, thumbnail: string };
 
-export type RegularUserResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
+export type RegularUserResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<string>, thumbnail: string } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { me: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } };
+export type MeQuery = { me: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<string>, thumbnail: string } };
 
 export type AddTotalOrdersMutationVariables = Exact<{
   input: AddTotalOrdersInput;
@@ -4047,7 +4128,7 @@ export type ChangePasswordMutationVariables = Exact<{
 }>;
 
 
-export type ChangePasswordMutation = { changePassword: { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } } };
+export type ChangePasswordMutation = { changePassword: { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<string>, thumbnail: string } } };
 
 export type EcountProductAllUpsertMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -4074,7 +4155,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { login: { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<Role>, thumbnail: string } } };
+export type LoginMutation = { login: { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<string>, thumbnail: string } } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -4184,6 +4265,13 @@ export type SetOrderArrivalLocationMutationVariables = Exact<{
 
 export type SetOrderArrivalLocationMutation = { setOrderArrivalLocation: { ok: boolean, error: { query: string, message: string } } };
 
+export type GetEcountListInventoryStatusLocationTrendsQueryVariables = Exact<{
+  input: EcountInventoryStatusLocationInput;
+}>;
+
+
+export type GetEcountListInventoryStatusLocationTrendsQuery = { getEcountListInventoryStatusLocationTrends: { datas: Array<{ WH_CD: string, WH_DES: string, PROD_CD: string, PROD_DES: string, PROD_SIZE_DES: string, BAL_QTY: string }>, error: { query: string, message: string } } };
+
 export type EcountProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4195,6 +4283,13 @@ export type GetSavedEcountInventoryQueryVariables = Exact<{
 
 
 export type GetSavedEcountInventoryQuery = { getSavedEcountInventory: { inventory: { _id: string, createdAt: string, updatedAt: string, WH_CD: string, WH_DES: string, PROD_CD: string, PROD_DES: string, PROD_SIZE_DES: string, BAL_QTY: string, UNIT: string }, error: { query: string, message: string } } };
+
+export type GetStorageItemsQuantityQueryVariables = Exact<{
+  recodedDate: Scalars['String']['input'];
+}>;
+
+
+export type GetStorageItemsQuantityQuery = { getStorageItemsQuantity: { errors: Array<{ field: string, message: string }>, itemsQuantities: Array<{ _id: string, quantity: number, storage: string, location: string, recodedDate: string, productCode: string, nickname: string, description: string, unit: string, sizeDES: string }> } };
 
 export type PackageBoxesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4845,6 +4940,24 @@ export const SetOrderArrivalLocationDocument = gql`
   }
 }
     `;
+export const GetEcountListInventoryStatusLocationTrendsDocument = gql`
+    query GetEcountListInventoryStatusLocationTrends($input: EcountInventoryStatusLocationInput!) {
+  getEcountListInventoryStatusLocationTrends(input: $input) {
+    datas {
+      WH_CD
+      WH_DES
+      PROD_CD
+      PROD_DES
+      PROD_SIZE_DES
+      BAL_QTY
+    }
+    error {
+      query
+      message
+    }
+  }
+}
+    `;
 export const EcountProductsDocument = gql`
     query EcountProducts {
   ecountProducts {
@@ -4870,6 +4983,28 @@ export const GetSavedEcountInventoryDocument = gql`
     error {
       query
       message
+    }
+  }
+}
+    `;
+export const GetStorageItemsQuantityDocument = gql`
+    query GetStorageItemsQuantity($recodedDate: String!) {
+  getStorageItemsQuantity(recodedDate: $recodedDate) {
+    errors {
+      field
+      message
+    }
+    itemsQuantities {
+      _id
+      quantity
+      storage
+      location
+      recodedDate
+      productCode
+      nickname
+      description
+      unit
+      sizeDES
     }
   }
 }
@@ -5119,11 +5254,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     setOrderArrivalLocation(variables: SetOrderArrivalLocationMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SetOrderArrivalLocationMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<SetOrderArrivalLocationMutation>(SetOrderArrivalLocationDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'setOrderArrivalLocation', 'mutation', variables);
     },
+    GetEcountListInventoryStatusLocationTrends(variables: GetEcountListInventoryStatusLocationTrendsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetEcountListInventoryStatusLocationTrendsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetEcountListInventoryStatusLocationTrendsQuery>(GetEcountListInventoryStatusLocationTrendsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetEcountListInventoryStatusLocationTrends', 'query', variables);
+    },
     EcountProducts(variables?: EcountProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<EcountProductsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<EcountProductsQuery>(EcountProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'EcountProducts', 'query', variables);
     },
     GetSavedEcountInventory(variables: GetSavedEcountInventoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSavedEcountInventoryQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSavedEcountInventoryQuery>(GetSavedEcountInventoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSavedEcountInventory', 'query', variables);
+    },
+    GetStorageItemsQuantity(variables: GetStorageItemsQuantityQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetStorageItemsQuantityQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetStorageItemsQuantityQuery>(GetStorageItemsQuantityDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetStorageItemsQuantity', 'query', variables);
     },
     PackageBoxes(variables?: PackageBoxesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<PackageBoxesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PackageBoxesQuery>(PackageBoxesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'PackageBoxes', 'query', variables);

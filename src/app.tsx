@@ -4,7 +4,6 @@ import { Suspense } from "solid-js";
 import "./app.css";
 import { QueryClientProvider } from "@tanstack/solid-query";
 import { queryClient } from "./lib/querh-client";
-import Layout from "./components/Layout";
 import { SolidQueryDevtools } from "@tanstack/solid-query-devtools";
 import { MetaProvider, Title, Meta } from "@solidjs/meta";
 import { IsAuth } from "./components/IsAuth";

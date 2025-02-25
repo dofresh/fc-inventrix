@@ -21,12 +21,12 @@ export const useUpsertStockItem = ({
     mutationFn: async (
       variables: UpsertStockItemMutationVariables
     ): Promise<UpsertStockItemMutation["upsertStockItem"]> => {
-      console.log("1. Mutation 시작:", variables);
+      // console.log("1. Mutation 시작:", variables);
       const response = await gqlClient.request<UpsertStockItemMutation>(
         UpsertStockItemDocument,
         variables
       );
-      console.log("2. Mutation 응답:", response);
+      // console.log("2. Mutation 응답:", response);
       return response.upsertStockItem;
     },
     onSuccess: async (data) => {

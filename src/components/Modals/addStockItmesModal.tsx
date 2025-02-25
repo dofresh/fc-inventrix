@@ -478,10 +478,7 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                 >
                   <button
                     disabled={Number(getRemainingQuantity()) < 0}
-                    class={`hover:border-slate-600 bg-slate-600 ${
-                      (sortingQuantity() === "0" || sortingQuantity() === "") &&
-                      "!bg-slate-200"
-                    } text-white border-4 py-1 px-2 md:py-3 md:px-5 rounded-lg`}
+                    class={`hover:border-slate-600 bg-slate-600 text-white border-4 py-1 px-2 md:py-3 md:px-5 rounded-lg`}
                     onClick={async () => {
                       setIsLoading(true);
 
@@ -510,6 +507,8 @@ const AddStockItemsModal: Component<ModalProps> = (props) => {
                   >
                     {Number(getRemainingQuantity()) === 0
                       ? "이동 후 소멸"
+                      : sortingQuantity() === "" || sortingQuantity() === "0"
+                      ? "저장"
                       : "피킹존으로 이동"}
                   </button>
                 </Show>

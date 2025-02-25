@@ -35,12 +35,12 @@ const ProductLocation: Component = () => {
   //     () => productsQuery.isLoading || locationsQuery.isLoading
   //   );
 
-  createEffect(() => {
-    console.log("productsQuery.isLoading", productsQuery.isLoading);
-  });
-  createEffect(() => {
-    console.log("locationsQuery.isLoading", locationsQuery.isLoading);
-  });
+  // createEffect(() => {
+  //   console.log("productsQuery.isLoading", productsQuery.isLoading);
+  // });
+  // createEffect(() => {
+  //   console.log("locationsQuery.isLoading", locationsQuery.isLoading);
+  // });
 
   // Product List Component
   const ProductsList = () => (

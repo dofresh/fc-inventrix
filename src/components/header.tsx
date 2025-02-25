@@ -12,12 +12,7 @@ import { FCLogo } from "~/svg/FC_logo";
 import { UserIcon } from "~/svg/userIcon";
 import { LogoutDocument, LogoutMutation, MeQuery } from "~/generated/graphql";
 import { DropdownMenu } from "./DropdownMenu";
-import {
-  clearUserStore,
-  getUserEmail,
-  getUsername,
-  isAuthenticated,
-} from "~/stroes/userStrore";
+import MobileMenu from "./mobileMenu";
 
 interface Props {
   isOpen: boolean;
@@ -44,9 +39,9 @@ export const Header: Component<Props> = (props) => {
       }
     },
     onSuccess: () => {
+      navigate("/auth/login");
       queryClient.setQueryData(["me"], { me: null });
       queryClient.invalidateQueries({ queryKey: ["me"] });
-      navigate("/auth/login");
     },
     onError: (error) => {
       console.error("Logout error:", error);
@@ -111,20 +106,7 @@ export const Header: Component<Props> = (props) => {
                 >
                   <ul>
                     <For each={props.menu}>
-                      {(item) => (
-                        <li>
-                          <A class="link" href={item.url || ""}>
-                            <Show when={item.Icon}>
-                              <Dynamic
-                                component={item.Icon}
-                                class="min-w-max"
-                                size={23}
-                              />
-                            </Show>
-                            {item.name}
-                          </A>
-                        </li>
-                      )}
+                      {(item) => <MobileMenu item={item} />}
                     </For>
                   </ul>
                 </div>

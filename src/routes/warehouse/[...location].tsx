@@ -14,7 +14,7 @@ import {
 } from "~/generated/graphql";
 import { gqlClient } from "~/lib/graphql-client";
 import LocationCode from "~/components/warehous/location/inputRack";
-import Stock, { StockType } from "~/components/warehous/location/stockItems";
+import Stocks, { StockType } from "~/components/warehous/location/stockItems";
 import { queryClient } from "~/lib/querh-client";
 import Layout from "~/components/Layout";
 export type RackType = {
@@ -217,7 +217,7 @@ const WarehousePage = () => {
                   >
                     <Show when={showSubmit()}>
                       <div>
-                        <Stock
+                        <Stocks
                           pallets={pallets()}
                           locationStockItems={
                             rackQuery.data?.stockItems as

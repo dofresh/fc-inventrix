@@ -9,7 +9,12 @@ interface ArrowExpandButtonProps {
 const ArrowExpandButton: Component<ArrowExpandButtonProps> = (props) => {
   return (
     <div
-      onClick={() => props.setExpand(!props.expand)}
+      onClick={() => {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("sidebarOpen", String(!props.expand));
+        }
+        props.setExpand(!props.expand);
+      }}
       class="ml-[28px] h-6 space-y-[6px] mt-6 z-50 cursor-pointer md:block hidden"
     >
       <Motion

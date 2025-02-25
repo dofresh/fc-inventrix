@@ -1,10 +1,10 @@
-import { IconType } from "react-icons";
+import { IconTypes } from "solid-icons";
 
 export type MenuType = {
   isSeperate?: boolean;
   name?: string;
   url?: string;
-  Icon?: IconType;
+  Icon?: IconTypes;
   iconRevers?: boolean;
 };
 

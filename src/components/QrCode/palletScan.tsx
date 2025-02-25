@@ -88,10 +88,10 @@ export const Scanner: Component<ScannerProps> = (props) => {
           html5QrCode.clear();
         })
         .catch((err) => {
-          console.log(err.message);
+          console.error(err.message);
         });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -107,7 +107,7 @@ export const Scanner: Component<ScannerProps> = (props) => {
         html5QrCode.clear();
       })
       .catch((err) => {
-        console.log(`Error scanning file. Reason: ${err}`);
+        console.error(`Error scanning file. Reason: ${err}`);
       });
   };
 
