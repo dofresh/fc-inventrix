@@ -1,4 +1,5 @@
 // ~/routes/warehouse/[location].tsx
+import { NoHydration } from "solid-js/web";
 import { useParams, useNavigate, useSearchParams } from "@solidjs/router";
 import { createEffect, createSignal, Show } from "solid-js";
 import { createQuery, createMutation } from "@tanstack/solid-query";
@@ -15,7 +16,7 @@ import {
 import { gqlClient } from "~/lib/graphql-client";
 import LocationCode from "~/components/warehous/location/inputRack";
 import Stocks, { StockType } from "~/components/warehous/location/stockItems";
-import { queryClient } from "~/lib/querh-client";
+import { queryClient } from "~/lib/query-client";
 import Layout from "~/components/Layout";
 export type RackType = {
   location: string;
@@ -68,6 +69,8 @@ const WarehousePage = () => {
         // 상태 업데이트
         if (getRackST.rack) {
           setRack(getRackST.rack as RackType);
+        } else {
+          setRack(undefined);
         }
 
         if (getRackST.stockItems) {
@@ -75,6 +78,8 @@ const WarehousePage = () => {
             .filter((item) => item?.palletCode)
             .map((item) => item.palletCode as string);
           setPallets(palletCodes);
+        } else {
+          setPallets([]);
         }
 
         // 반드시 전체 getRackST 객체를 반환
@@ -179,62 +184,66 @@ const WarehousePage = () => {
                   {decodedLocation()}
                 </div>
               </Show>
-              <Show
-                when={!rackQuery.isLoading || !rackMutation.isPending}
-                fallback={<Spin isOpen={true} />}
-              >
+              <NoHydration>
                 <Show
-                  when={!rackQuery.isLoading}
+                  when={!rackQuery.isLoading || !rackMutation.isPending}
                   fallback={<Spin isOpen={true} />}
                 >
                   <Show
-                    when={rack() && rack}
-                    fallback={
-                      <div class="mt-48">
-                        {/* <div class="text-center mb-12">{decodedLocation()}</div> */}
-                        <div class="flex gap-4">
-                          <button class="" onClick={() => navigate(-1)}>
-                            <div
-                              class={`w-[6rem] cursor-pointer inline-block border-4 p-2 rounded-lg ${
-                                rackQuery.isLoading && "border-slate-400"
-                              }`}
-                            >
-                              취소
-                            </div>
-                          </button>
-                          <button class="" onClick={createRackHandle}>
-                            <div
-                              class={`w-[6rem] cursor-pointer inline-block border-4 p-2 rounded-lg ${
-                                rackQuery.isLoading && "border-slate-400"
-                              }`}
-                            >
-                              생성
-                            </div>
-                          </button>
-                        </div>
-                      </div>
-                    }
+                    when={!rackQuery.isLoading}
+                    fallback={<Spin isOpen={true} />}
                   >
-                    <Show when={showSubmit()}>
-                      <div>
-                        <Stocks
-                          pallets={pallets()}
-                          locationStockItems={
-                            rackQuery.data?.stockItems as
-                              | StockType[]
-                              | null
-                              | undefined
-                          }
-                          rackId={rack()?._id}
-                          location={decodedLocation()}
-                          prodTotalQuantities={rackQuery.data?.totalQuantities}
-                          highlightStockId={stockId as string}
-                        />
-                      </div>
+                    <Show
+                      when={rack()}
+                      fallback={
+                        <div class="mt-48">
+                          {/* <div class="text-center mb-12">{decodedLocation()}</div> */}
+                          <div class="flex gap-4">
+                            <button class="" onClick={() => navigate(-1)}>
+                              <div
+                                class={`w-[6rem] cursor-pointer inline-block border-4 p-2 rounded-lg hover:bg-slate-300 ${
+                                  rackQuery.isLoading && "border-slate-400"
+                                }`}
+                              >
+                                취소
+                              </div>
+                            </button>
+                            <button class="" onClick={createRackHandle}>
+                              <div
+                                class={`w-[6rem] cursor-pointer inline-block border-4 p-2 rounded-lg ${
+                                  rackQuery.isLoading && "border-slate-400"
+                                }`}
+                              >
+                                생성
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <Show when={showSubmit()}>
+                        <div>
+                          <Stocks
+                            pallets={pallets()}
+                            locationStockItems={
+                              rackQuery.data?.stockItems as
+                                | StockType[]
+                                | null
+                                | undefined
+                            }
+                            rackId={rack()?._id}
+                            location={decodedLocation()}
+                            prodTotalQuantities={
+                              rackQuery.data?.totalQuantities
+                            }
+                            highlightStockId={stockId as string}
+                          />
+                        </div>
+                      </Show>
                     </Show>
                   </Show>
                 </Show>
-              </Show>
+              </NoHydration>
             </div>
           </div>
         </main>

@@ -6,7 +6,7 @@ import { gqlClient } from "~/lib/graphql-client";
 import * as yup from "yup";
 import { LoginDocument, LoginMutation } from "~/generated/graphql";
 import { createStore } from "solid-js/store";
-import { queryClient } from "~/lib/querh-client";
+import { queryClient } from "~/lib/query-client";
 import { Field } from "~/components/Field";
 
 // Form 타입 정의

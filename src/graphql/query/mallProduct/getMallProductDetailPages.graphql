@@ -1,0 +1,31 @@
+query GetMallProductDetailPages(
+  $limit: Int!
+  $offset: Int!
+  $sortField: String
+  $sortOrder: Int!
+  $input: GetMallProductDetailPagesInput!
+) {
+  getMallProductDetailPages(
+    limit: $limit
+    offset: $offset
+    sortField: $sortField
+    sortOrder: $sortOrder
+    input: $input
+  ) {
+    mallProductDetailPages {
+      _id
+      name
+      weight
+      capacity
+      quantityInBox
+      quantityInPackage
+      productPhotoId
+      productPhotoIds
+      productCode
+      productItemCode
+      storageType
+      disable
+    }
+    hasMore
+  }
+}

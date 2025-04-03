@@ -1,0 +1,28 @@
+fragment mallProductDetailPageFragment on MallProductDetailPage {
+  _id
+  name
+  productItemCode
+  disable
+  productCode
+  weight
+  capacity
+  quantityInBox
+  quantityInPackage
+  storageType
+  storageMethod
+  about {
+    name
+    thumbnailId
+    preThumbnailId
+    content
+  }
+  sampleImageIds
+  recipe {
+    byCook
+    time
+    temperature
+  }
+  productInfo
+  productPhotoId
+  productPhotoIds
+}

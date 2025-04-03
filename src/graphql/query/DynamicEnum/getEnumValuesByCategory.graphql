@@ -1,0 +1,5 @@
+query GetEnumValuesByCategory($categoryId: ID!) {
+  getEnumValuesByCategory(categoryId: $categoryId) {
+    ...RegularEnumValue
+  }
+}

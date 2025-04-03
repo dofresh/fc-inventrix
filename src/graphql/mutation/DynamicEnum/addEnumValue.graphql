@@ -1,0 +1,12 @@
+mutation addEnumValue($categoryId: ID!, $input: EnumValueInput!) {
+  addEnumValue(categoryId: $categoryId, input: $input) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}

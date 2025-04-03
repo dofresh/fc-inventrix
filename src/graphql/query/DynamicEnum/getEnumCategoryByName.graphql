@@ -1,0 +1,12 @@
+query GetEnumCategoryByName($name: String!) {
+  getEnumCategoryByName(name: $name) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}

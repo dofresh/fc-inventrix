@@ -1,0 +1,9 @@
+mutation UpsertMallProductDetailPage(
+  $input: UpsertMallProductDetailPageInput!
+) {
+  upsertMallProductDetailPage(input: $input) {
+    mallProductDetailPage {
+      ...mallProductDetailPageFragment
+    }
+  }
+}

@@ -6,7 +6,7 @@ import { useNavigate } from "@solidjs/router";
 import { gqlClient } from "~/lib/graphql-client";
 import { Dynamic } from "solid-js/web";
 import { MenuType } from "~/contracts/types/menu";
-import { queryClient } from "~/lib/querh-client";
+import { queryClient } from "~/lib/query-client";
 import { FCFreshhadaLogoKr } from "~/svg/FCfreshhada_logo_kr";
 import { FCLogo } from "~/svg/FC_logo";
 import { UserIcon } from "~/svg/userIcon";

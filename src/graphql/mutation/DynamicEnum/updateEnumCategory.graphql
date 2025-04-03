@@ -1,0 +1,12 @@
+mutation UpdateEnumCategory($id: ID!, $input: EnumCategoryInput!) {
+  updateEnumCategory(id: $id, input: $input) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}

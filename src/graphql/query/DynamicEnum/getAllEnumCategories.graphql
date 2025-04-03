@@ -1,0 +1,12 @@
+query GetAllEnumCategories {
+  getAllEnumCategories {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}

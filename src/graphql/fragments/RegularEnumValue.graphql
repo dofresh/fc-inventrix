@@ -1,0 +1,10 @@
+fragment RegularEnumValue on EnumValue {
+  _id
+  invisible
+  value
+  label
+  description
+  color
+  isActive
+  sortOrder
+}
