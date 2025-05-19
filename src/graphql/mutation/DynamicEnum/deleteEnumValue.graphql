@@ -1,0 +1,12 @@
+mutation DeleteEnumValue($categoryId: ID!, $valueId: ID!) {
+  deleteEnumValue(categoryId: $categoryId, valueId: $valueId) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}

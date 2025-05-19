@@ -1,0 +1,16 @@
+mutation UpdateEnumValue(
+  $categoryId: ID!
+  $valueId: ID!
+  $input: EnumValueInput!
+) {
+  updateEnumValue(categoryId: $categoryId, valueId: $valueId, input: $input) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}

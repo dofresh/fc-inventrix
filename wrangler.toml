@@ -1,18 +1,24 @@
-[configuration]
-cookies = true
+# Cloudflare Pages 설정
+name = "fc-inventrix"
+compatibility_date = "2025-01-17"
 
-[headers]
-Access-Control-Allow-Credentials = true
-Access-Control-Allow-Origin = "your-domain.com"
-
-name = "fc-inventrix" # 앱 이름
-type = "javascript" # 앱 유형
-workers_dev = true # Workers Dev 모드 활성화
-compatibility_date = "2025-01-17" # 최신 날짜로 설정
+[site]
+bucket = "./dist"  # 빌드된 정적 파일의 위치
 
 [build]
-command = "npm install && npm run build" # 빌드 명령어
+command = "npm install && npm run build"  # 빌드 명령어
 
-[build.upload]
-format = "modules" # Cloudflare Modules 포맷 사용
-main = "./dist/index.js" # 진입점 파일 경로
+[env.production]
+NODE_VERSION = "18"  # Node.js 버전 지정
+
+# 필요한 헤더 설정
+[[headers]]
+for = "/*"
+[headers.values]
+Access-Control-Allow-Origin = "*"
+Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+Access-Control-Allow-Headers = "Content-Type"
+
+# SSR 설정
+[functions]
+directory = "./dist/functions"  # SSR 함수 디렉토리

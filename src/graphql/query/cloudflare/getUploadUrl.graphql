@@ -1,0 +1,6 @@
+query GetUploadUrl {
+  getUploadUrl {
+    id
+    uploadURL
+  }
+}

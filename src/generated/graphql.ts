@@ -20,6 +20,26 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type AboutInfo = {
+  /** 제품 광고 문구 */
+  content: Maybe<Scalars['String']['output']>;
+  /** 제품에 대한 이름 */
+  name: Maybe<Scalars['String']['output']>;
+  /** 앞쪽썸네일 이미지 ID */
+  preThumbnailId: Maybe<Scalars['String']['output']>;
+  /** 썸네일 이미지 ID */
+  thumbnailId: Maybe<Scalars['String']['output']>;
+};
+
+export type AboutInfoInput = {
+  /** 제품 광고 문구 */
+  content: InputMaybe<Scalars['String']['input']>;
+  /** 제품에 대한 이름 */
+  name: InputMaybe<Scalars['String']['input']>;
+  /** 썸네일 이미지 ID */
+  thumbnailId: InputMaybe<Scalars['String']['input']>;
+};
+
 export type AddMemberInput = {
   email: Scalars['String']['input'];
   roles: Array<Scalars['String']['input']>;
@@ -60,6 +80,31 @@ export type Address = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type AddressForNaver = {
+  /** 배송지 타입. 250바이트 내외 */
+  addressType: Maybe<AddressType>;
+  /** 기본 주소. 300바이트 내외 */
+  baseAddress: Maybe<Scalars['String']['output']>;
+  /** 도시. 국내 주소에는 빈 문자열("")을 입력합니다. 300바이트 내외 */
+  city: Maybe<Scalars['String']['output']>;
+  /** 국가. 45바이트 내외 */
+  country: Maybe<Scalars['String']['output']>;
+  /** 상세 주소. 300바이트 내외 */
+  detailedAddress: Maybe<Scalars['String']['output']>;
+  /** 도로명 주소 여부. 8바이트 내외 */
+  isRoadNameAddress: Maybe<Scalars['Boolean']['output']>;
+  /** 이름. 150바이트 내외 */
+  name: Maybe<Scalars['String']['output']>;
+  /** 주(state). 국내 주소에는 빈 문자열("")을 입력합니다. 300바이트 내외 */
+  state: Maybe<Scalars['String']['output']>;
+  /** 연락처 1. 45바이트 내외 */
+  tel1: Maybe<Scalars['String']['output']>;
+  /** 연락처 2. 45바이트 내외 */
+  tel2: Maybe<Scalars['String']['output']>;
+  /** 우편번호. 45바이트 내외 */
+  zipCode: Maybe<Scalars['String']['output']>;
+};
+
 export type AddressInput = {
   addressLine1: InputMaybe<Scalars['String']['input']>;
   addressLine2: InputMaybe<Scalars['String']['input']>;
@@ -85,6 +130,12 @@ export type AddressKr = {
   updatedAt: Scalars['DateTime']['output'];
   zipcode: Maybe<Scalars['String']['output']>;
 };
+
+/** object (address.pay-order-seller) */
+export enum AddressType {
+  Domestic = 'DOMESTIC',
+  Foreign = 'FOREIGN'
+}
 
 export type ApiError = {
   message: Scalars['String']['output'];
@@ -176,6 +227,10 @@ export type BaljugoProductOrder = {
   warehouseProductDES: Maybe<Scalars['String']['output']>;
 };
 
+export type BeforeClaim = {
+  exchange: Maybe<Exchange>;
+};
+
 export type Box = {
   _id: Scalars['ID']['output'];
   boxCost: Maybe<Scalars['Float']['output']>;
@@ -238,6 +293,7 @@ export type CenterProductOrdersRespone = {
   defaultPackageBox: Maybe<Box>;
   delivery: Maybe<Delivery>;
   exchange: Maybe<Exchange>;
+  exchanging: Maybe<Exchange>;
   inventory: Maybe<Scalars['Float']['output']>;
   order: Maybe<Order>;
   pickOrder: Maybe<Picking>;
@@ -351,30 +407,36 @@ export type ChannelProduct = {
   textReviewPoint: Maybe<Scalars['Int']['output']>;
 };
 
-export type CollectAddress = {
-  /** 배송지 타입. 250바이트 내외 */
-  addressType: Maybe<Scalars['String']['output']>;
-  /** 기본 주소. 300바이트 내외 */
-  baseAddress: Maybe<Scalars['String']['output']>;
-  /** 도시. 국내 주소에는 빈 문자열("")을 입력합니다. 300바이트 내외 */
-  city: Maybe<Scalars['String']['output']>;
-  /** 국가. 45바이트 내외 */
-  country: Maybe<Scalars['String']['output']>;
-  /** 상세 주소. 300바이트 내외 */
-  detailedAddress: Maybe<Scalars['String']['output']>;
-  /** 도로명 주소 여부. 8바이트 내외 */
-  isRoadNameAddress: Maybe<Scalars['Boolean']['output']>;
-  /** 이름. 150바이트 내외 */
-  name: Maybe<Scalars['String']['output']>;
-  /** 주(state). 국내 주소에는 빈 문자열("")을 입력합니다. 300바이트 내외 */
-  state: Maybe<Scalars['String']['output']>;
-  /** 연락처 1. 45바이트 내외 */
-  tel1: Maybe<Scalars['String']['output']>;
-  /** 연락처 2. 45바이트 내외 */
-  tel2: Maybe<Scalars['String']['output']>;
-  /** 우편번호. 45바이트 내외 */
-  zipCode: Maybe<Scalars['String']['output']>;
-};
+/** 클레임 상태 */
+export enum ClaimStatus {
+  AdminCanceling = 'ADMIN_CANCELING',
+  AdminCancelDone = 'ADMIN_CANCEL_DONE',
+  AdminCancelReject = 'ADMIN_CANCEL_REJECT',
+  Canceling = 'CANCELING',
+  CancelDone = 'CANCEL_DONE',
+  CancelReject = 'CANCEL_REJECT',
+  CancelRequest = 'CANCEL_REQUEST',
+  Collecting = 'COLLECTING',
+  CollectDone = 'COLLECT_DONE',
+  ExchangeDone = 'EXCHANGE_DONE',
+  ExchangeRedelivering = 'EXCHANGE_REDELIVERING',
+  ExchangeReject = 'EXCHANGE_REJECT',
+  ExchangeRequest = 'EXCHANGE_REQUEST',
+  PurchaseDecisionHoldback = 'PURCHASE_DECISION_HOLDBACK',
+  PurchaseDecisionHoldbackRelease = 'PURCHASE_DECISION_HOLDBACK_RELEASE',
+  PurchaseDecisionRequest = 'PURCHASE_DECISION_REQUEST',
+  ReturnDone = 'RETURN_DONE',
+  ReturnReject = 'RETURN_REJECT',
+  ReturnRequest = 'RETURN_REQUEST'
+}
+
+export enum ClaimType {
+  AdminCancel = 'ADMIN_CANCEL',
+  Cancel = 'CANCEL',
+  Exchange = 'EXCHANGE',
+  PurchaseDecisionHoldback = 'PURCHASE_DECISION_HOLDBACK',
+  Return = 'RETURN'
+}
 
 export type Company = {
   /** 종목 */
@@ -412,6 +474,97 @@ export type Company = {
 export type CompanyResponse = {
   company: Maybe<Company>;
   errors: Maybe<ApiError>;
+};
+
+export type CompletedClaim = {
+  /** 반품 완료일 */
+  claimCompleteOperationDate: Maybe<Scalars['String']['output']>;
+  /** 클레임 배송비 청구액 */
+  claimDeliveryFeeDemandAmount: Maybe<Scalars['Int']['output']>;
+  /** 반품 배송비 할인액 */
+  claimDeliveryFeeDiscountAmount: Maybe<Scalars['Int']['output']>;
+  /** 클레임 배송비 결제 수단 */
+  claimDeliveryFeePayMeans: Maybe<Scalars['String']['output']>;
+  /** 클레임 배송비 결제 방법 */
+  claimDeliveryFeePayMethod: Maybe<Scalars['String']['output']>;
+  /** 클레임 배송비 묶음 청구 상품 주문 번호 */
+  claimDeliveryFeeProductOrderIds: Maybe<Scalars['String']['output']>;
+  /** 클레임 번호 */
+  claimId: Scalars['String']['output'];
+  /** 클레임 승인일 */
+  claimRequestAdmissionDate: Maybe<Scalars['String']['output']>;
+  /** 클레임 요청일 */
+  claimRequestDate: Scalars['String']['output'];
+  /** 클레임 상세 사유 */
+  claimRequestDetailContent: Maybe<Scalars['String']['output']>;
+  /** 클레임 요청 사유 */
+  claimRequestReason: Maybe<NaverReason>;
+  /** 클레임 상태 */
+  claimStatus: ClaimStatus;
+  /** 클레임 구분 */
+  claimType: ClaimType;
+  /** 구매자 수거지 주소 */
+  collectAddress: Maybe<AddressForNaver>;
+  /** 수거 완료일 */
+  collectCompletedDate: Maybe<Scalars['String']['output']>;
+  /** 택배사 코드 */
+  collectDeliveryCompany: Maybe<DeliveryCompanyEnum>;
+  /** 배송 방법 코드 */
+  collectDeliveryMethod: Maybe<DeliveryMethod>;
+  /** 수거 종료 시간 */
+  collectEndTime: Maybe<Scalars['String']['output']>;
+  /** 배송 일자 */
+  collectOperationDate: Maybe<Scalars['String']['output']>;
+  /** 수거 슬롯 ID */
+  collectSlotId: Maybe<Scalars['String']['output']>;
+  /** 수거 시작 시간 */
+  collectStartTime: Maybe<Scalars['String']['output']>;
+  /** 수거 상태 */
+  collectStatus: Maybe<CollectStatus>;
+  /** 수거 송장 번호 */
+  collectTrackingNumber: Maybe<Scalars['String']['output']>;
+  /** 기타 비용 청구액 */
+  etcFeeDemandAmount: Maybe<Scalars['Int']['output']>;
+  /** 기타 비용 결제 수단 */
+  etcFeePayMeans: Maybe<Scalars['String']['output']>;
+  /** 기타 비용 결제 방법 */
+  etcFeePayMethod: Maybe<Scalars['String']['output']>;
+  /** 보류 설정일 */
+  holdbackConfigDate: Maybe<Scalars['String']['output']>;
+  /** 보류 설정자 */
+  holdbackConfigurer: Maybe<Scalars['String']['output']>;
+  /** 보류 상세 사유 */
+  holdbackDetailedReason: Maybe<Scalars['String']['output']>;
+  /** 보류 유형 */
+  holdbackReason: Maybe<HoldbackReason>;
+  /** 보류 해제일 */
+  holdbackReleaseDate: Maybe<Scalars['String']['output']>;
+  /** 보류 해제자 */
+  holdbackReleaser: Maybe<Scalars['String']['output']>;
+  /** 보류 상태 */
+  holdbackStatus: Maybe<HoldbackStatus>;
+  /** 택배사 코드 */
+  reDelivery: Maybe<DeliveryCompanyEnum>;
+  /** 구매자 재배송지 주소 */
+  reDeliveryAddress: Maybe<AddressForNaver>;
+  /** 배송 방법 코드 */
+  reDeliveryMethod: Maybe<DeliveryMethod>;
+  /** 배송 상세 상태 */
+  reDeliveryStatus: Maybe<DeliveryStatus>;
+  /** 환불 예정일 */
+  refundExpectedDate: Maybe<Scalars['String']['output']>;
+  /** 환불 대기 사유 */
+  refundStandbyReason: Maybe<Scalars['String']['output']>;
+  /** 환불 대기 상태 */
+  refundStandbyStatus: Maybe<Scalars['String']['output']>;
+  /** 반품 도서산간 배송비 */
+  remoteAreaCostChargeAmount: Maybe<Scalars['Int']['output']>;
+  /** 접수 채널 */
+  requestChannel: Maybe<Scalars['String']['output']>;
+  /** 클레임 요청 수량 */
+  requestQuantity: Scalars['Int']['output'];
+  /** 판매자 교환/반품 수취 주소 */
+  returnReceiveAddress: Maybe<AddressForNaver>;
 };
 
 export type ComponySearchType = {
@@ -520,6 +673,12 @@ export enum CurrencyType {
   Usd = 'USD'
 }
 
+export type CurrentClaim = {
+  cancel: Maybe<Cancel>;
+  exchange: Maybe<Exchange>;
+  return: Maybe<Return>;
+};
+
 export type CustomerOrders = {
   customerCode: Maybe<Scalars['String']['output']>;
   orders: Maybe<Array<BaljugoProductOrder>>;
@@ -583,6 +742,87 @@ export type Delivery = {
   wrongTrackingNumberType: Maybe<Scalars['String']['output']>;
 };
 
+/** 배송회사 코드 */
+export enum DeliveryCompanyEnum {
+  Ace = 'ACE',
+  Aciexpress = 'ACIEXPRESS',
+  Adcair = 'ADCAIR',
+  Airway = 'AIRWAY',
+  Anytrack = 'ANYTRACK',
+  Apex = 'APEX',
+  Bridge = 'BRIDGE',
+  Ch1 = 'CH1',
+  Chunil = 'CHUNIL',
+  Cjgls = 'CJGLS',
+  Crlx = 'CRLX',
+  Cuparcel = 'CUPARCEL',
+  Cvsnet = 'CVSNET',
+  Cwayexpress = 'CWAYEXPRESS',
+  Daelim = 'DAELIM',
+  Daesin = 'DAESIN',
+  Daewoon = 'DAEWOON',
+  Dhl = 'DHL',
+  Dhlde = 'DHLDE',
+  Donggang = 'DONGGANG',
+  Ems = 'EMS',
+  Epost = 'EPOST',
+  Esther = 'ESTHER',
+  Eunha = 'EUNHA',
+  Europarcel = 'EUROPARCEL',
+  Ezusa = 'EZUSA',
+  Fedex = 'FEDEX',
+  Generalpost = 'GENERALPOST',
+  Gos = 'GOS',
+  Gpslogix = 'GPSLOGIX',
+  Gsiexpress = 'GSIEXPRESS',
+  Gsmnton = 'GSMNTON',
+  Gspostbox = 'GSPOSTBOX',
+  Handalum = 'HANDALUM',
+  Hanjin = 'HANJIN',
+  Hanwoori = 'HANWOORI',
+  Hdexp = 'HDEXP',
+  Hlcglobal = 'HLCGLOBAL',
+  Homeinno = 'HOMEINNO',
+  Homepick = 'HOMEPICK',
+  Honam = 'HONAM',
+  Howser = 'HOWSER',
+  Hpl = 'HPL',
+  Hybrid = 'HYBRID',
+  Hyundai = 'HYUNDAI',
+  Ik = 'IK',
+  Ilyang = 'ILYANG',
+  Iparcel = 'IPARCEL',
+  Kdexp = 'KDEXP',
+  Kgb = 'KGB',
+  Kgsl = 'KGSL',
+  Kin = 'KIN',
+  Korexg = 'KOREXG',
+  Kunyoung = 'KUNYOUNG',
+  Lglogistics = 'LGLOGISTICS',
+  Lineexp = 'LINEEXP',
+  Lotos = 'LOTOS',
+  Nonghyup = 'NONGHYUP',
+  Pantos = 'PANTOS',
+  Qxpress = 'QXPRESS',
+  Registpost = 'REGISTPOST',
+  Sebang = 'SEBANG',
+  Slx = 'SLX',
+  Smartlogis = 'SMARTLOGIS',
+  Sunghun = 'SUNGHUN',
+  Swgexp = 'SWGEXP',
+  Tnt = 'TNT',
+  Ufreight = 'UFREIGHT',
+  Ups = 'UPS',
+  Usps = 'USPS',
+  Warpex = 'WARPEX',
+  Wevill = 'WEVILL',
+  Wizwa = 'WIZWA',
+  Woorihb = 'WOORIHB',
+  Yjs = 'YJS',
+  Yjsworld = 'YJSWORLD',
+  Yongma = 'YONGMA'
+}
+
 export type DeliveryKgbInput = {
   trackingNumbers: Array<Scalars['String']['input']>;
 };
@@ -623,6 +863,19 @@ export type DeliveryPriceTagsResponse = {
   deliveryPriceTags: Maybe<Array<DeliveryPriceTag>>;
   errors: Maybe<Array<ApiError>>;
 };
+
+/** 배송 상세 상태 */
+export enum DeliveryStatus {
+  CollectCargo = 'COLLECT_CARGO',
+  CollectCargoCancel = 'COLLECT_CARGO_CANCEL',
+  CollectCargoFail = 'COLLECT_CARGO_FAIL',
+  CollectRequest = 'COLLECT_REQUEST',
+  CollectWait = 'COLLECT_WAIT',
+  DeliveryCompletion = 'DELIVERY_COMPLETION',
+  DeliveryFail = 'DELIVERY_FAIL',
+  NotTracking = 'NOT_TRACKING',
+  WrongInvoice = 'WRONG_INVOICE'
+}
 
 export type DispatchProductOrderInput = {
   deliveryCompanyCode: Scalars['String']['input'];
@@ -982,6 +1235,45 @@ export type EmailVerifyResponse = {
   ok: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type EnumCategory = {
+  _id: Scalars['ID']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  description: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  values: Array<EnumValue>;
+};
+
+export type EnumCategoryInput = {
+  description: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type EnumValue = {
+  _id: Scalars['ID']['output'];
+  color: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  description: Maybe<Scalars['String']['output']>;
+  /** 더 이상 해당값 생성을 원치 않을 경우(값 사용을 허용) */
+  invisible: Scalars['Boolean']['output'];
+  isActive: Scalars['Boolean']['output'];
+  label: Scalars['String']['output'];
+  sortOrder: Scalars['Float']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type EnumValueInput = {
+  color: InputMaybe<Scalars['String']['input']>;
+  description: InputMaybe<Scalars['String']['input']>;
+  /** 더 이상 해당값 생성을 원치 않을 경우(값 사용을 허용) */
+  invisible: InputMaybe<Scalars['Boolean']['input']>;
+  isActive: InputMaybe<Scalars['Boolean']['input']>;
+  label: InputMaybe<Scalars['String']['input']>;
+  sortOrder: InputMaybe<Scalars['Float']['input']>;
+  value: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Exchange = {
   /** 교환 배송비 청구액 */
   claimDeliveryFeeDemandAmount: Maybe<Scalars['Int']['output']>;
@@ -993,12 +1285,13 @@ export type Exchange = {
   claimDeliveryFeePayMethod: Maybe<Scalars['String']['output']>;
   /** 교환 배송비 묶음 청구 상품 주문 번호(여러 개면 쉼표로 구분). 4000바이트 내외 */
   claimDeliveryFeeProductOrderIds: Maybe<Scalars['String']['output']>;
+  claimId: Maybe<Scalars['String']['output']>;
   /** 클레임 요청일. 45바이트 내외 */
   claimRequestDate: Maybe<Scalars['String']['output']>;
   /** 클레임 상태. 250바이트 내외 */
   claimStatus: Maybe<Scalars['String']['output']>;
   /** 수거 주소 */
-  collectAddress: Maybe<CollectAddress>;
+  collectAddress: Maybe<AddressForNaver>;
   /** 수거 완료일. 45바이트 내외 */
   collectCompletedDate: Maybe<Scalars['String']['output']>;
   /** 택배사 코드. 250바이트 내외 */
@@ -1048,7 +1341,7 @@ export type Exchange = {
   /** 접수 채널. 100바이트 내외 */
   requestChannel: Maybe<Scalars['String']['output']>;
   /** 반송 수령 주소 */
-  returnReceiveAddress: Maybe<CollectAddress>;
+  returnReceiveAddress: Maybe<AddressForNaver>;
 };
 
 export type FcCustomer = {
@@ -1180,6 +1473,10 @@ export type FindEmailResponse = {
   errors: Maybe<Array<FieldError>>;
 };
 
+export type GetBaljugoProductOrdersInput = {
+  deliveryDate: Scalars['String']['input'];
+};
+
 export type GetBoxCostInput = {
   boxname: Scalars['String']['input'];
 };
@@ -1249,6 +1546,11 @@ export type GetInventoryAtDateInput = {
   warehouseId: Scalars['String']['input'];
 };
 
+export type GetMallProductDetailPagesInput = {
+  name: InputMaybe<Scalars['String']['input']>;
+  productCode: InputMaybe<Scalars['String']['input']>;
+};
+
 export type GetPackageBoxCostInput = {
   productCode: Scalars['String']['input'];
 };
@@ -1301,6 +1603,30 @@ export type GetTodosInput = {
 export enum GiftReceivingStatus {
   Received = 'RECEIVED',
   WaitForReceiving = 'WAIT_FOR_RECEIVING'
+}
+
+/** 보류 유형 */
+export enum HoldbackReason {
+  Etc = 'ETC',
+  Etc2 = 'ETC2',
+  ExchangeDeliveryfee = 'EXCHANGE_DELIVERYFEE',
+  ExchangeExtrafee = 'EXCHANGE_EXTRAFEE',
+  ExchangeHoldback = 'EXCHANGE_HOLDBACK',
+  ExchangeProductNotDelivered = 'EXCHANGE_PRODUCT_NOT_DELIVERED',
+  ExchangeProductReady = 'EXCHANGE_PRODUCT_READY',
+  Extrafeee = 'EXTRAFEEE',
+  PurchaserConfirmNeed = 'PURCHASER_CONFIRM_NEED',
+  ReturnDeliveryfee = 'RETURN_DELIVERYFEE',
+  ReturnDeliveryfeeAndExtrafeee = 'RETURN_DELIVERYFEE_AND_EXTRAFEEE',
+  ReturnProductNotDelivered = 'RETURN_PRODUCT_NOT_DELIVERED',
+  SellerConfirmNeed = 'SELLER_CONFIRM_NEED',
+  SellerRemit = 'SELLER_REMIT'
+}
+
+/** 보류 상태 */
+export enum HoldbackStatus {
+  Holdback = 'HOLDBACK',
+  Released = 'RELEASED'
 }
 
 export type HopeDelivery = {
@@ -1452,6 +1778,50 @@ export type LoginResponse = {
   user: Maybe<User>;
 };
 
+export type MallProductDetailPage = {
+  _id: Maybe<Scalars['ID']['output']>;
+  /** 제품에 대한 상세 정보 */
+  about: Maybe<AboutInfo>;
+  /** 용량 (예: 1kg*10팩) */
+  capacity: Maybe<Scalars['String']['output']>;
+  disable: Maybe<Scalars['Boolean']['output']>;
+  /** 제품명 */
+  name: Maybe<Scalars['String']['output']>;
+  productCode: Maybe<Scalars['String']['output']>;
+  /** 제품 상세 정보 (제품 정보) */
+  productInfo: Maybe<Scalars['String']['output']>;
+  productItemCode: Maybe<Scalars['String']['output']>;
+  /** 대표 이미지 ID */
+  productPhotoId: Maybe<Scalars['String']['output']>;
+  /** 추가 이미지 ID */
+  productPhotoIds: Maybe<Array<Scalars['String']['output']>>;
+  /** 박스내 수량 (예: 10팩) */
+  quantityInBox: Maybe<Scalars['String']['output']>;
+  /** 팩내 낱개수량 (예: 20미) */
+  quantityInPackage: Maybe<Scalars['String']['output']>;
+  /** 레시피 정보 */
+  recipe: Maybe<Array<RecipeInfo>>;
+  /** 샘플 이미지 ID 목록 */
+  sampleImageIds: Maybe<Array<Scalars['String']['output']>>;
+  /** 보관 방법 (예: 냉동실(-18°C 이하)) */
+  storageMethod: Maybe<Scalars['String']['output']>;
+  /** 보관 유형 (예: 냉동) */
+  storageType: Maybe<Scalars['String']['output']>;
+  /** 박스무게 (예: 10kg) */
+  weight: Maybe<Scalars['String']['output']>;
+};
+
+export type MallProductDetailPageResponse = {
+  error: Maybe<ApiError>;
+  mallProductDetailPage: Maybe<MallProductDetailPage>;
+};
+
+export type MallProductDetailPagesResponse = {
+  error: Maybe<ApiError>;
+  hasMore: Maybe<Scalars['Boolean']['output']>;
+  mallProductDetailPages: Maybe<Array<MallProductDetailPage>>;
+};
+
 export type MonthlyProductSale = {
   /** 세금 */
   VAT: Maybe<Scalars['Float']['output']>;
@@ -1482,6 +1852,7 @@ export type MonthlyProductSalesResponse = {
 };
 
 export type Mutation = {
+  addEnumValue: EnumCategory;
   addMember: EmailVerifyResponse;
   addProfilePicture: Scalars['Boolean']['output'];
   addTotalOrders: Maybe<AddTotalOrdersRespones>;
@@ -1492,6 +1863,7 @@ export type Mutation = {
   connetPackageBoxMapping: PackageBoxMappingResponse;
   createCalendarDate: CreateCalendarDateResponse;
   createContact: CreateContactResponse;
+  createEnumCategory: EnumCategory;
   createInbound: FcInBound;
   createOutbound: FcOutBound;
   createProduct: Product;
@@ -1503,6 +1875,7 @@ export type Mutation = {
   deleteContactEmail: Scalars['Boolean']['output'];
   deleteContactPhone: Scalars['Boolean']['output'];
   deleteDliveryPriceTag: Scalars['Boolean']['output'];
+  deleteEnumValue: EnumCategory;
   deleteImportOrder: Scalars['Boolean']['output'];
   deleteImportTodo: UpdateTodoResponse;
   deleteInbound: Scalars['Boolean']['output'];
@@ -1545,6 +1918,8 @@ export type Mutation = {
   transitStockItem: Scalars['Boolean']['output'];
   updateCalendarDate: UpdateCalendarDateResponse;
   updateCenterNaverProducts: Scalars['Boolean']['output'];
+  updateEnumCategory: EnumCategory;
+  updateEnumValue: EnumCategory;
   updateInventoryEcount: CreateInventoryEcountResponese;
   updatePackageBox: Scalars['Boolean']['output'];
   updateSPCOrder: UpdateSpcOrderResponse;
@@ -1581,9 +1956,16 @@ export type Mutation = {
   upsertImportItem: UpsertImportItemResponse;
   upsertImportOrder: UpsertImportOrderResponse;
   upsertImportTodo: UpsertImportTodoResponse;
+  upsertMallProductDetailPage: MallProductDetailPageResponse;
   upsertRack: RackRespones;
   upsertStockItem: StockItemRespones;
   userSecession: UpdateUserResponse;
+};
+
+
+export type MutationAddEnumValueArgs = {
+  categoryId: Scalars['ID']['input'];
+  input: EnumValueInput;
 };
 
 
@@ -1636,6 +2018,11 @@ export type MutationCreateContactArgs = {
 };
 
 
+export type MutationCreateEnumCategoryArgs = {
+  input: EnumCategoryInput;
+};
+
+
 export type MutationCreateOutboundArgs = {
   input: OutboundInput;
 };
@@ -1683,6 +2070,12 @@ export type MutationDeleteContactPhoneArgs = {
 
 export type MutationDeleteDliveryPriceTagArgs = {
   deliveryPriceTagId: Scalars['String']['input'];
+};
+
+
+export type MutationDeleteEnumValueArgs = {
+  categoryId: Scalars['ID']['input'];
+  valueId: Scalars['ID']['input'];
 };
 
 
@@ -1824,6 +2217,19 @@ export type MutationTransitStockItemArgs = {
 
 export type MutationUpdateCalendarDateArgs = {
   input: UpdateCalendarDateInput;
+};
+
+
+export type MutationUpdateEnumCategoryArgs = {
+  id: Scalars['ID']['input'];
+  input: EnumCategoryInput;
+};
+
+
+export type MutationUpdateEnumValueArgs = {
+  categoryId: Scalars['ID']['input'];
+  input: EnumValueInput;
+  valueId: Scalars['ID']['input'];
 };
 
 
@@ -2002,6 +2408,11 @@ export type MutationUpsertImportTodoArgs = {
 };
 
 
+export type MutationUpsertMallProductDetailPageArgs = {
+  input: UpsertMallProductDetailPageInput;
+};
+
+
 export type MutationUpsertRackArgs = {
   input: UpsertRackInput;
 };
@@ -2014,31 +2425,6 @@ export type MutationUpsertStockItemArgs = {
 
 export type MutationUserSecessionArgs = {
   input: UserSecessionInput;
-};
-
-export type NaverAddress = {
-  /** 배송지 타입. 250바이트 내외 */
-  addressType: Maybe<Scalars['String']['output']>;
-  /** 기본 주소. 300바이트 내외 */
-  baseAddress: Maybe<Scalars['String']['output']>;
-  /** 도시. 국내 주소에는 빈 문자열('')을 입력합니다. 300바이트 내외 */
-  city: Maybe<Scalars['String']['output']>;
-  /** 국가. 45바이트 내외 */
-  country: Maybe<Scalars['String']['output']>;
-  /** 상세 주소. 300바이트 내외 */
-  detailedAddress: Maybe<Scalars['String']['output']>;
-  /** 도로명 주소 여부. 8바이트 내외 */
-  isRoadNameAddress: Maybe<Scalars['Boolean']['output']>;
-  /** 이름. 150바이트 내외 */
-  name: Maybe<Scalars['String']['output']>;
-  /** 주(state). 국내 주소에는 빈 문자열('')을 입력합니다. 300바이트 내외 */
-  state: Maybe<Scalars['String']['output']>;
-  /** 연락처 1. 45바이트 내외 */
-  tel1: Maybe<Scalars['String']['output']>;
-  /** 연락처 2. 45바이트 내외 */
-  tel2: Maybe<Scalars['String']['output']>;
-  /** 우편번호. 45바이트 내외 */
-  zipCode: Maybe<Scalars['String']['output']>;
 };
 
 export type NaverConfirmProductOrderQueryResponses = {
@@ -2070,12 +2456,12 @@ export type NaverProductOrder = {
 };
 
 export type NaverProductOrderData = {
-  cancel: Maybe<Cancel>;
+  beforeClaim: Maybe<BeforeClaim>;
+  completedClaims: Maybe<Array<CompletedClaim>>;
+  currentClaim: Maybe<CurrentClaim>;
   delivery: Maybe<Delivery>;
-  exchange: Maybe<Exchange>;
   order: Maybe<Order>;
   productOrder: Maybe<ProductOrder>;
-  return: Maybe<Return>;
 };
 
 export type NaverProductOrderIds = {
@@ -2138,6 +2524,44 @@ export type NaverPruductsInput = {
   page: InputMaybe<Scalars['Float']['input']>;
   productStatusType: Array<ProductStatusType>;
 };
+
+/** 클레임 요청 사유 */
+export enum NaverReason {
+  AsyncFailPayment = 'ASYNC_FAIL_PAYMENT',
+  AsyncLongWaitPayment = 'ASYNC_LONG_WAIT_PAYMENT',
+  Broken = 'BROKEN',
+  BrokenAndBad = 'BROKEN_AND_BAD',
+  ColorAndSize = 'COLOR_AND_SIZE',
+  DelayedDelivery = 'DELAYED_DELIVERY',
+  DelayedDeliveryByPurchaser = 'DELAYED_DELIVERY_BY_PURCHASER',
+  DroppedDelivery = 'DROPPED_DELIVERY',
+  Etc = 'ETC',
+  GiftIntentChanged = 'GIFT_INTENT_CHANGED',
+  GiftRefusal = 'GIFT_REFUSAL',
+  IncorrectInfo = 'INCORRECT_INFO',
+  IncorrectInfoByPurchaser = 'INCORRECT_INFO_BY_PURCHASER',
+  IntentChanged = 'INTENT_CHANGED',
+  MinorRestricted = 'MINOR_RESTRICTED',
+  MistakeOrder = 'MISTAKE_ORDER',
+  NotYetDelivery = 'NOT_YET_DELIVERY',
+  NotYetDiscussion = 'NOT_YET_DISCUSSION',
+  NotYetPayment = 'NOT_YET_PAYMENT',
+  NotYetReceive = 'NOT_YET_RECEIVE',
+  OutOfStock = 'OUT_OF_STOCK',
+  ProductUnsatisfied = 'PRODUCT_UNSATISFIED',
+  ProductUnsatisfiedByPurchaser = 'PRODUCT_UNSATISFIED_BY_PURCHASER',
+  ReceiverMismatched = 'RECEIVER_MISMATCHED',
+  ReceivingBlocked = 'RECEIVING_BLOCKED',
+  ReceivingDueDateOver = 'RECEIVING_DUE_DATE_OVER',
+  SaleIntentChanged = 'SALE_INTENT_CHANGED',
+  SimpleIntentChanged = 'SIMPLE_INTENT_CHANGED',
+  SoldOut = 'SOLD_OUT',
+  UnderQuantity = 'UNDER_QUANTITY',
+  WrongDelayedDelivery = 'WRONG_DELAYED_DELIVERY',
+  WrongDelivery = 'WRONG_DELIVERY',
+  WrongOption = 'WRONG_OPTION',
+  WrongOrder = 'WRONG_ORDER'
+}
 
 export type NaverTokenResponse = {
   token: Maybe<Scalars['String']['output']>;
@@ -2293,13 +2717,17 @@ export enum PackageCapacityUnitType {
   Tonne = 'TONNE'
 }
 
+/** Package material type in English */
 export enum PackageMaterial {
   Bulk = 'BULK',
   Drum = 'DRUM',
   PaperPackage = 'PAPER_PACKAGE',
   PlasticContainer = 'PLASTIC_CONTAINER',
   SealedPack = 'SEALED_PACK',
-  VacuumPack = 'VACUUM_PACK'
+  Tray = 'TRAY',
+  VacuumPack = 'VACUUM_PACK',
+  VacuumSkinTrayPack = 'VACUUM_SKIN_TRAY_PACK',
+  VacuumTrayPack = 'VACUUM_TRAY_PACK'
 }
 
 export type PackageSize = {
@@ -2589,7 +3017,7 @@ export type ProductOrder = {
   /** 배송 메모. 4000바이트 내외 */
   shippingMemo: Maybe<Scalars['String']['output']>;
   /** object (address.pay-order-seller) */
-  takingAddress: Maybe<TakingAddress>;
+  takingAddress: Maybe<AddressForNaver>;
   /** 총 결제 금액(할인 적용 후 금액) */
   totalPaymentAmount: Maybe<Scalars['Int']['output']>;
   /** 상품 주문 금액(할인 적용 전 금액) */
@@ -2658,7 +3086,7 @@ export type Query = {
   baljugoOrderCustomers: BaljugoOrderCustomersRespones;
   baljugoOrderCustomersHistory: BaljugoOrderCustomersRespones;
   baljugoPickingList: PickingListsRespones;
-  baljugoPickingStickerList: BaljugoPickingStickerListRespones;
+  baljugoPickingStickerList: BaljugoProductOrderRespones;
   centerEcountProductStatus: CenterProuductStatusResponse;
   centerProductOrders: Array<CenterProductOrdersRespone>;
   company: CompanyResponse;
@@ -2677,6 +3105,8 @@ export type Query = {
   ecountZoneTest: Maybe<Scalars['String']['output']>;
   fetchUpdatedOrders: Maybe<FetchUpdatedOrdersResponse>;
   generatePDF: Scalars['JSON']['output'];
+  getAllEnumCategories: Array<EnumCategory>;
+  getBaljugoProductOrders: BaljugoProductOrderRespones;
   getBox: Scalars['JSON']['output'];
   getBoxes: Array<Box>;
   getCalendarDates: GetCalendarDateResponse;
@@ -2690,11 +3120,14 @@ export type Query = {
   getEcountListInventoryStatusLocationTrends: EcountInventoryStatusLocationResponse;
   getEcountProfitMargins: EcountProfitMarginResponse;
   getEmailFromToken: FindEmailResponse;
+  getEnumCategoryByName: Maybe<EnumCategory>;
+  getEnumValuesByCategory: Array<EnumValue>;
   getImportOrder: GetImportOrderResponse;
   getImportOrders: ImportOrdersResponse;
   getImports: GetImportsResponse;
   getInventoryAtDate: Scalars['Float']['output'];
   getInventorySnapshot: Scalars['Float']['output'];
+  getMallProductDetailPages: MallProductDetailPagesResponse;
   getNaverOriginProducts: Scalars['String']['output'];
   getPackageBoxCost: Scalars['Float']['output'];
   getPalletStockItem: StockItemRespones;
@@ -2710,7 +3143,9 @@ export type Query = {
   getStorageItemsQuantity: StorageItemsQuantityRespones;
   getTodos: TodosResponse;
   getUploadEcountSalesXLSX: Scalars['JSON']['output'];
+  getUploadUrl: UploadUrlResultResponese;
   logiOrders: NaverProductOrderResponse;
+  mallProductDetailPage: MallProductDetailPageResponse;
   me: Maybe<User>;
   monthlyProductSale: MonthlyProductSaleResponse;
   monthlyProductSales: MonthlyProductSalesResponse;
@@ -2808,6 +3243,11 @@ export type QueryEcountViewProductsArgs = {
 };
 
 
+export type QueryGetBaljugoProductOrdersArgs = {
+  input: GetBaljugoProductOrdersInput;
+};
+
+
 export type QueryGetBoxArgs = {
   input: GetBoxCostInput;
 };
@@ -2848,6 +3288,16 @@ export type QueryGetEmailFromTokenArgs = {
 };
 
 
+export type QueryGetEnumCategoryByNameArgs = {
+  name: Scalars['String']['input'];
+};
+
+
+export type QueryGetEnumValuesByCategoryArgs = {
+  categoryId: Scalars['ID']['input'];
+};
+
+
 export type QueryGetImportOrderArgs = {
   importOrderId: Scalars['String']['input'];
 };
@@ -2865,6 +3315,15 @@ export type QueryGetImportsArgs = {
 
 export type QueryGetInventoryAtDateArgs = {
   input: GetInventoryAtDateInput;
+};
+
+
+export type QueryGetMallProductDetailPagesArgs = {
+  input: GetMallProductDetailPagesInput;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  sortField: InputMaybe<Scalars['String']['input']>;
+  sortOrder: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2935,6 +3394,11 @@ export type QueryGetUploadEcountSalesXlsxArgs = {
 
 export type QueryLogiOrdersArgs = {
   input: NaverProductOrderLastStatuesInput;
+};
+
+
+export type QueryMallProductDetailPageArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -3042,6 +3506,15 @@ export type RacksRespones = {
   racks: Maybe<Array<Rack>>;
 };
 
+export type RecipeInfo = {
+  /** 조리기구 */
+  byCook: Maybe<Scalars['String']['output']>;
+  /** 조리온도 */
+  temperature: Maybe<Scalars['String']['output']>;
+  /** 조리시간 */
+  time: Maybe<Scalars['String']['output']>;
+};
+
 export type Return = {
   /** 반품 배송비 청구액 */
   claimDeliveryFeeDemandAmount: Maybe<Scalars['Int']['output']>;
@@ -3058,7 +3531,7 @@ export type Return = {
   /** 클레임 상태 */
   claimStatus: Maybe<Scalars['String']['output']>;
   /** 수거 주소 */
-  collectAddress: Maybe<NaverAddress>;
+  collectAddress: Maybe<AddressForNaver>;
   /** 수거 완료일 */
   collectCompletedDate: Maybe<Scalars['String']['output']>;
   /** 택배사 코드 */
@@ -3106,7 +3579,7 @@ export type Return = {
   /** 클레임 요청 사유 */
   returnReason: Maybe<Scalars['String']['output']>;
   /** 반품 주소 */
-  returnReceiveAddress: Maybe<NaverAddress>;
+  returnReceiveAddress: Maybe<AddressForNaver>;
 };
 
 /** 사용자 권한 설정 */
@@ -3245,6 +3718,7 @@ export type SavedDeliveryFeeRespones = {
   fee: Maybe<Scalars['Float']['output']>;
   orderName: Maybe<Scalars['String']['output']>;
   productOrderId: Maybe<Scalars['String']['output']>;
+  quantity: Maybe<Scalars['Float']['output']>;
   trackingNumber: Maybe<Scalars['String']['output']>;
 };
 
@@ -3390,10 +3864,10 @@ export type SettlesDailyResponse = {
 
 export type ShippingAddress = {
   /** 배송지 타입. 250바이트 내외 */
-  addressType: Maybe<Scalars['String']['output']>;
+  addressType: Maybe<AddressType>;
   /** 기본 주소. 300바이트 내외 */
   baseAddress: Maybe<Scalars['String']['output']>;
-  /** 도시. 국내 주소에는 빈 문자열('')을 입력합니다. 300바이트 내외 */
+  /** 도시. 국내 주소에는 빈 문자열("")을 입력합니다. 300바이트 내외 */
   city: Maybe<Scalars['String']['output']>;
   /** 국가. 45바이트 내외 */
   country: Maybe<Scalars['String']['output']>;
@@ -3411,7 +3885,7 @@ export type ShippingAddress = {
   pickupLocationContent: Maybe<Scalars['String']['output']>;
   /** 수령 위치. 250바이트 내외 */
   pickupLocationType: Maybe<Scalars['String']['output']>;
-  /** 주(state). 국내 주소에는 빈 문자열('')을 입력합니다. 300바이트 내외 */
+  /** 주(state). 국내 주소에는 빈 문자열("")을 입력합니다. 300바이트 내외 */
   state: Maybe<Scalars['String']['output']>;
   /** 연락처 1. 45바이트 내외 */
   tel1: Maybe<Scalars['String']['output']>;
@@ -3647,31 +4121,6 @@ export type SuccessProductOrderIds = {
   productOrderId: Maybe<Scalars['String']['output']>;
 };
 
-export type TakingAddress = {
-  /** 배송지 타입. 250바이트 내외 */
-  addressType: Maybe<Scalars['String']['output']>;
-  /** 기본 주소. 300바이트 내외 */
-  baseAddress: Maybe<Scalars['String']['output']>;
-  /** 도시. 국내 주소에는 빈 문자열('')을 입력합니다. 300바이트 내외 */
-  city: Maybe<Scalars['String']['output']>;
-  /** 국가. 45바이트 내외 */
-  country: Maybe<Scalars['String']['output']>;
-  /** 상세 주소. 300바이트 내외 */
-  detailedAddress: Maybe<Scalars['String']['output']>;
-  /** 도로명 주소 여부. 8바이트 내외 */
-  isRoadNameAddress: Maybe<Scalars['Boolean']['output']>;
-  /** 이름. 150바이트 내외 */
-  name: Maybe<Scalars['String']['output']>;
-  /** 주(state). 국내 주소에는 빈 문자열('')을 입력합니다. 300바이트 내외 */
-  state: Maybe<Scalars['String']['output']>;
-  /** 연락처 1. 45바이트 내외 */
-  tel1: Maybe<Scalars['String']['output']>;
-  /** 연락처 2. 45바이트 내외 */
-  tel2: Maybe<Scalars['String']['output']>;
-  /** 우편번호. 45바이트 내외 */
-  zipCode: Maybe<Scalars['String']['output']>;
-};
-
 export type Todo = {
   _id: Maybe<Scalars['ID']['output']>;
   assignedTo: Maybe<User>;
@@ -3788,6 +4237,11 @@ export type UpdateUserResponse = {
 export type UploadProductOrdersXlsxResponse = {
   errors: Maybe<FieldError>;
   result: Maybe<Scalars['String']['output']>;
+};
+
+export type UploadUrlResultResponese = {
+  id: Maybe<Scalars['String']['output']>;
+  uploadURL: Maybe<Scalars['String']['output']>;
 };
 
 export type UploadXlsxResponse = {
@@ -3908,6 +4362,38 @@ export type UpsertImportTodoResponse = {
   todo: Maybe<Todo>;
 };
 
+export type UpsertMallProductDetailPageInput = {
+  _id: InputMaybe<Scalars['ID']['input']>;
+  /** 제품에 대한 상세 정보 */
+  about: InputMaybe<AboutInfoInput>;
+  /** 용량 (예: 1kg) */
+  capacity: InputMaybe<Scalars['String']['input']>;
+  /** 제품명 */
+  name: InputMaybe<Scalars['String']['input']>;
+  productCode: InputMaybe<Scalars['String']['input']>;
+  /** 제품 상세 정보 (제품 정보) */
+  productInfo: InputMaybe<Scalars['String']['input']>;
+  productItemCode: InputMaybe<Scalars['String']['input']>;
+  /** 대표 이미지 ID */
+  productPhotoId: InputMaybe<Scalars['String']['input']>;
+  /** 추가 이미지 ID */
+  productPhotoIds: InputMaybe<Array<Scalars['String']['input']>>;
+  /** 박스내 수량 (예: 10팩) */
+  quantityInBox: InputMaybe<Scalars['String']['input']>;
+  /** 팩내 낱개수량 (예: 20미) */
+  quantityInPackage: InputMaybe<Scalars['String']['input']>;
+  /** 레시피 정보 */
+  recipe: InputMaybe<Array<Scalars['String']['input']>>;
+  /** 샘플 이미지 ID 목록 */
+  sampleImageIds: InputMaybe<Array<Scalars['String']['input']>>;
+  /** 보관 방법 (예: 냉동실(-18°C 이하)) */
+  storageMethod: InputMaybe<Scalars['String']['input']>;
+  /** 보관 유형 (예: 냉동) */
+  storageType: InputMaybe<Scalars['String']['input']>;
+  /** 박스무게 (예: 10kg) */
+  weight: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpsertRackInput = {
   description: InputMaybe<Scalars['String']['input']>;
   location: Scalars['String']['input'];
@@ -4013,10 +4499,24 @@ export enum WeightUnit {
   ShortTons = 'SHORT_TONS'
 }
 
-export type BaljugoPickingStickerListRespones = {
+export type BaljugoProductOrderRespones = {
   error: Maybe<ApiError>;
   orders: Maybe<Array<BaljugoProductOrder>>;
 };
+
+/** 수거 상태 */
+export enum CollectStatus {
+  CollectCanceled = 'COLLECT_CANCELED',
+  CollectFailed = 'COLLECT_FAILED',
+  CollectRequestToAgent = 'COLLECT_REQUEST_TO_AGENT',
+  CollectRequestToDeliveryCompany = 'COLLECT_REQUEST_TO_DELIVERY_COMPANY',
+  CollectWaiting = 'COLLECT_WAITING',
+  Delivered = 'DELIVERED',
+  Delivering = 'DELIVERING',
+  DeliveryFailed = 'DELIVERY_FAILED',
+  NotRequested = 'NOT_REQUESTED',
+  WrongInvoice = 'WRONG_INVOICE'
+}
 
 export type CreateInventoryEcountResponese = {
   error: Maybe<ApiError>;
@@ -4093,6 +4593,8 @@ export type ProductDisplayRequestFragmentFragment = { productDisplayRequest: str
 
 export type RegularEcountProductFragment = { _id: string, createdAt: string, updatedAt: string, PROD_CD: string, PROD_DES: string, SIZE_FLAG: string, SIZE_DES: string, UNIT: string, PROD_TYPE: string, SET_FLAG: string, BAL_FLAG: string, WH_CD: string, IN_PRICE: number, IN_PRICE_VAT: string, OUT_PRICE: number, OUT_PRICE_VAT: string, REMARKS_WIN: string, CLASS_CD: string, CLASS_CD2: string, CLASS_CD3: string, BAR_CODE: string, VAT_YN: string, TAX: number, VAT_RATE_BY_BASE_YN: string, VAT_RATE_BY: number, CS_FLAG: string, REMARKS: string, INSPECT_TYPE_CD: string, INSPECT_STATUS: string, SAMPLE_PERCENT: number, CSORD_C0001: string, CSORD_TEXT: number, CSORD_C0003: string, IN_TERM: string, MIN_QTY: string, CUST: string, EXCH_RATE: string, DENO_RATE: string, OUT_PRICE1: number, OUT_PRICE1_VAT_YN: string, OUT_PRICE2: number, OUT_PRICE2_VAT_YN: string, OUT_PRICE3: number, OUT_PRICE3_VAT_YN: string, OUT_PRICE4: number, OUT_PRICE4_VAT_YN: string, OUT_PRICE5: number, OUT_PRICE5_VAT_YN: string, OUT_PRICE6: number, OUT_PRICE6_VAT_YN: string, OUT_PRICE7: number, OUT_PRICE7_VAT_YN: string, OUT_PRICE8: number, OUT_PRICE8_VAT_YN: string, OUT_PRICE9: number, OUT_PRICE9_VAT_YN: string, OUT_PRICE10: number, OUT_PRICE10_VAT_YN: string, OUTSIDE_PRICE: number, OUTSIDE_PRICE_VAT: string, LABOR_WEIGHT: number, EXPENSES_WEIGHT: number, MATERIAL_COST: number, EXPENSE_COST: number, LABOR_COST: number, OUT_COST: number, CONT1: string, CONT2: string, CONT3: string, CONT4: string, CONT5: string, CONT6: string, NO_USER1: number, NO_USER2: number, NO_USER3: number, NO_USER4: number, NO_USER5: number, NO_USER6: number, NO_USER7: number, NO_USER8: number, NO_USER9: number, NO_USER10: number, ITEM_TYPE: string, SERIAL_TYPE: string, PROD_SELL_TYPE: string, PROD_WHMOVE_TYPE: string, QC_BUY_TYPE: string, QC_YN: string };
 
+export type RegularEnumValueFragment = { _id: string, invisible: boolean, value: string, label: string, description: string, color: string, isActive: boolean, sortOrder: number };
+
 export type RegularErrorFragment = { field: string, message: string };
 
 export type RegularLoginResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<string>, thumbnail: string } };
@@ -4102,6 +4604,8 @@ export type RegularStockItemFragment = { _id: string, isPicking: boolean, isSort
 export type RegularUserFragment = { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<string>, thumbnail: string };
 
 export type RegularUserResponseFragment = { errors: Array<{ field: string, message: string }>, user: { _id: string, username: string, _email: string, nickname: string, position: string, roles: Array<string>, thumbnail: string } };
+
+export type MallProductDetailPageFragmentFragment = { _id: string, name: string, productItemCode: string, disable: boolean, productCode: string, weight: string, capacity: string, quantityInBox: string, quantityInPackage: string, storageType: string, storageMethod: string, sampleImageIds: Array<string>, productInfo: string, productPhotoId: string, productPhotoIds: Array<string>, about: { name: string, thumbnailId: string, preThumbnailId: string, content: string }, recipe: Array<{ byCook: string, time: string, temperature: string }> };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4114,6 +4618,46 @@ export type AddTotalOrdersMutationVariables = Exact<{
 
 
 export type AddTotalOrdersMutation = { addTotalOrders: { result: Array<string>, error: { query: string, message: string } } };
+
+export type AddEnumValueMutationVariables = Exact<{
+  categoryId: Scalars['ID']['input'];
+  input: EnumValueInput;
+}>;
+
+
+export type AddEnumValueMutation = { addEnumValue: { _id: string, name: string, description: string, createdAt: string, updatedAt: string, values: Array<{ _id: string, invisible: boolean, value: string, label: string, description: string, color: string, isActive: boolean, sortOrder: number }> } };
+
+export type CreateEnumCategoryMutationVariables = Exact<{
+  input: EnumCategoryInput;
+}>;
+
+
+export type CreateEnumCategoryMutation = { createEnumCategory: { _id: string, name: string, description: string, createdAt: string, updatedAt: string, values: Array<{ _id: string, invisible: boolean, value: string, label: string, description: string, color: string, isActive: boolean, sortOrder: number }> } };
+
+export type DeleteEnumValueMutationVariables = Exact<{
+  categoryId: Scalars['ID']['input'];
+  valueId: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteEnumValueMutation = { deleteEnumValue: { _id: string, name: string, description: string, createdAt: string, updatedAt: string, values: Array<{ _id: string, invisible: boolean, value: string, label: string, description: string, color: string, isActive: boolean, sortOrder: number }> } };
+
+export type UpdateEnumCategoryMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  input: EnumCategoryInput;
+}>;
+
+
+export type UpdateEnumCategoryMutation = { updateEnumCategory: { _id: string, name: string, description: string, createdAt: string, updatedAt: string, values: Array<{ _id: string, invisible: boolean, value: string, label: string, description: string, color: string, isActive: boolean, sortOrder: number }> } };
+
+export type UpdateEnumValueMutationVariables = Exact<{
+  categoryId: Scalars['ID']['input'];
+  valueId: Scalars['ID']['input'];
+  input: EnumValueInput;
+}>;
+
+
+export type UpdateEnumValueMutation = { updateEnumValue: { _id: string, name: string, description: string, createdAt: string, updatedAt: string, values: Array<{ _id: string, invisible: boolean, value: string, label: string, description: string, color: string, isActive: boolean, sortOrder: number }> } };
 
 export type OrderStateMutationVariables = Exact<{
   input: PickingListInput;
@@ -4161,6 +4705,13 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutMutation = { logout: boolean };
+
+export type UpsertMallProductDetailPageMutationVariables = Exact<{
+  input: UpsertMallProductDetailPageInput;
+}>;
+
+
+export type UpsertMallProductDetailPageMutation = { upsertMallProductDetailPage: { mallProductDetailPage: { _id: string, name: string, productItemCode: string, disable: boolean, productCode: string, weight: string, capacity: string, quantityInBox: string, quantityInPackage: string, storageType: string, storageMethod: string, sampleImageIds: Array<string>, productInfo: string, productPhotoId: string, productPhotoIds: Array<string>, about: { name: string, thumbnailId: string, preThumbnailId: string, content: string }, recipe: Array<{ byCook: string, time: string, temperature: string }> } } };
 
 export type UploadBaljugoDispatchXlsxMutationVariables = Exact<{
   file: Array<Scalars['Upload']['input']> | Scalars['Upload']['input'];
@@ -4232,6 +4783,25 @@ export type UpsertStockItemMutationVariables = Exact<{
 
 export type UpsertStockItemMutation = { upsertStockItem: { errors: Array<{ query: string, message: string }>, stockItem: { _id: string, isPicking: boolean, isSorting: boolean, isDeleted: boolean, timestamp: string, warehousingDate: string, expirationDate: string, qrcode: string, palletCode: string, enterQuantity: number, quantity: number, replenishment: any, quantityOfEach: number, ecountProductCode: string, name: string, description: string, rackLocation: string, rackId: string, ecountProduct: { PROD_CD: string, PROD_DES: string, SIZE_DES: string, UNIT: string }, recorder: { _id: string, username: string } } } };
 
+export type GetAllEnumCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllEnumCategoriesQuery = { getAllEnumCategories: Array<{ _id: string, name: string, description: string, createdAt: string, updatedAt: string, values: Array<{ _id: string, invisible: boolean, value: string, label: string, description: string, color: string, isActive: boolean, sortOrder: number }> }> };
+
+export type GetEnumCategoryByNameQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type GetEnumCategoryByNameQuery = { getEnumCategoryByName: { _id: string, name: string, description: string, createdAt: string, updatedAt: string, values: Array<{ _id: string, invisible: boolean, value: string, label: string, description: string, color: string, isActive: boolean, sortOrder: number }> } };
+
+export type GetEnumValuesByCategoryQueryVariables = Exact<{
+  categoryId: Scalars['ID']['input'];
+}>;
+
+
+export type GetEnumValuesByCategoryQuery = { getEnumValuesByCategory: Array<{ _id: string, invisible: boolean, value: string, label: string, description: string, color: string, isActive: boolean, sortOrder: number }> };
+
 export type BaljugoOrderCustomerQueryVariables = Exact<{
   input: BaljugoCustomerOrderInput;
 }>;
@@ -4265,6 +4835,16 @@ export type SetOrderArrivalLocationMutationVariables = Exact<{
 
 export type SetOrderArrivalLocationMutation = { setOrderArrivalLocation: { ok: boolean, error: { query: string, message: string } } };
 
+export type GetCloudflareImgUrlQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCloudflareImgUrlQuery = { getCloudflareImgUrl: { ok: boolean, url: string, id: string } };
+
+export type GetUploadUrlQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUploadUrlQuery = { getUploadUrl: { id: string, uploadURL: string } };
+
 export type GetEcountListInventoryStatusLocationTrendsQueryVariables = Exact<{
   input: EcountInventoryStatusLocationInput;
 }>;
@@ -4290,6 +4870,24 @@ export type GetStorageItemsQuantityQueryVariables = Exact<{
 
 
 export type GetStorageItemsQuantityQuery = { getStorageItemsQuantity: { errors: Array<{ field: string, message: string }>, itemsQuantities: Array<{ _id: string, quantity: number, storage: string, location: string, recodedDate: string, productCode: string, nickname: string, description: string, unit: string, sizeDES: string }> } };
+
+export type GetMallProductDetailPagesQueryVariables = Exact<{
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+  sortField: InputMaybe<Scalars['String']['input']>;
+  sortOrder: Scalars['Int']['input'];
+  input: GetMallProductDetailPagesInput;
+}>;
+
+
+export type GetMallProductDetailPagesQuery = { getMallProductDetailPages: { hasMore: boolean, mallProductDetailPages: Array<{ _id: string, name: string, weight: string, capacity: string, quantityInBox: string, quantityInPackage: string, productPhotoId: string, productPhotoIds: Array<string>, productCode: string, productItemCode: string, storageType: string, disable: boolean }> } };
+
+export type MallProductDetailPageQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type MallProductDetailPageQuery = { mallProductDetailPage: { mallProductDetailPage: { _id: string, name: string, productItemCode: string, disable: boolean, productCode: string, weight: string, capacity: string, quantityInBox: string, quantityInPackage: string, storageType: string, storageMethod: string, sampleImageIds: Array<string>, productInfo: string, productPhotoId: string, productPhotoIds: Array<string>, about: { name: string, thumbnailId: string, preThumbnailId: string, content: string }, recipe: Array<{ byCook: string, time: string, temperature: string }> } } };
 
 export type PackageBoxesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4450,6 +5048,18 @@ export const RegularEcountProductFragmentDoc = gql`
   QC_YN
 }
     `;
+export const RegularEnumValueFragmentDoc = gql`
+    fragment RegularEnumValue on EnumValue {
+  _id
+  invisible
+  value
+  label
+  description
+  color
+  isActive
+  sortOrder
+}
+    `;
 export const RegularErrorFragmentDoc = gql`
     fragment RegularError on FieldError {
   field
@@ -4523,6 +5133,36 @@ export const RegularUserResponseFragmentDoc = gql`
   }
 }
     `;
+export const MallProductDetailPageFragmentFragmentDoc = gql`
+    fragment mallProductDetailPageFragment on MallProductDetailPage {
+  _id
+  name
+  productItemCode
+  disable
+  productCode
+  weight
+  capacity
+  quantityInBox
+  quantityInPackage
+  storageType
+  storageMethod
+  about {
+    name
+    thumbnailId
+    preThumbnailId
+    content
+  }
+  sampleImageIds
+  recipe {
+    byCook
+    time
+    temperature
+  }
+  productInfo
+  productPhotoId
+  productPhotoIds
+}
+    `;
 export const MeDocument = gql`
     query Me {
   me {
@@ -4541,6 +5181,76 @@ export const AddTotalOrdersDocument = gql`
   }
 }
     `;
+export const AddEnumValueDocument = gql`
+    mutation addEnumValue($categoryId: ID!, $input: EnumValueInput!) {
+  addEnumValue(categoryId: $categoryId, input: $input) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}
+    ${RegularEnumValueFragmentDoc}`;
+export const CreateEnumCategoryDocument = gql`
+    mutation createEnumCategory($input: EnumCategoryInput!) {
+  createEnumCategory(input: $input) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}
+    ${RegularEnumValueFragmentDoc}`;
+export const DeleteEnumValueDocument = gql`
+    mutation DeleteEnumValue($categoryId: ID!, $valueId: ID!) {
+  deleteEnumValue(categoryId: $categoryId, valueId: $valueId) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}
+    ${RegularEnumValueFragmentDoc}`;
+export const UpdateEnumCategoryDocument = gql`
+    mutation UpdateEnumCategory($id: ID!, $input: EnumCategoryInput!) {
+  updateEnumCategory(id: $id, input: $input) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}
+    ${RegularEnumValueFragmentDoc}`;
+export const UpdateEnumValueDocument = gql`
+    mutation UpdateEnumValue($categoryId: ID!, $valueId: ID!, $input: EnumValueInput!) {
+  updateEnumValue(categoryId: $categoryId, valueId: $valueId, input: $input) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}
+    ${RegularEnumValueFragmentDoc}`;
 export const OrderStateDocument = gql`
     mutation OrderState($input: PickingListInput!) {
   orderState(input: $input) {
@@ -4599,6 +5309,15 @@ export const LogoutDocument = gql`
   logout
 }
     `;
+export const UpsertMallProductDetailPageDocument = gql`
+    mutation UpsertMallProductDetailPage($input: UpsertMallProductDetailPageInput!) {
+  upsertMallProductDetailPage(input: $input) {
+    mallProductDetailPage {
+      ...mallProductDetailPageFragment
+    }
+  }
+}
+    ${MallProductDetailPageFragmentFragmentDoc}`;
 export const UploadBaljugoDispatchXlsxDocument = gql`
     mutation UploadBaljugoDispatchXLSX($file: [Upload!]!) {
   uploadBaljugoDispatchXLSX(file: $file) {
@@ -4714,6 +5433,41 @@ export const UpsertStockItemDocument = gql`
   }
 }
     ${RegularStockItemFragmentDoc}`;
+export const GetAllEnumCategoriesDocument = gql`
+    query GetAllEnumCategories {
+  getAllEnumCategories {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}
+    ${RegularEnumValueFragmentDoc}`;
+export const GetEnumCategoryByNameDocument = gql`
+    query GetEnumCategoryByName($name: String!) {
+  getEnumCategoryByName(name: $name) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}
+    ${RegularEnumValueFragmentDoc}`;
+export const GetEnumValuesByCategoryDocument = gql`
+    query GetEnumValuesByCategory($categoryId: ID!) {
+  getEnumValuesByCategory(categoryId: $categoryId) {
+    ...RegularEnumValue
+  }
+}
+    ${RegularEnumValueFragmentDoc}`;
 export const BaljugoOrderCustomerDocument = gql`
     query BaljugoOrderCustomer($input: BaljugoCustomerOrderInput!) {
   baljugoOrderCustomer(input: $input) {
@@ -4940,6 +5694,23 @@ export const SetOrderArrivalLocationDocument = gql`
   }
 }
     `;
+export const GetCloudflareImgUrlDocument = gql`
+    query GetCloudflareImgUrl {
+  getCloudflareImgUrl {
+    ok
+    url
+    id
+  }
+}
+    `;
+export const GetUploadUrlDocument = gql`
+    query GetUploadUrl {
+  getUploadUrl {
+    id
+    uploadURL
+  }
+}
+    `;
 export const GetEcountListInventoryStatusLocationTrendsDocument = gql`
     query GetEcountListInventoryStatusLocationTrends($input: EcountInventoryStatusLocationInput!) {
   getEcountListInventoryStatusLocationTrends(input: $input) {
@@ -5009,6 +5780,42 @@ export const GetStorageItemsQuantityDocument = gql`
   }
 }
     `;
+export const GetMallProductDetailPagesDocument = gql`
+    query GetMallProductDetailPages($limit: Int!, $offset: Int!, $sortField: String, $sortOrder: Int!, $input: GetMallProductDetailPagesInput!) {
+  getMallProductDetailPages(
+    limit: $limit
+    offset: $offset
+    sortField: $sortField
+    sortOrder: $sortOrder
+    input: $input
+  ) {
+    mallProductDetailPages {
+      _id
+      name
+      weight
+      capacity
+      quantityInBox
+      quantityInPackage
+      productPhotoId
+      productPhotoIds
+      productCode
+      productItemCode
+      storageType
+      disable
+    }
+    hasMore
+  }
+}
+    `;
+export const MallProductDetailPageDocument = gql`
+    query MallProductDetailPage($id: String!) {
+  mallProductDetailPage(id: $id) {
+    mallProductDetailPage {
+      ...mallProductDetailPageFragment
+    }
+  }
+}
+    ${MallProductDetailPageFragmentFragmentDoc}`;
 export const PackageBoxesDocument = gql`
     query PackageBoxes {
   packageBoxes {
@@ -5188,6 +5995,21 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     AddTotalOrders(variables: AddTotalOrdersMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddTotalOrdersMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddTotalOrdersMutation>(AddTotalOrdersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'AddTotalOrders', 'mutation', variables);
     },
+    addEnumValue(variables: AddEnumValueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddEnumValueMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddEnumValueMutation>(AddEnumValueDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addEnumValue', 'mutation', variables);
+    },
+    createEnumCategory(variables: CreateEnumCategoryMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateEnumCategoryMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateEnumCategoryMutation>(CreateEnumCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createEnumCategory', 'mutation', variables);
+    },
+    DeleteEnumValue(variables: DeleteEnumValueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteEnumValueMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteEnumValueMutation>(DeleteEnumValueDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'DeleteEnumValue', 'mutation', variables);
+    },
+    UpdateEnumCategory(variables: UpdateEnumCategoryMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateEnumCategoryMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateEnumCategoryMutation>(UpdateEnumCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpdateEnumCategory', 'mutation', variables);
+    },
+    UpdateEnumValue(variables: UpdateEnumValueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateEnumValueMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateEnumValueMutation>(UpdateEnumValueDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpdateEnumValue', 'mutation', variables);
+    },
     OrderState(variables: OrderStateMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<OrderStateMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<OrderStateMutation>(OrderStateDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'OrderState', 'mutation', variables);
     },
@@ -5208,6 +6030,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     Logout(variables?: LogoutMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LogoutMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<LogoutMutation>(LogoutDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Logout', 'mutation', variables);
+    },
+    UpsertMallProductDetailPage(variables: UpsertMallProductDetailPageMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpsertMallProductDetailPageMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpsertMallProductDetailPageMutation>(UpsertMallProductDetailPageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpsertMallProductDetailPage', 'mutation', variables);
     },
     UploadBaljugoDispatchXLSX(variables: UploadBaljugoDispatchXlsxMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UploadBaljugoDispatchXlsxMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UploadBaljugoDispatchXlsxMutation>(UploadBaljugoDispatchXlsxDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UploadBaljugoDispatchXLSX', 'mutation', variables);
@@ -5239,6 +6064,15 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     UpsertStockItem(variables: UpsertStockItemMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpsertStockItemMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpsertStockItemMutation>(UpsertStockItemDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'UpsertStockItem', 'mutation', variables);
     },
+    GetAllEnumCategories(variables?: GetAllEnumCategoriesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllEnumCategoriesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllEnumCategoriesQuery>(GetAllEnumCategoriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllEnumCategories', 'query', variables);
+    },
+    GetEnumCategoryByName(variables: GetEnumCategoryByNameQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetEnumCategoryByNameQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetEnumCategoryByNameQuery>(GetEnumCategoryByNameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetEnumCategoryByName', 'query', variables);
+    },
+    GetEnumValuesByCategory(variables: GetEnumValuesByCategoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetEnumValuesByCategoryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetEnumValuesByCategoryQuery>(GetEnumValuesByCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetEnumValuesByCategory', 'query', variables);
+    },
     BaljugoOrderCustomer(variables: BaljugoOrderCustomerQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<BaljugoOrderCustomerQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<BaljugoOrderCustomerQuery>(BaljugoOrderCustomerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'BaljugoOrderCustomer', 'query', variables);
     },
@@ -5254,6 +6088,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     setOrderArrivalLocation(variables: SetOrderArrivalLocationMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SetOrderArrivalLocationMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<SetOrderArrivalLocationMutation>(SetOrderArrivalLocationDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'setOrderArrivalLocation', 'mutation', variables);
     },
+    GetCloudflareImgUrl(variables?: GetCloudflareImgUrlQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetCloudflareImgUrlQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetCloudflareImgUrlQuery>(GetCloudflareImgUrlDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetCloudflareImgUrl', 'query', variables);
+    },
+    GetUploadUrl(variables?: GetUploadUrlQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUploadUrlQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUploadUrlQuery>(GetUploadUrlDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetUploadUrl', 'query', variables);
+    },
     GetEcountListInventoryStatusLocationTrends(variables: GetEcountListInventoryStatusLocationTrendsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetEcountListInventoryStatusLocationTrendsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetEcountListInventoryStatusLocationTrendsQuery>(GetEcountListInventoryStatusLocationTrendsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetEcountListInventoryStatusLocationTrends', 'query', variables);
     },
@@ -5265,6 +6105,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetStorageItemsQuantity(variables: GetStorageItemsQuantityQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetStorageItemsQuantityQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetStorageItemsQuantityQuery>(GetStorageItemsQuantityDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetStorageItemsQuantity', 'query', variables);
+    },
+    GetMallProductDetailPages(variables: GetMallProductDetailPagesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMallProductDetailPagesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMallProductDetailPagesQuery>(GetMallProductDetailPagesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetMallProductDetailPages', 'query', variables);
+    },
+    MallProductDetailPage(variables: MallProductDetailPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<MallProductDetailPageQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MallProductDetailPageQuery>(MallProductDetailPageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'MallProductDetailPage', 'query', variables);
     },
     PackageBoxes(variables?: PackageBoxesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<PackageBoxesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<PackageBoxesQuery>(PackageBoxesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'PackageBoxes', 'query', variables);

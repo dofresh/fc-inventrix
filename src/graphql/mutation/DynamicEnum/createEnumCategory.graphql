@@ -1,0 +1,12 @@
+mutation createEnumCategory($input: EnumCategoryInput!) {
+  createEnumCategory(input: $input) {
+    _id
+    name
+    description
+    values {
+      ...RegularEnumValue
+    }
+    createdAt
+    updatedAt
+  }
+}

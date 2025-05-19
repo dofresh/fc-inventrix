@@ -4,6 +4,7 @@ interface ImportMetaEnv {
   readonly VITE_HOME_URL: string;
   readonly VITE_BACKEND_URL: string;
   readonly VITE_WHAREHOUSE_CODE: string;
+  readonly VITE_CLOUDFLARE_ACCOUNT_HASH: string;
 }
 
 interface ImportMeta {

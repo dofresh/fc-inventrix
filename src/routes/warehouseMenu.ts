@@ -3,6 +3,7 @@ import { BsBookshelf, BsCreditCard2Front } from "solid-icons/bs";
 import { ImNewspaper } from "solid-icons/im";
 import { RiDeviceDashboard2Line } from "solid-icons/ri";
 import { TbBuildingWarehouse } from "solid-icons/tb";
+import { FaSolidBoxOpen } from "solid-icons/fa";
 import { MenuType } from "~/contracts/types/menu";
 
 export const warehouseMenu: MenuType[] = [
@@ -43,5 +44,11 @@ export const warehouseMenu: MenuType[] = [
     name: "발주고 피킹좌표값",
     url: "/baljugoLocation",
     Icon: AiOutlineOrderedList,
+  },
+  { isSeperate: true },
+  {
+    name: "제품모델",
+    url: "/products",
+    Icon: FaSolidBoxOpen,
   },
 ];

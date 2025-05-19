@@ -3,7 +3,7 @@ import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import "./app.css";
 import { QueryClientProvider } from "@tanstack/solid-query";
-import { queryClient } from "./lib/querh-client";
+import { queryClient } from "./lib/query-client";
 import { SolidQueryDevtools } from "@tanstack/solid-query-devtools";
 import { MetaProvider, Title, Meta } from "@solidjs/meta";
 import { IsAuth } from "./components/IsAuth";

@@ -1,0 +1,7 @@
+query GetCloudflareImgUrl {
+  getCloudflareImgUrl {
+    ok
+    url
+    id
+  }
+}
