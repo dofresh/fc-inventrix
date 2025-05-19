@@ -82,7 +82,8 @@ const Products = () => {
   // Set up intersection observer
   onMount(() => {
     // 페이지에 들어올 때마다 products 상태 초기화 확인
-    const productData = data()?.getMallProductDetailPages?.mallProductDetailPages;
+    const productData =
+      data()?.getMallProductDetailPages?.mallProductDetailPages;
     if (productData && products().length === 0) {
       setProducts(productData as MallProductDetailPage[]);
       setPage(0);

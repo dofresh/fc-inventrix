@@ -184,33 +184,6 @@ const ProductInfo = () => {
                       )}
                     </div>
 
-                    {/* 레시피 정보 */}
-                    {product()?.recipe && (
-                      <div class="mt-8">
-                        <h2 class="text-lg font-bold mb-2">레시피 정보</h2>
-                        <div class="grid grid-cols-2 gap-4">
-                          {product()?.recipe.byCook && (
-                            <div class="border-b pb-2">
-                              <span class="font-medium">조리법:</span>{" "}
-                              {product()?.recipe.byCook}
-                            </div>
-                          )}
-                          {product()?.recipe.time && (
-                            <div class="border-b pb-2">
-                              <span class="font-medium">조리시간:</span>{" "}
-                              {product()?.recipe.time}
-                            </div>
-                          )}
-                          {product()?.recipe.temperature && (
-                            <div class="border-b pb-2">
-                              <span class="font-medium">온도:</span>{" "}
-                              {product()?.recipe.temperature}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
                     {/* 제품 추가 정보 */}
                     {product()?.productInfo && (
                       <div class="mt-8">
@@ -222,24 +195,6 @@ const ProductInfo = () => {
                     )}
                   </div>
                 </div>
-
-                {/* 추가 이미지 섹션 */}
-                {product()?.productPhotoIds &&
-                  product()?.productPhotoIds.length > 0 && (
-                    <div class="mt-12">
-                      <h2 class="text-xl font-bold mb-4">추가 이미지</h2>
-                      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {product()?.productPhotoIds.map((imageId) => (
-                          <div class="border">
-                            <GetCloudFlareImage
-                              imageId={imageId}
-                              sizeType={SizeType.THUMB_256}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
               </div>
             </Show>
           </Show>

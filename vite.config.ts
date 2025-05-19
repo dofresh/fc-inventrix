@@ -16,8 +16,16 @@ export default defineConfig({
     target: "esnext", // Cloudflare와 호환성을 위해 최신 JavaScript 사용
     rollupOptions: {
       output: {
-        entryFileNames: "index.js", // 진입 파일 이름
+        entryFileNames: "assets/[name].[hash].js",
+        chunkFileNames: "assets/[name].[hash].js",
+        assetFileNames: "assets/[name].[hash].[ext]"
       },
     },
+    // Ensure SSR-compatible builds for Cloudflare Pages
+    ssr: true,
+    // Minimize the bundle size
+    minify: true,
+    // Ensure proper sourcemaps for debugging
+    sourcemap: true
   },
 });
